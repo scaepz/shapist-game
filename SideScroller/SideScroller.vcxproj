@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5FF20EC8-B76B-40B6-AD54-667CEFA501F3}</ProjectGuid>
+    <RootNamespace>SideScroller</RootNamespace>
+    <ProjectName>Shapist</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ExtensionsToDeleteOnClean>*.dll;$(ExtensionsToDeleteOnClean)</ExtensionsToDeleteOnClean>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>shap</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Jonathan\Desktop\shapist16jan\SideScroller\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Jonathan\Desktop\shapist16jan\SideScroller\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)"\lib\*.DLL "$(TargetDir)" /D /K /Y</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy DLLs to Target Directory</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Jonathan\Desktop\shapist16jan\SideScroller\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AI.cpp" />
+    <ClCompile Include="AIHandler.cpp" />
+    <ClCompile Include="AmmoItem.cpp" />
+    <ClCompile Include="Animate.cpp" />
+    <ClCompile Include="Artist.cpp" />
+    <ClCompile Include="AttackCommand.cpp" />
+    <ClCompile Include="BackgroundObject.cpp" />
+    <ClCompile Include="BaseObject.cpp" />
+    <ClCompile Include="Campaign.cpp" />
+    <ClCompile Include="CautiousRangedAI.cpp" />
+    <ClCompile Include="CeaseFire.cpp" />
+    <ClCompile Include="Chest.cpp" />
+    <ClCompile Include="ChestDialog.cpp" />
+    <ClCompile Include="CollisionDetector.cpp" />
+    <ClCompile Include="CommandObject.cpp" />
+    <ClCompile Include="Crate.cpp" />
+    <ClCompile Include="DamageNumber.cpp" />
+    <ClCompile Include="DeathManager.cpp" />
+    <ClCompile Include="DashCommand.cpp" />
+    <ClCompile Include="DevLaser.cpp" />
+    <ClCompile Include="DialogHandler.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EntityFactory.cpp" />
+    <ClCompile Include="Enemyhandler.cpp" />
+    <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="EventTrigger.cpp" />
+    <ClCompile Include="EventTriggerInteract.cpp" />
+    <ClCompile Include="EventTriggerZone.cpp" />
+    <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="GameSaver.cpp" />
+    <ClCompile Include="Grenade.cpp" />
+    <ClCompile Include="GrenadeLauncher.cpp" />
+    <ClCompile Include="Group.cpp" />
+    <ClCompile Include="GroupManager.cpp" />
+    <ClCompile Include="HealthBubble.cpp" />
+    <ClCompile Include="HitscanWeapon.cpp" />
+    <ClCompile Include="Hud.cpp" />
+    <ClCompile Include="HudDialog.cpp" />
+    <ClCompile Include="InteractCommand.cpp" />
+    <ClCompile Include="InventoryOnScreen.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Key.cpp" />
+    <ClCompile Include="KickBack.cpp" />
+    <ClCompile Include="Fluid.cpp" />
+    <ClCompile Include="AggressiveAI.cpp" />
+    <ClCompile Include="Line.cpp" />
+    <ClCompile Include="MeleeWeapon.cpp" />
+    <ClCompile Include="ParticleEngine.cpp" />
+    <ClCompile Include="ProjectileHandler.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="JumpCommand.cpp" />
+    <ClCompile Include="LevelReader.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MoveCommand.cpp" />
+    <ClCompile Include="PhysicsHandler.cpp" />
+    <ClCompile Include="PhysicsObject.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="RangedAI.cpp" />
+    <ClCompile Include="ReloadCommand.cpp" />
+    <ClCompile Include="RetreatingAI.cpp" />
+    <ClCompile Include="Rocket.cpp" />
+    <ClCompile Include="RocketLauncher.cpp" />
+    <ClCompile Include="SDL2_framerate.c" />
+    <ClCompile Include="SDL2_gfxPrimitives.c" />
+    <ClCompile Include="SDL2_imageFilter.c" />
+    <ClCompile Include="SDL2_rotozoom.c" />
+    <ClCompile Include="BulletWeapon.cpp" />
+    <ClCompile Include="SimpleTestAI.cpp" />
+    <ClCompile Include="SlowMoveCommand.cpp" />
+    <ClCompile Include="SoftStopCommand.cpp" />
+    <ClCompile Include="SoundPlayer.cpp" />
+    <ClCompile Include="Speech.cpp" />
+    <ClCompile Include="SpeechManager.cpp" />
+    <ClCompile Include="SwimEffect.cpp" />
+    <ClCompile Include="StaticObject.cpp" />
+    <ClCompile Include="StopCommand.cpp" />
+    <ClCompile Include="SwitchWeapon.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TrapHandler.cpp" />
+    <ClCompile Include="TrapObject.cpp" />
+    <ClCompile Include="VectorManager.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AI.h" />
+    <ClInclude Include="AIHandler.h" />
+    <ClInclude Include="AIs.h" />
+    <ClInclude Include="AmmoItem.h" />
+    <ClInclude Include="Animate.h" />
+    <ClInclude Include="Artist.h" />
+    <ClInclude Include="AttackCommand.h" />
+    <ClInclude Include="BackgroundObject.h" />
+    <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="Campaign.h" />
+    <ClInclude Include="CautiousRangedAI.h" />
+    <ClInclude Include="CeaseFire.h" />
+    <ClInclude Include="Chest.h" />
+    <ClInclude Include="ChestDialog.h" />
+    <ClInclude Include="CollisionDetector.h" />
+    <ClInclude Include="CommandObject.h" />
+    <ClInclude Include="Crate.h" />
+    <ClInclude Include="DamageNumber.h" />
+    <ClInclude Include="DeathManager.h" />
+    <ClInclude Include="DashCommand.h" />
+    <ClInclude Include="DevLaser.h" />
+    <ClInclude Include="DialogHandler.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EntityFactory.h" />
+    <ClInclude Include="EnemyHandler.h" />
+    <ClInclude Include="EventManager.h" />
+    <ClInclude Include="EventTrigger.h" />
+    <ClInclude Include="EventTriggerInteract.h" />
+    <ClInclude Include="EventTriggerZone.h" />
+    <ClInclude Include="Explosion.h" />
+    <ClInclude Include="GameSaver.h" />
+    <ClInclude Include="Grenade.h" />
+    <ClInclude Include="GrenadeLauncher.h" />
+    <ClInclude Include="Commands.h" />
+    <ClInclude Include="EventEnum.h" />
+    <ClInclude Include="Group.h" />
+    <ClInclude Include="GroupManager.h" />
+    <ClInclude Include="Hud.h" />
+    <ClInclude Include="Line.h" />
+    <ClInclude Include="ParticleEngine.h" />
+    <ClInclude Include="ReloadCommand.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Rocket.h" />
+    <ClInclude Include="RocketLauncher.h" />
+    <ClInclude Include="BulletWeapon.h" />
+    <ClInclude Include="SlowMoveCommand.h" />
+    <ClInclude Include="SoundEnum.h" />
+    <ClInclude Include="HealthBubble.h" />
+    <ClInclude Include="HitscanWeapon.h" />
+    <ClInclude Include="HudDialog.h" />
+    <ClInclude Include="InteractCommand.h" />
+    <ClInclude Include="InventoryOnScreen.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemEnum.h" />
+    <ClInclude Include="Key.h" />
+    <ClInclude Include="KickBack.h" />
+    <ClInclude Include="Fluid.h" />
+    <ClInclude Include="AggressiveAI.h" />
+    <ClInclude Include="MeleeWeapon.h" />
+    <ClInclude Include="ProjectileHandler.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="PhysicsHandler.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="RangedAI.h" />
+    <ClInclude Include="RetreatingAI.h" />
+    <ClInclude Include="SimpleTestAI.h" />
+    <ClInclude Include="SoundPlayer.h" />
+    <ClInclude Include="Speech.h" />
+    <ClInclude Include="SpeechManager.h" />
+    <ClInclude Include="SwimEffect.h" />
+    <ClInclude Include="StaticObject.h" />
+    <ClInclude Include="SwitchWeapon.h" />
+    <ClInclude Include="TrapHandler.h" />
+    <ClInclude Include="TrapObject.h" />
+    <ClInclude Include="VectorManager.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponsEnum.h" />
+    <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="JumpCommand.h" />
+    <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="SoftStopCommand.h" />
+    <ClInclude Include="StopCommand.h" />
+    <ClInclude Include="vector2.h" />
+    <ClInclude Include="LevelReader.h" />
+    <ClInclude Include="PhysicsObject.h" />
+    <ClInclude Include="SDL2_framerate.h" />
+    <ClInclude Include="SDL2_gfxPrimitives.h" />
+    <ClInclude Include="SDL2_gfxPrimitives_font.h" />
+    <ClInclude Include="SDL2_imageFilter.h" />
+    <ClInclude Include="SDL2_rotozoom.h" />
+    <ClInclude Include="Tile.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Shapist.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

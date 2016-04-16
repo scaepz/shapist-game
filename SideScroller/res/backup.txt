@@ -1,0 +1,334 @@
+#include "Game.h"
+
+
+CGame::CGame()
+{
+
+	CLevelReader reader;
+	reader.importLevel("../res/testlevel.txt");
+	int xCounter = 0;
+	int yCounter = 0;
+	//testlevel
+	while (reader.NextTile())
+	{
+		if (reader.GetTileType() == 1)
+		{
+			CTile* tile = new CTile(xCounter, yCounter);
+			tRow.push_back(tile);
+			xCounter++;
+		}
+		else if (reader.GetTileType() == -1)
+		{
+			tileVector.push_back(tRow);
+			tRow.clear();
+			yCounter++;
+			xCounter = 0;
+		}
+		else if (reader.GetTileType() == 0)
+		{
+			tRow.push_back(nullptr); //represents an empty tile in the array
+			xCounter++;
+		}
+		else if (reader.GetTileType() == 2)
+		{
+			xCounter++;
+			tRow.push_back(nullptr); //represents an empty tile in the array
+
+			// new entity, get type from reader.entityId
+
+		}
+
+	}
+
+	//calculate textures
+	for each (std::vector<CTile*> row in tileVector)
+	{
+		std::cout << std::endl;
+		for each (CTile* tile in row)
+		{
+			if (tile == nullptr)
+			{
+				std::cout << "#" << "\t";
+			}
+			else
+			{
+				tile->CalculateProperties(tileVector);
+				std::cout << tile->texture << "\t";
+			}
+		}
+	}
+	player = new CPlayer(50, 100, 0, 32);
+
+	objectVector.push_back(player);
+	CArtist picasso(tileVector, 0, standardTileSize, objectVector);
+	InitTimer();
+	for (int i = 0; i < 10000; i++)
+	{
+		UpdateWorld(GetTicks());
+		picasso.DrawEverything();
+	}
+
+
+	//testlevel 2
+}
+
+int CGame::GetTicks()
+{
+	int tempTotal = SDL_GetTicks();
+	int slice = tempTotal - totalMs;
+
+	totalMs = tempTotal;
+	return slice;
+}
+
+void CGame::InitTimer()
+{
+	totalMs = SDL_GetTicks();
+}
+
+CGame::~CGame()
+{
+	//delete tiles etc
+}
+
+bool CGame::Intersects(float p0_x, float p0_y, float p1_x, float p1_y,
+	float p2_x, float p2_y, float p3_x, float p3_y, float *i_x, float *i_y)
+{
+	float s02_x, s02_y, s10_x, s10_y, s32_x, s32_y, s_numer, t_numer, denom, t;
+	s10_x = p1_x - p0_x;
+	s10_y = p1_y - p0_y;
+	s32_x = p3_x - p2_x;
+	s32_y = p3_y - p2_y;
+
+	denom = s10_x * s32_y - s32_x * s10_y;
+	if (denom == 0)
+		return 0; // Collinear
+	bool denomPositive = denom > 0;
+
+	s02_x = p0_x - p2_x;
+	s02_y = p0_y - p2_y;
+	s_numer = s10_x * s02_y - s10_y * s02_x;
+	if ((s_numer < 0) == denomPositive)
+		return 0; // No collision
+
+	t_numer = s32_x * s02_y - s32_y * s02_x;
+	if ((t_numer < 0) == denomPositive)
+		return 0; // No collision
+
+	if (((s_numer > denom) == denomPositive) || ((t_numer > denom) == denomPositive))
+		return 0; // No collision
+	// Collision detected
+	t = t_numer / denom;
+
+	*i_x = p0_x + (t * s10_x);
+
+	*i_y = p0_y + (t * s10_y);
+
+	return 1;
+}
+
+
+
+bool CGame::WillCollide(int index, int ms)
+{
+	bool CollisionFixed = false;
+
+	CPhysicsObject* obj = objectVector[index];
+	obj->SetOnGround(false);
+	float a = 3.2;
+	int b[4];
+	
+
+	for (int i = 0; i <= (obj->size / standardTileSize); i++)
+	{
+		//Topside of object
+		CTile* tile = tileVector[(obj->pos[1] + (obj->velocity[1] * ms)) / standardTileSize][(obj->pos[0] + (obj->velocity[0] * ms)) / standardTileSize + i]; // I could maybe do (float) here, in its current state it might produce very rare collision bugs
+		if (tile != nullptr)
+		{
+			SDL_Rect rect;
+			rect.x = tile->pos[0] * standardTileSize;
+			rect.y = tile->pos[1] * standardTileSize;
+			rect.w = standardTileSize;
+			rect.h = rect.w;
+			float cx = 0;
+			float cy = 0;
+			float *pcx = &cx;
+			float *pcy = &cy;
+			
+
+			if (Intersects(obj->pos[0] + (standardTileSize*i), obj->pos[1], (obj->pos[0] + (obj->velocity[0] * ms)) + (standardTileSize*i), obj->pos[1] + obj->velocity[1] * ms, rect.x, rect.y + rect.h, rect.x + rect.w, rect.y + rect.h, pcx, pcy))
+			{
+				obj->truncationLeftovers[1] = 0;
+				obj->truncationLeftovers[0] = 0;
+				// hit roof
+				obj->pos[1] = cy + 1;
+				obj->pos[0] = cx - (i * standardTileSize);
+				//std::cout << "roof";
+				obj->velocity[1] = 0;
+				CollisionFixed = true;
+				
+			}
+		}
+	}
+
+
+
+
+	for (int i = 0; i <= (obj->size / standardTileSize); i++)
+	{
+		//Underside of object
+		CTile* tile = tileVector[(((obj->pos[1] + (float)((float)(obj->velocity[1] * ms) + obj->truncationLeftovers[1])) + obj->size) / standardTileSize)][(obj->pos[0] + (obj->velocity[0] * ms) + obj->truncationLeftovers[0]) / standardTileSize + i];
+		if (tile != nullptr)
+		{
+
+			SDL_Rect rect;
+			rect.x = tile->pos[0] * standardTileSize;
+			rect.y = tile->pos[1] * standardTileSize;
+			rect.w = standardTileSize;
+			rect.h = rect.w;
+			float cx = 0;
+			float cy = 0;
+			float *pcx = &cx;
+			float *pcy = &cy;
+			float test = (float)((float)(obj->pos[0] + (float)(obj->velocity[0] * ms)) + (float)((standardTileSize*i) + obj->truncationLeftovers[0]));
+
+			if (Intersects(obj->pos[0] + (standardTileSize*i), obj->pos[1] + obj->size, (float)((float)(obj->pos[0] + (float)(obj->velocity[0] * ms)) + (float)((standardTileSize*i) + obj->truncationLeftovers[0])), (float)(((float)(obj->pos[1] + (float)obj->velocity[1]) * ms) + (float)((obj->size) + (float)obj->truncationLeftovers[1])), rect.x, rect.y, rect.x + rect.w, rect.y, pcx, pcy))
+			{
+				// hit floor
+				obj->truncationLeftovers[1] = 0;
+				obj->truncationLeftovers[0] = 0;
+				obj->pos[1] = (cy)-1 - obj->size;
+				obj->pos[0] = cx - (i * standardTileSize);
+				//std::cout << "floor";
+				obj->velocity[1] = 0;
+				CollisionFixed = true;
+				obj->SetOnGround(true);
+				
+			}
+		}
+	}
+
+
+
+
+	for (int i = 0; i <= (obj->size / standardTileSize); i++)
+	{
+	//	std::cout << "l-loop";
+		//Leftside of object
+		CTile* tile = tileVector[(((obj->pos[1] + (float)((float)(obj->velocity[1] * ms) + obj->truncationLeftovers[1]))) / standardTileSize) + i][((obj->pos[0] + (float)((float)(obj->velocity[0] * ms) + obj->truncationLeftovers[0])) / standardTileSize)];
+		if (tile != nullptr)
+		{
+			SDL_Rect rect;
+			rect.x = tile->pos[0] * standardTileSize;
+			rect.y = tile->pos[1] * standardTileSize;
+			rect.w = standardTileSize;
+			rect.h = rect.w;
+			float cx = 0;
+			float cy = 0;
+			float *pcx = &cx;
+			float *pcy = &cy;
+
+
+			if (Intersects(obj->pos[0], obj->pos[1] + (standardTileSize*i), (float)((float)(obj->pos[0] + (float)(obj->velocity[0] * ms)) + (float)(obj->truncationLeftovers[0])), (float)((float)(obj->pos[1] + (float)(obj->velocity[1] * ms)) + (standardTileSize*i) + (float)obj->truncationLeftovers[1]), rect.x + rect.w, rect.y, rect.x + rect.w, rect.y + rect.h, pcx, pcy))
+			{
+				// hit right wall
+				obj->truncationLeftovers[1] = 0;
+				obj->truncationLeftovers[0] = 0;
+				obj->pos[1] = cy - (i * standardTileSize);
+				obj->pos[0] = cx + 1;
+				//std::cout << "left";
+				obj->velocity[0] = 0;
+				CollisionFixed = true;
+				
+			}
+
+		}
+
+	}
+	/*{
+
+	for (int i = 0; i <= (obj->size / standardTileSize); i++)
+	{
+	//Rightside of object
+	CTile* tile = tileVector[(((obj->pos[1] + (float)((float)(obj->velocity[1] * ms) + obj->truncationLeftovers[1]))) / standardTileSize) + i][((obj->pos[0] + obj->size + (float)((float)(obj->velocity[0] * ms) + obj->truncationLeftovers[0])) / standardTileSize)];
+	if (tile != nullptr)
+	{
+	SDL_Rect rect;
+	rect.x = tile->pos[0] * standardTileSize;
+	rect.y = tile->pos[1] * standardTileSize;
+	rect.w = standardTileSize;
+	rect.h = rect.w;
+	float cx = 0;
+	float cy = 0;
+	float *pcx = &cx;
+	float *pcy = &cy;
+
+
+	if (Intersects(obj->pos[0], obj->pos[1] + (standardTileSize*i), (float)((float)(obj->pos[0] + (float)(obj->velocity[0] * ms)) + (float)(obj->truncationLeftovers[0])), (float)((float)(obj->pos[1] + (float)(obj->velocity[1] * ms)) + (standardTileSize*i) + (float)obj->truncationLeftovers[1]), rect.x + rect.w, rect.y, rect.x + rect.w, rect.y + rect.h, pcx, pcy))
+	{
+	// hit right wall
+	obj->pos[1] = cy - (i * standardTileSize);
+	obj->pos[0] = cx + 1;
+	std::cout << "intersection";
+	obj->velocity[0] = 0;
+	CollisionFixed = true;
+	}
+	}
+	}
+
+	}*/
+
+	return CollisionFixed;
+}
+
+void CGame::DoProperCollision(int index, int tileY, int tileX)
+{
+
+}
+
+bool CGame::OnGround(CPhysicsObject* obj)
+{
+	/*for (int y = 0; y < tileVector.size(); y++)
+	{
+	for (int x = 0; x < tileVector[y].size(); x++)
+	{
+	if (tileVector[y][x] != nullptr)
+	{
+	if (tileVector[y][x]->touchable == true)
+	{
+	if (obj->pos[0] >= tileVector[y][x]->pos[0] * standardTileSize || obj->pos[0] * standardTileSize <= (tileVector[y][x]->pos[0] * standardTileSize) + standardTileSize)
+	{
+	if (obj->pos[1] + obj->size == (tileVector[y][x]->pos[1] * standardTileSize) - 1)
+	{
+	return true;
+	}
+	}
+	}
+	}
+	}
+	}*/
+	return true;
+}
+// if bool DidCollide
+//void DoProperCollision
+//else obj->update();
+void CGame::UpdateWorld(int ms)
+{
+	SDL_Delay(10);
+	for (int i = 0; i < objectVector.size(); i++)
+	{
+		if (objectVector[i]->OnGround() == false)
+		{
+			//Apply gravity
+			CVector2<float> grav(0.0001*ms, 0.001*ms);
+			objectVector[i]->AddVelocity(grav);
+			std::cout << "trunc: " << objectVector[i]->truncationLeftovers[0] << ", " << objectVector[i]->truncationLeftovers[1] << std::endl;
+		}
+
+		if (!WillCollide(0, ms)) //WillCollide also handles the collision
+		{
+			objectVector[i]->Update(ms);
+		}
+		//std::cout << objectVector[i]->pos[0] << ", " << objectVector[i]->pos[1] << "travelling at" << objectVector[i]->velocity[0] << ", " << objectVector[i]->velocity[1] << std::endl;
+	}
+}

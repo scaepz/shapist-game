@@ -1,0 +1,3 @@
+res/campaigns/shapist/level01/
+res/campaigns/shapist/level02/
+eof

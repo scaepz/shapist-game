@@ -1,0 +1,623 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="SDL_gfx">
+      <UniqueIdentifier>{7b313ad3-9dd6-423c-9336-3ebadee686dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{e84ca385-ef34-46f5-a265-414b681a0b65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{87fc5cc6-96b0-468e-828f-d17003b0b39a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\PhysicsObjects">
+      <UniqueIdentifier>{2bc083d0-7150-4424-9403-0c4bd58b1c59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\StaticObjects">
+      <UniqueIdentifier>{fd6de651-5177-436c-96c0-3ad00c61da6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\PhysicsObjects\Projectiles and explosions">
+      <UniqueIdentifier>{ac45866a-8959-4f92-92c0-b0ebaabc050d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Handlers">
+      <UniqueIdentifier>{a0d7208e-54d0-47bc-95a6-d5b6cd2643a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factories">
+      <UniqueIdentifier>{1826fa39-a931-4e14-9a24-6c49f1022fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Misc">
+      <UniqueIdentifier>{5c1fbe02-3bfe-4cc8-ab4b-12e6bfaf27c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Weapons">
+      <UniqueIdentifier>{2ce48003-7124-4073-8392-25314b08fd6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{f2647e72-3cc0-4cc1-bf74-31a6309e48bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\StaticObjects\Traps">
+      <UniqueIdentifier>{0c55d455-7015-4749-bf6b-8bcb648833f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effects">
+      <UniqueIdentifier>{f18ee532-ff70-499d-ae45-296be509ca21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\PhysicsObjects\Items">
+      <UniqueIdentifier>{3530230f-8f20-4b2e-9d7e-f661020daadc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\StaticObjects\Crates">
+      <UniqueIdentifier>{0a38f584-f85e-4123-a068-ad7bcc735265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{88ccefb0-3e52-403e-8dbf-844691cea67e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{250f7153-bfb4-4062-b3b2-ac786aa30b79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Pre-Game">
+      <UniqueIdentifier>{733be130-2fbe-46d5-a46d-bc0513769d98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{1519634f-0ee8-4f3d-a742-11339f11501d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{d5602b73-85bf-4339-a03f-b05848596da3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SDL2_framerate.c">
+      <Filter>SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_gfxPrimitives.c">
+      <Filter>SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_imageFilter.c">
+      <Filter>SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_rotozoom.c">
+      <Filter>SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandObject.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="SoftStopCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="StopCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Animate.cpp">
+      <Filter>Objects\PhysicsObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsObject.cpp">
+      <Filter>Objects\PhysicsObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Objects\PhysicsObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Objects\PhysicsObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="DashCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticObject.cpp">
+      <Filter>Objects\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Objects\PhysicsObjects\Projectiles and explosions</Filter>
+    </ClCompile>
+    <ClCompile Include="Artist.cpp">
+      <Filter>Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsHandler.cpp">
+      <Filter>Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityFactory.cpp">
+      <Filter>Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelReader.cpp">
+      <Filter>Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Objects\PhysicsObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileHandler.cpp">
+      <Filter>Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="HitscanWeapon.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="GrenadeLauncher.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Grenade.cpp">
+      <Filter>Objects\PhysicsObjects\Projectiles and explosions</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>Objects\PhysicsObjects\Projectiles and explosions</Filter>
+    </ClCompile>
+    <ClCompile Include="DevLaser.cpp">
+      <Filter>Objects\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionDetector.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTestAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="TrapObject.cpp">
+      <Filter>Objects\StaticObjects\Traps</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="SwimEffect.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="TrapHandler.cpp">
+      <Filter>Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="SwitchWeapon.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="CeaseFire.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemyhandler.cpp">
+      <Filter>Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorManager.cpp">
+      <Filter>Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Crate.cpp">
+      <Filter>Objects\StaticObjects\Crates</Filter>
+    </ClCompile>
+    <ClCompile Include="KickBack.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Objects\PhysicsObjects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBubble.cpp">
+      <Filter>Objects\PhysicsObjects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="DeathManager.cpp">
+      <Filter>Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryOnScreen.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="HudDialog.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogHandler.cpp">
+      <Filter>Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>Objects\PhysicsObjects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="RangedAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AggressiveAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="RetreatingAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Chest.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="ChestDialog.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="AIHandler.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageNumber.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="EventTrigger.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="EventTriggerZone.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="EventTriggerInteract.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Campaign.cpp">
+      <Filter>Pre-Game</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Hud.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletWeapon.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleEngine.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="RocketLauncher.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Rocket.cpp">
+      <Filter>Objects\PhysicsObjects\Projectiles and explosions</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundPlayer.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ReloadCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Fluid.cpp">
+      <Filter>Objects\StaticObjects\Traps</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSaver.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeapon.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="CautiousRangedAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundObject.cpp">
+      <Filter>Objects\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="AmmoItem.cpp">
+      <Filter>Objects\PhysicsObjects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Group.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="GroupManager.cpp">
+      <Filter>Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="SlowMoveCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="SpeechManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Speech.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SDL2_framerate.h">
+      <Filter>SDL_gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2_gfxPrimitives.h">
+      <Filter>SDL_gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2_gfxPrimitives_font.h">
+      <Filter>SDL_gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2_imageFilter.h">
+      <Filter>SDL_gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2_rotozoom.h">
+      <Filter>SDL_gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandObject.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="StopCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SoftStopCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Animate.h">
+      <Filter>Objects\PhysicsObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Objects\PhysicsObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Objects\PhysicsObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsObject.h">
+      <Filter>Objects\PhysicsObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="DashCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticObject.h">
+      <Filter>Objects\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Objects\PhysicsObjects\Projectiles and explosions</Filter>
+    </ClInclude>
+    <ClInclude Include="Artist.h">
+      <Filter>Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityFactory.h">
+      <Filter>Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelReader.h">
+      <Filter>Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsHandler.h">
+      <Filter>Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Objects\PhysicsObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileHandler.h">
+      <Filter>Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="HitscanWeapon.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Grenade.h">
+      <Filter>Objects\PhysicsObjects\Projectiles and explosions</Filter>
+    </ClInclude>
+    <ClInclude Include="GrenadeLauncher.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>Objects\PhysicsObjects\Projectiles and explosions</Filter>
+    </ClInclude>
+    <ClInclude Include="DevLaser.h">
+      <Filter>Objects\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetector.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleTestAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="AIs.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="TrapObject.h">
+      <Filter>Objects\StaticObjects\Traps</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="SwimEffect.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="TrapHandler.h">
+      <Filter>Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchWeapon.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="CeaseFire.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHandler.h">
+      <Filter>Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorManager.h">
+      <Filter>Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Crate.h">
+      <Filter>Objects\StaticObjects\Crates</Filter>
+    </ClInclude>
+    <ClInclude Include="KickBack.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Objects\PhysicsObjects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBubble.h">
+      <Filter>Objects\PhysicsObjects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="DeathManager.h">
+      <Filter>Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemEnum.h">
+      <Filter>Objects\PhysicsObjects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogHandler.h">
+      <Filter>Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryOnScreen.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="HudDialog.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>Objects\PhysicsObjects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="AggressiveAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="RetreatingAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Chest.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="ChestDialog.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="AIHandler.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageNumber.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponsEnum.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="EventTrigger.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="EventEnum.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="EventTriggerZone.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="EventTriggerInteract.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Campaign.h">
+      <Filter>Pre-Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletWeapon.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketLauncher.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Rocket.h">
+      <Filter>Objects\PhysicsObjects\Projectiles and explosions</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEngine.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEnum.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundPlayer.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="ReloadCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Fluid.h">
+      <Filter>Objects\StaticObjects\Traps</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSaver.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeWeapon.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="CautiousRangedAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundObject.h">
+      <Filter>Objects\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="AmmoItem.h">
+      <Filter>Objects\PhysicsObjects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Group.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="GroupManager.h">
+      <Filter>Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="SlowMoveCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SpeechManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Speech.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Shapist.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
