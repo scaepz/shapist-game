@@ -8,7 +8,9 @@
 #include "Global.h"
 #include "VectorManager.h"
 #include "SDL.h"
-
+#include "pugixml.hpp"
+#include <string>
+using namespace pugi;
 using std::vector;
 class CAI
 {
@@ -19,6 +21,7 @@ public:
 	virtual void Retreat(CEnemy* self);
 	virtual void Attack(CEnemy* self);
 	virtual void Idle(CEnemy* self);
+	virtual std::string GetSpeechString(CEnemy * self);
 	//virtual void UpdateCurrentActivity(CEnemy* self);
 
 	int DistanceToPlayer(CEnemy* self);
@@ -39,6 +42,8 @@ protected:
 	CVectorManager *vm;
 	CPlayer * player;
 	vector<vector<CTile*>>* tileVector;
+private:
+	
 	
 
 };

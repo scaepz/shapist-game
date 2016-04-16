@@ -8,10 +8,11 @@ CAI::CAI(CVectorManager* _vm)
 	vm = _vm;
 	tileVector = vm->GetTileVector();
 	player = vm->GetPlayer();
+	GetSpeechString(nullptr);
 }
 
 void CAI::Idle(CEnemy* self)
-{
+{ 
 	switch (self->currentIdleActivity)
 	{
 	case CEnemy::CurrentIdleActivity::idle:
@@ -130,7 +131,15 @@ void CAI::Idle(CEnemy* self)
 		break;
 	}
 }
+std::string CAI::GetSpeechString(CEnemy * self)
+{
+	pugi::xml_document doc;
 
+	pugi::xml_parse_result result = doc.load_file("res/strings/speech.xml");
+	std::cout << "Load result: " << result.description() << ", mesh name: " <<
+		doc.child("speech").child("generic").child("idle").child("captain").attribute("0").value() << std::endl;
+	return "";
+}
 int CAI::DistanceToPlayer(CEnemy * self)
 {
 	return sqrt((player->GetX() - self->GetX()) * (player->GetX() - self->GetX()) + (player->GetY() - self->GetY()) * (player->GetY() - self->GetY()));

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<speech>
+	<generic>
+		<idle>
+			<anyone>
+			<0>Hello.</0>
+			</anyone>
+			<captain>
+			<0>Stay alert.</0>
+			<1>Eyes open.</1>
+			</captain>
+			<soldier>
+			<0>So bored.</1>
+			</soldier>
+		</idle>
+	</generic>
+</speech>
