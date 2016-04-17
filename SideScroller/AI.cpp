@@ -226,8 +226,9 @@ void CAI::Attack(CEnemy* self)
 		}
 		else
 		{
-			CCeaseFire * cease = new CCeaseFire(self);
-			vm->AddObject(cease);
+			CAttackCommand * attack = new CAttackCommand(self);
+			vm->DeleteObject(attack);
+			delete attack;
 		}
 	}
 }

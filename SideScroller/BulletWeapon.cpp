@@ -107,9 +107,15 @@ bool CBulletWeapon::Attack(int x, int y, float angle)
 
 		int x1 = x + correctedOffsetX;
 		int y1 = y + correctedOffsetY;
-
+	 
 		int x2 = x1 + maxLength * cos(newAngle);
 		int y2 = y1 + maxLength * sin(newAngle);
+
+		if (vm->GetTileVector()->at(y1 / vm->standardTileSize).at(x1 / vm->standardTileSize) != nullptr)
+		{
+			x2 = x1;
+			y2 = y1;
+		}
 
 		float m = (float)((float)(y2 - y1) / (float)(x2 - x1)); //riktningskoefficient / slope
 		//loopstuff
