@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "SpeechManager.h"
 #include "AI.h"
+
 class CGroup
 {
 public:
@@ -30,7 +31,7 @@ public:
 private:
 	SDL_Color captainColor;
 	SDL_Color memberColor;
-	
+
 	bool IsCaptainAlive();
 	static const int maxReactionTime = 600; //actually max + min is real max
 	static const int minReactionTime = 200;
@@ -59,6 +60,7 @@ private:
 
 	std::vector<CEnemy*> groupMembers;
 	std::vector<int> delayVector;
+
 };
 
 #endif

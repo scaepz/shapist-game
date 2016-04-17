@@ -29,7 +29,7 @@
          <j>What's that smell?</j>
        </alert>
        <deserting>
-         <amount>11</amount>
+         <amount>10</amount>
          <a>Fuck this!</a>
          <b>Nope. Nope nope nope.</b>
          <c>Guys I forgot to feed my cat!</c>
@@ -40,7 +40,6 @@
          <h>I had a dream it would end this way.</h>
          <i>I'm out of here!</i>
          <j>Oh fuck!</j>
-         <k>I've got kids!</k>
        </deserting>
        <braveryboost>
          <a>Stay and fight!</a>

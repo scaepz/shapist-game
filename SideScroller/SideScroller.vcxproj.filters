@@ -336,6 +336,9 @@
     <ClCompile Include="pugixml.cpp">
       <Filter>pugixml</Filter>
     </ClCompile>
+    <ClCompile Include="FileReader.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDL2_framerate.h">
@@ -626,10 +629,18 @@
     <ClInclude Include="pugixml.hpp">
       <Filter>pugixml</Filter>
     </ClInclude>
+    <ClInclude Include="FileReader.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Shapist.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="res\strings\speech.xml">
+      <Filter>AI</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

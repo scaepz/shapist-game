@@ -35,9 +35,7 @@ CGame::CGame(string levelDirectory, bool * nextLevel, SDL_Renderer * renderer, S
 	// BLESS THIS MESS //
 	/////////////////////
 
-
-
-
+	vm.SetSpeechPath(levelDirectory);
 	vm.standardTileSize = 64;
 	vm.SetRenderPointer(renderer);
 	CreateWeapons();
@@ -189,7 +187,7 @@ CGame::CGame(string levelDirectory, bool * nextLevel, SDL_Renderer * renderer, S
 		if (!dialogHandler.IsDialogOpen())
 		{
 			groups.HandleGroups();
-			speechManager.UpdateSpeech();
+			speechManager.Update();
 			physicsHandler.DoPhysics();
 
 			ExecuteCommands();

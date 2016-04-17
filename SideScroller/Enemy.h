@@ -1,7 +1,8 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 #include "Animate.h"
-
+#include <string>
+#include "pugixml.hpp"
 
 class CEnemy :
 	public CAnimate
@@ -13,7 +14,9 @@ public:
 		retreating,
 		deserting,
 		fighting,
-		alert
+		alert,
+		braveryboost,
+		spottedPlayer
 	};
 	enum class CurrentIdleActivity
 	{
@@ -24,6 +27,8 @@ public:
 		movingRight,
 		numberOfIdleActivites
 	};
+	pugi::char_t * speechType;
+	pugi::char_t * GetActivityString();
 	float GetXhairAngleDeg();
 	CurrentIdleActivity currentIdleActivity;
 	CurrentActivity currentActivity;
@@ -50,8 +55,14 @@ public:
 	int GetTimeUntilReaction();
 	bool IsAwareOfPlayer(); 
 	void SetAwareOfPlayer(bool);
-	float crosshairVelocity;
+	void Aim();
+	void SetOptimalXhairAngle(float angle);
+	int timeUntilAimCorrection;
 private:
+	float xhairVelocity;
+	float optimalAngle;
+	
+
 	bool awareOfPlayer;
 	int timeSincePlayerNotVisible;
 	bool playerVisible;

@@ -2,7 +2,7 @@
 #include "AI.h"
 
 class CSimpleTestAI :
-	public CAI
+	private CAI
 {
 public:
 	CSimpleTestAI(CVectorManager *vm);

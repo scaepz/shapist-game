@@ -327,7 +327,7 @@ void CArtist::DrawObjects()
 									textureMap[weapon->textureId],
 									NULL,
 									&dstrect,
-									animateVector->at(a)->GetRealRotation() + animateVector->at(a)->kickback->GetRotation()*kickBackFlipper,
+									animateVector->at(a)->GetXhairAngleDeg() + animateVector->at(a)->kickback->GetRotation()*kickBackFlipper,
 									&weapon->flipPoint,
 									flipper);
 							}

@@ -110,7 +110,6 @@ void CCautiousRangedAI::MakeDecision(CEnemy * self)
 
 		}
 	}
-	srand(SDL_GetTicks() + GetIncrementalInt());
 	if (rand() % 500 + 1 == 29)
 	{
 		CJumpCommand * jump = new CJumpCommand(self);

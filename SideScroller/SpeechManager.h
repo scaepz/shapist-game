@@ -9,7 +9,7 @@ static class CSpeechManager
 {
 public:
 	void AddSpeech(CAnimate* speaker, std::string text, SDL_Color color);
-	void UpdateSpeech();
+	void Update();
 	CSpeechManager(CVectorManager * vm);
 	virtual ~CSpeechManager();
 private:	

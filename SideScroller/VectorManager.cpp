@@ -6,10 +6,29 @@ CVectorManager::CVectorManager()
 {
 
 }
-
-
+void CVectorManager::SetSpeechPath(string path)
+{
+	speechPath = new pugi::char_t[path.length() + 8];
+	for (int i = 0; i < path.length(); i++)
+	{
+		speechPath[i] = path[i];
+	}
+	speechPath[path.length()] = '/';
+	speechPath[path.length() + 1] = 's';
+	speechPath[path.length() + 2] = '.';
+	speechPath[path.length() + 3] = 'x';
+	speechPath[path.length() + 4] = 'm';
+	speechPath[path.length() + 5] = 'l';
+	speechPath[path.length() + 6] = '\0';
+}
 CVectorManager::~CVectorManager()
 {
+	delete[] speechPath;
+}
+
+pugi::char_t * CVectorManager::GetSpeechPath()
+{
+	return speechPath;
 }
 
 CSoundPlayer * CVectorManager::GetSoundPlayer()
@@ -70,8 +89,12 @@ void CVectorManager::DeleteAllObjects() //including tiles
 	}
 	//delete particles
 	particleEngine.DeleteAllParticles();
-	
-	//that all?
+
+	while (speechVector.size() > 0)
+	{
+		delete speechVector[0];
+		speechVector.erase(speechVector.begin());
+	}
 
 }
 
@@ -384,6 +407,15 @@ void CVectorManager::DeleteObjectsConcerning(CBaseObject * obj)
 			c--;
 		}
 	}
+	for (int c = 0; c < speechVector.size(); c++)
+	{
+		if (speechVector.at(c)->speaker == obj)
+		{
+			delete speechVector.at(c);
+			speechVector.erase(speechVector.begin() + c);
+			c--;
+		}
+	}
 }
 
 void CVectorManager::AddTile(CTile* tile)
@@ -484,5 +516,5 @@ void CVectorManager::SetRenderPointer(SDL_Renderer* r)
 }
 void CVectorManager::AddObject(CSpeech*s)
 {
-		speechVector.push_back(s);
+	speechVector.push_back(s);
 }

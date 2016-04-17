@@ -163,6 +163,7 @@
     <ClCompile Include="EventTriggerInteract.cpp" />
     <ClCompile Include="EventTriggerZone.cpp" />
     <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="GameSaver.cpp" />
     <ClCompile Include="Grenade.cpp" />
     <ClCompile Include="GrenadeLauncher.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="EventTriggerInteract.h" />
     <ClInclude Include="EventTriggerZone.h" />
     <ClInclude Include="Explosion.h" />
+    <ClInclude Include="FileReader.h" />
     <ClInclude Include="GameSaver.h" />
     <ClInclude Include="Grenade.h" />
     <ClInclude Include="GrenadeLauncher.h" />
@@ -320,6 +322,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Shapist.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="res\strings\speech.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

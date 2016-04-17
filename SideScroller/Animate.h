@@ -105,10 +105,9 @@ public:
 	bool LoseStamina(int amount); //returns false if animate has too little stamina
 	void SetStaminaRegenPerMs(int staminaPerMs);
 	void StartWeaponAnimation(int animation);
-
+	int ammoInClip[numberOfWeapons];
 protected:
 	bool weaponInventory[numberOfWeapons];
-	int ammoInClip[numberOfWeapons];
 	int ammoInInventory[numberOfAmmoTypes];
 	int weaponEquipped = 0;
 private:

@@ -273,6 +273,7 @@ CEnemy* EntityFactory::CreateEnemy(const string & file, int startRow, int x, int
 	if (groupMap->count(groupNumber) == 0)
 	{
 		CGroup * group = new CGroup();
+		group->AddMember(enemy, captain);
 		group->speechManager = smgr;
 		groupMap->insert(std::pair<int, CGroup*>(groupNumber, group));
 	}

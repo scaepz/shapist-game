@@ -22,10 +22,10 @@ void CSpeechManager::AddSpeech(CAnimate* speaker, std::string text, SDL_Color co
 
 	TTF_SizeText(font, text.c_str(), &dst.w, &dst.h);
 
-	CSpeech * speech = new CSpeech(speaker, texture, 200000, dst);
+	CSpeech * speech = new CSpeech(speaker, texture, 2000, dst);
 	vm->AddObject(speech);
 }
-void CSpeechManager::UpdateSpeech()
+void CSpeechManager::Update()
 {
 	vector<CSpeech*>* sv = vm->GetSpeechVector();
 	for (int i = 0; i < sv->size(); i++)

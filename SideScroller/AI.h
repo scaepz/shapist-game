@@ -10,6 +10,8 @@
 #include "SDL.h"
 #include "pugixml.hpp"
 #include <string>
+#include <map>
+#include "SpeechManager.h"
 using namespace pugi;
 using std::vector;
 class CAI
@@ -21,14 +23,12 @@ public:
 	virtual void Retreat(CEnemy* self);
 	virtual void Attack(CEnemy* self);
 	virtual void Idle(CEnemy* self);
-	virtual std::string GetSpeechString(CEnemy * self);
+	virtual std::string GetSpeechString(CEnemy * self, bool captain);
 	//virtual void UpdateCurrentActivity(CEnemy* self);
-
+	float GetOptimalXhairAngle(CEnemy* self);
 	int DistanceToPlayer(CEnemy* self);
 
 	bool IsPlayerInLineOfSight(int maxDistance, CEnemy * self);//expensive operation, only call once in a while
-	int GetIncrementalInt();
-	
 
 	/* GetEnemyCrosshairPlacement
 	do not call every frame, call only based on time
@@ -38,14 +38,10 @@ public:
 	*/
 	void GetEnemyCrosshairPlacement(float * previousRotation, float *previousRotationVelocity, int optimalRotation);
 protected:
-	int incrementalIntForRandomizer= 0;
-	CVectorManager *vm;
 	CPlayer * player;
 	vector<vector<CTile*>>* tileVector;
-private:
-	
-	
-
+	CVectorManager *vm;
+	CSpeechManager * sm;
 };
 
 #endif

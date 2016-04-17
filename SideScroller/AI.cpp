@@ -1,6 +1,8 @@
 #include "AI.h"
 #include "SlowMoveCommand.h"
 #include <iostream>
+#include <fstream>
+#include "FileReader.h"
 using std::cout;
 using std::endl;
 CAI::CAI(CVectorManager* _vm)
@@ -8,18 +10,17 @@ CAI::CAI(CVectorManager* _vm)
 	vm = _vm;
 	tileVector = vm->GetTileVector();
 	player = vm->GetPlayer();
-	GetSpeechString(nullptr);
+	sm = new CSpeechManager(vm);
 }
 
 void CAI::Idle(CEnemy* self)
-{ 
+{
+	GetSpeechString(self, true);
 	switch (self->currentIdleActivity)
 	{
 	case CEnemy::CurrentIdleActivity::idle:
 		if (self->AITimer > 1000)
 		{
-			self->AITimer = 0;
-			cout << self;
 			if (rand() % 40 < 8)
 			{
 				int newActivity = rand() % (int)CEnemy::CurrentIdleActivity::numberOfIdleActivites;
@@ -82,7 +83,7 @@ void CAI::Idle(CEnemy* self)
 			cout << "soft stop" << endl;
 		}
 		break;
-	
+
 	case CEnemy::CurrentIdleActivity::lookingLeft:
 		if (self->AITimer > 2000)
 		{
@@ -131,14 +132,28 @@ void CAI::Idle(CEnemy* self)
 		break;
 	}
 }
-std::string CAI::GetSpeechString(CEnemy * self)
+
+std::string CAI::GetSpeechString(CEnemy * self, bool captain)
 {
 	pugi::xml_document doc;
 
-	pugi::xml_parse_result result = doc.load_file("res/strings/speech.xml");
-	std::cout << "Load result: " << result.description() << ", mesh name: " <<
-		doc.child("speech").child("generic").child("idle").child("captain").attribute("0").value() << std::endl;
-	return "";
+	doc.load_file(vm->GetSpeechPath());
+
+	char_t * activity = self->GetActivityString();
+	vector<string> possibleLines;
+
+	char_t * role;
+	if (captain) role = "captain"; else role = "soldier";
+
+	char_t * index = new char_t[2];
+	int numberOfChildren = doc.child("speech").child(self->speechType).child(role).child(activity).child("amount").text().as_int();
+	if (numberOfChildren == 0) return "";
+	index[0] = (char_t)(rand() % numberOfChildren + 'a');
+	index[1] = '\0';
+
+	string a = doc.child("speech").child(self->speechType).child(role).child(activity).child(index).text().as_string();
+	delete[] index;
+	return a;
 }
 int CAI::DistanceToPlayer(CEnemy * self)
 {
@@ -181,7 +196,6 @@ void CAI::Retreat(CEnemy* self)
 		}
 		self->UpdateTimeUntilReaction(g_time);
 	}
-	srand(SDL_GetTicks() + GetIncrementalInt());
 	if (rand() % 300 + 1 == 29)
 	{
 		CJumpCommand * jump = new CJumpCommand(self);
@@ -189,8 +203,10 @@ void CAI::Retreat(CEnemy* self)
 	}
 }
 
+
 void CAI::Attack(CEnemy* self)
 {
+	self->currentAnim = self->move;
 	if (player->GetX() + player->GetWidth() < self->GetX() - 1)
 	{
 		CMoveCommand * move = new CMoveCommand(self, 0);
@@ -201,10 +217,18 @@ void CAI::Attack(CEnemy* self)
 		CMoveCommand * move = new CMoveCommand(self, 1);
 		vm->AddObject(move);
 	}
-	if (DistanceToPlayer(self) < 50)
+	if (DistanceToPlayer(self) < 1000)
 	{
-		CAttackCommand * attack = new CAttackCommand(self);
-		vm->AddObject(attack);
+		if (self->GetPlayerVisible())
+		{
+			CAttackCommand * attack = new CAttackCommand(self);
+			vm->AddObject(attack);
+		}
+		else
+		{
+			CCeaseFire * cease = new CCeaseFire(self);
+			vm->AddObject(cease);
+		}
 	}
 }
 
@@ -277,52 +301,7 @@ bool CAI::IsPlayerInLineOfSight(int maxDistance, CEnemy * self)
 
 }
 
-int CAI::GetIncrementalInt()
+float CAI::GetOptimalXhairAngle(CEnemy* self)
 {
-	incrementalIntForRandomizer++;
-	return incrementalIntForRandomizer;
-}
-
-void CAI::GetEnemyCrosshairPlacement(float * previousRotation, float *previousRotationVelocity, int optimalRotation)
-{
-	g_time = 10;
-	if (*previousRotation >= 270) *previousRotation = 269.9f;
-	if (*previousRotation <= -90) *previousRotation = -89.9f;
-	//-90 -> 270 clockwise from 12
-	float difference = optimalRotation - *previousRotation;
-	if (previousRotationVelocity == 0)
-	{
-		if (difference > 0)
-		{
-			*previousRotationVelocity = 0.001f;
-		}
-		else if (difference < 0)
-		{
-			*previousRotationVelocity = -0.001f;
-		}
-		else return;
-	}
-	else
-	{
-		if ((*previousRotationVelocity > 0 && difference < 0) || previousRotationVelocity < 0 && difference > 0) //If xhair going wrong way
-		{
-			if (*previousRotationVelocity < 0.001f)	//if xhair is going very slow -> switch direction
-			{
-				*previousRotationVelocity *= -1;
-			}
-			else
-			{
-				for (int i = 0; i < g_time; i++)	//else slow down
-				{
-					*previousRotationVelocity *= 0.95f;
-				}
-			}
-		}
-		else //if xhair is going right way speed up proportional to difference
-		{
-			*previousRotationVelocity += g_time* (difference / 30000);
-		}
-	}
-
-	*previousRotation += *previousRotationVelocity * g_time;
+	return atan2(vm->GetPlayer()->GetY() - self->GetY(), vm->GetPlayer()->GetX() - self->GetX());
 }

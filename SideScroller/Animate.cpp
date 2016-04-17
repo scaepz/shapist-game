@@ -249,7 +249,21 @@ int CAnimate::GetWeaponEquipped()
 
 void CAnimate::SetXhairAngle(float angle)
 {
-	xhairAngle = angle;
+	if (angle > 3.1415f)
+	{
+		xhairAngle = angle - (2.0f * 3.1415f);
+	}
+	else if (angle < -3.1415f)
+	{
+		xhairAngle = angle + (2.0f * 3.1415f);
+	}
+	else
+	{
+		xhairAngle = angle;
+	}
+	if (xhairAngle < -1.57f || xhairAngle > 1.57f)
+		lookingLeft = true;
+	else lookingLeft = false;
 }
 
 float CAnimate::GetXhairAngle()

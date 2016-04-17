@@ -18,6 +18,7 @@
 #include <vector>
 #include "ParticleEngine.h"
 #include "Speech.h"
+#include "pugixml.hpp"
 class CVectorManager
 {
 public:
@@ -40,11 +41,10 @@ public:
 	void AddObject(CSpeech*);
 	void DeleteObjectsConcerning(CBaseObject * obj); //Delete commands and effects linked to object
 
-	
 	void AddTile(CTile*);
 	void NewTileRow();
 	int standardTileSize;
-	
+
 	void DeleteObject(CBackgroundObject*);
 	void DeleteObject(CDamageNumber*);
 	void DeleteObject(CEffect*); //Do not create a new dynamic object to send here. This method works by finding all identical objects and deleting them, not by deleting via address. //
@@ -79,8 +79,11 @@ public:
 	vector<CSpeech*>* GetSpeechVector();
 	SDL_Renderer * GetRenderer();
 	void SetRenderPointer(SDL_Renderer*);
+	string levelDirectory;
+	void SetSpeechPath(string path);
+	pugi::char_t * GetSpeechPath();
 private:
-
+	pugi::char_t * speechPath;
 	SDL_Renderer * renderer;
 	CParticleEngine particleEngine;
 	CSoundPlayer soundPlayer;

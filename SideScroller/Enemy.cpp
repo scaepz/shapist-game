@@ -1,16 +1,22 @@
 #include "Enemy.h"
-#include <string>
+#include "Global.h"
 
 CEnemy::CEnemy(int x, int y, int textureId, int size, vector<CWeapon*> & weaponVector) : CAnimate(x, y, textureId, size, weaponVector)
 {
 	hitbox = square;
-	
+
 	SetWeaponEquipped(_spear_mudhands);
 	timeSincePlayerVisibilityCheck = 0;
 	timeSincePlayerNotVisible = 0;
 	reactionTime = 230;
-	crosshairVelocity = 0;
+	xhairVelocity = 0;
 	SetPointingDirection(1, 1);
+	speechType = "generic";
+	AddAmmo(bulletAmmo, 200);
+	for (int i = 0; i < numberOfWeapons; i++)
+	{
+		ammoInClip[i] = weaponVector[i]->clipSize;
+	}
 }
 float CEnemy::GetXhairAngleDeg()
 {
@@ -22,6 +28,53 @@ float CEnemy::GetXhairAngleDeg()
 	else return CAnimate::GetXhairAngleDeg();
 }
 
+void CEnemy::Aim()
+{
+	float distance = GetXhairAngle() - optimalAngle;
+	if (distance == 0) return;
+	int direction = (distance / abs(distance)) * -1;
+	if (abs(distance) > 3.1415f)
+	{
+		if (direction == 1) distance += 3.1415f;
+		else 
+		{
+			distance -= 3.1415f;
+		}
+		direction *= -1;
+	}
+
+	xhairVelocity = abs(distance) * direction * 0.005f;
+
+	SetXhairAngle(GetXhairAngle() + xhairVelocity*g_time);
+}
+void CEnemy::SetOptimalXhairAngle(float angle)
+{
+	timeUntilAimCorrection = (rand() % 300) + 50;
+	optimalAngle = angle;
+}
+pugi::char_t * CEnemy::GetActivityString()
+{
+	switch (currentActivity)
+	{
+	case CurrentActivity::idling:
+		return "idling";
+	case CurrentActivity::deserting:
+		return "deserting";
+	case CurrentActivity::alert:
+		return "alert";
+	case CurrentActivity::fighting:
+		return "fighting";
+	case CurrentActivity::retreating:
+		return "retreating";
+	case CurrentActivity::braveryboost:
+		return "braveryboost";
+	case CurrentActivity::spottedPlayer:
+		return "spotted";
+	default:
+		return "";
+
+	}
+}
 void CEnemy::ResetTimeUntilReaction()
 {
 	timeUntilReaction = reactionTime;
@@ -43,16 +96,13 @@ CEnemy::~CEnemy()
 {
 }
 
-//int CEnemy::GetFrame()
-//{
-//	return 0;
-//}
+
 void CEnemy::OnCollision(bool stopHor, bool stopVer)
 {
 	if (stopHor)
 	{
-		velocity.SetX(velocity[0]*-0.5);
-		
+		velocity.SetX(velocity[0] * -0.5);
+
 	}
 	if (stopVer)
 	{
@@ -76,7 +126,7 @@ bool CEnemy::GetPlayerVisibleStale()
 }
 void CEnemy::SetPlayerVisible(bool newPlayerVisibility)
 {
-	
+
 	if (playerVisible && newPlayerVisibility == false)
 	{
 		timeSincePlayerNotVisible = 0;
