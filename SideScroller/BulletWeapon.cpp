@@ -79,7 +79,7 @@ void CBulletWeapon::Update()
 bool CBulletWeapon::Attack(int x, int y, float angle)
 {
 	totalDamage = 0;
-
+	bool playerHitEnemy = true;
 	float radius = sqrt(offsetX*offsetX + offsetY*offsetY);
 
 	float correctedOffsetX = (float)(radius * cos(angle));
@@ -107,7 +107,7 @@ bool CBulletWeapon::Attack(int x, int y, float angle)
 
 		int x1 = x + correctedOffsetX;
 		int y1 = y + correctedOffsetY;
-	 
+
 		int x2 = x1 + maxLength * cos(newAngle);
 		int y2 = y1 + maxLength * sin(newAngle);
 
@@ -181,6 +181,7 @@ bool CBulletWeapon::Attack(int x, int y, float angle)
 		int closestSolid = -1;
 		for (int p = 0; p < vm->GetSolidVector()->size(); p++)
 		{
+
 			SDL_Rect enemy;
 			enemy.x = vm->GetSolidVector()->at(p)->GetX();
 			enemy.y = vm->GetSolidVector()->at(p)->GetY();
@@ -200,10 +201,15 @@ bool CBulletWeapon::Attack(int x, int y, float angle)
 		}
 		if (closestSolid != -1)
 		{
+			if (vm->GetSolidVector()->at(closestSolid) != vm->GetPlayer())
+			{
+				totalDamage += damage;
+				CDamageNumber * dmgn = new CDamageNumber(damage, x2, y2);
+				playerHitEnemy = true;
+				vm->AddObject(dmgn);
+				vm->GetSolidVector()->at(closestSolid)->TakeDamage(damage);
+			}
 			vm->GetSolidVector()->at(closestSolid)->TakeDamage(damage);
-			totalDamage += damage;
-			CDamageNumber * dmgn = new CDamageNumber(damage, x2, y2);
-			vm->AddObject(dmgn);
 		}
 		vm->GetParticleEngine()->NewBulletTracer(x1, y1, x2, y2, tracerIntensity);
 		currentExtraRecoil += recoilIncreasePerBullet;
@@ -211,7 +217,8 @@ bool CBulletWeapon::Attack(int x, int y, float angle)
 	}
 	if (totalDamage != 0)
 	{
-		vm->GetSoundPlayer()->PlayDamageSound(totalDamage);
+		if (playerHitEnemy)
+			vm->GetSoundPlayer()->PlayDamageSound(totalDamage);
 	}
 	if (fireSound != -1)
 	{

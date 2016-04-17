@@ -209,11 +209,15 @@ void CAI::Attack(CEnemy* self)
 	self->currentAnim = self->move;
 	if (player->GetX() + player->GetWidth() < self->GetX() - 1)
 	{
+		CMoveCommand * m = new CMoveCommand(self, 1);
+		vm->DeleteObject(m);
 		CMoveCommand * move = new CMoveCommand(self, 0);
 		vm->AddObject(move);
 	}
 	else if (player->GetX() > self->GetX() + self->GetWidth() + 1)
 	{
+		CMoveCommand * m = new CMoveCommand(self, 0);
+		vm->DeleteObject(m);
 		CMoveCommand * move = new CMoveCommand(self, 1);
 		vm->AddObject(move);
 	}
