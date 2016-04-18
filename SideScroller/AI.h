@@ -19,16 +19,42 @@ class CAI
 public:
 	CAI(CVectorManager * _vm);
 	virtual ~CAI();
-	virtual void MakeDecision(CEnemy* self) = 0;
+	enum class PlayerDirection
+	{
+		above,
+		below,
+		left,
+		right,
+		center
+	};
 	virtual void Retreat(CEnemy* self);
 	virtual void Attack(CEnemy* self);
 	virtual void Idle(CEnemy* self);
+	virtual void Desert(CEnemy* self);
+	virtual void Search(CEnemy* self, PlayerDirection lastKnownDirection);
+	void MoveRight(CEnemy* self);
+	void MoveLeft(CEnemy* self);
+	void Jump(CEnemy* self); 
+	bool React(CEnemy* self);
+	void Fire(CEnemy* self);
+	void CeaseFire(CEnemy* self);
+	void Stop(CEnemy* self);
+	void SoftStop(CEnemy* self);
+	void SoftMoveRight(CEnemy* self);
+	void SoftMoveLeft(CEnemy* self);
 	virtual std::string GetSpeechString(CEnemy * self, bool captain);
 	//virtual void UpdateCurrentActivity(CEnemy* self);
 	float GetOptimalXhairAngle(CEnemy* self);
 	int DistanceToPlayer(CEnemy* self);
+	int QuickDistanceToPlayer(CEnemy * self);
+	bool GetRandomBool(int averageMsBetweenOccurence);
 
+	CEnemy * GetEnemyClosestToPlayerFromVector(vector<CEnemy*> group);
+
+	PlayerDirection GetPlayerHorizontalDirection(CAnimate* self);
+	PlayerDirection GetPlayerVerticalDirection(CAnimate* self);
 	bool IsPlayerInLineOfSight(int maxDistance, CEnemy * self);//expensive operation, only call once in a while
+
 
 	/* GetEnemyCrosshairPlacement
 	do not call every frame, call only based on time
@@ -41,7 +67,7 @@ protected:
 	CPlayer * player;
 	vector<vector<CTile*>>* tileVector;
 	CVectorManager *vm;
-	CSpeechManager * sm;
+
 };
 
 #endif

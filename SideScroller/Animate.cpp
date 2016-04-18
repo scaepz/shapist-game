@@ -134,7 +134,7 @@ bool CAnimate::Move(bool dir, int ms)
 			return false;
 
 		}
-		else return true;
+		else return false;
 	}
 	else //right
 	{
@@ -154,7 +154,7 @@ bool CAnimate::Move(bool dir, int ms)
 			return false;
 
 		}
-		else return true;
+		else return false;
 	}
 }
 
@@ -423,7 +423,7 @@ bool CAnimate::Attack()
 					SetFireDelay(weaponVector->at(GetWeaponEquipped())->fireDelay);
 					ammoInClip[GetWeaponEquipped()] -= weaponVector->at(GetWeaponEquipped())->ammoCost;
 					kickback->NewKickback();
-					return (weaponVector->at(weaponEquipped)->Attack(pos[0] + (GetWidth() / 2), pos[1] + (GetHeight() / 2), GetXhairAngle()));
+					return (weaponVector->at(weaponEquipped)->Attack(pos[0] + (GetWidth() / 2), pos[1] + (GetHeight() / 2), GetXhairAngle(), this));
 				}
 			}
 			else return false;

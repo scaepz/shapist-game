@@ -65,7 +65,7 @@ public:
 	void SetFireDelay(int ms);
 	void SetReloadDelay(int ms);
 
-	bool Attack();
+	virtual bool Attack();
 
 	int GetWeaponEquipped();
 	bool SetWeaponEquipped(int weapon);

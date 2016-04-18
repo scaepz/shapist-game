@@ -8,7 +8,7 @@ class CBulletWeapon :
 {
 public:
 	CBulletWeapon(CVectorManager * vm);
-	bool Attack(int x, int y, float angle);
+	bool Attack(int x, int y, float angle, CBaseObject* attacker);
 	virtual ~CBulletWeapon();
 	CVectorManager * vm;
 	int maxLength;

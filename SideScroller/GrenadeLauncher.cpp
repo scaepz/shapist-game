@@ -33,7 +33,7 @@ CGrenadeLauncher::~CGrenadeLauncher()
 {
 }
 
-bool CGrenadeLauncher::Attack(int x, int y, float angle)
+bool CGrenadeLauncher::Attack(int x, int y, float angle, CBaseObject* attacker)
 {
 	float speedX = projectileSpeed * cos(angle);
 	float speedY = projectileSpeed * sin(angle);

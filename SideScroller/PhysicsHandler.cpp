@@ -92,7 +92,7 @@ void CPhysicsHandler::FixCollision(int index)
 							int counter = 0;
 							while (collision)
 							{
-								if (counter > g_time + 1)
+								if (counter > g_time + 2)
 								{
 									throw - 1;
 								}
@@ -253,9 +253,9 @@ void CPhysicsHandler::FixCollision(int index)
 								int counter = 0;
 								while (collision)
 								{
-									if (counter > g_time + 1)
+									if (counter > g_time + 2)
 									{
-										throw - 1;
+										throw 1;
 									}
 									counter += 1;
 									obj->pos[0] -= obj->velocity[0];
@@ -362,14 +362,14 @@ void CPhysicsHandler::FixCollision(int index)
 		//	std::cout << "throw" << index << std::endl;
 		objectVector->at(index)->pos[0] = objectVector->at(index)->previousFramePos[0];
 		objectVector->at(index)->pos[1] = objectVector->at(index)->previousFramePos[1];
-		objectVector->at(index)->velocity[0] = 0;
-		objectVector->at(index)->velocity[1] = 0;
+		//objectVector->at(index)->velocity[0] = 0;
+		//objectVector->at(index)->velocity[1] = 0;
 		if (e > -1)
 		{
 			objectVector->at(e)->pos[0] = objectVector->at(e)->previousFramePos[0];
 			objectVector->at(e)->pos[1] = objectVector->at(e)->previousFramePos[1];
-			objectVector->at(e)->velocity[0] = 0;
-			objectVector->at(e)->velocity[1] = 0;
+			//objectVector->at(e)->velocity[0] = 0;
+			//objectVector->at(e)->velocity[1] = 0;
 		}
 	}
 }

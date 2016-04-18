@@ -9,7 +9,7 @@ public:
 
 	CMeleeWeapon(CVectorManager * vm);
 	virtual ~CMeleeWeapon();
-	bool Attack(int x, int y, float angle);
+	bool Attack(int x, int y, float angle, CBaseObject* attacker);
 	int GetFrame(int ms, int animation);
 	int maxLength;
 	int staminaCost;

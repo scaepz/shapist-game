@@ -11,7 +11,7 @@ class CGrenadeLauncher :
 	public CWeapon
 {
 public:
-	bool Attack(int x, int y, float angle);
+	bool Attack(int x, int y, float angle, CBaseObject* attacker);
 	CGrenadeLauncher(CVectorManager * vm);
 	virtual ~CGrenadeLauncher();
 	CVectorManager* vm;

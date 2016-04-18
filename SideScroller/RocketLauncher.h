@@ -7,7 +7,7 @@ class CRocketLauncher :
 	public CWeapon
 {
 public:
-	bool Attack(int x, int y, float angle);
+	bool Attack(int x, int y, float angle, CBaseObject* attacker);
 	CRocketLauncher(CVectorManager * vm);
 	virtual ~CRocketLauncher();
 private:

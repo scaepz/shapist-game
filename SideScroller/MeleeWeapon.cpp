@@ -36,7 +36,7 @@ CMeleeWeapon::CMeleeWeapon(CVectorManager * _vm)
 
 }
 
-bool CMeleeWeapon::Attack(int x, int y, float angle)
+bool CMeleeWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 {
 	//float angle = atan2(dirY, dirX);
 

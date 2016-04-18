@@ -32,7 +32,7 @@ CRocketLauncher::~CRocketLauncher()
 }
 
 
-bool CRocketLauncher::Attack(int x, int y, float angle)
+bool CRocketLauncher::Attack(int x, int y, float angle, CBaseObject* attacker)
 {
 
 	//calculate starting x and y speed

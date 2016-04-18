@@ -16,7 +16,7 @@ void CEnemyHandler::HandleEnemies()
 {
 	for (int i = 0; i < enemyVector->size(); i++)
 	{
-		AIVector[enemyVector->at(i)->AI]->MakeDecision(enemyVector->at(i));
+		
 	}
 
 	int size = enemyVector->size();

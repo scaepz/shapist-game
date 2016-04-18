@@ -4,13 +4,14 @@
 #include "WeaponsEnum.h"
 #include <vector>
 #include <string>
+#include "BaseObject.h"
 
 class CWeapon
 {
 public:
 	CWeapon();
 	virtual ~CWeapon();
-	virtual bool Attack(int x, int y, float angle) = 0;
+	virtual bool Attack(int x, int y, float angle, CBaseObject* attacker) = 0;
 	virtual void CeaseFire();
 	virtual void Update();
 

@@ -25,29 +25,29 @@ public:
 		lostMorals,
 		retreating,
 		fighting,
+		searching,
+		alert,
 		numberOfActivites
 	};
 	CSpeechManager * speechManager;
 private:
 	SDL_Color captainColor;
 	SDL_Color memberColor;
-
+	SDL_Color GetColor(int index);
+	SDL_Color GetColor(CEnemy * member);
 	bool IsCaptainAlive();
 	static const int maxReactionTime = 600; //actually max + min is real max
 	static const int minReactionTime = 200;
 	static const int playerScanDelayMax = 155;
-	static const int retreatRarity = 200;
-	static const int returnRarity = 50;
-	static const int timeToForget = 10000;
-	int timeSincePlayerSpotted = 0;
 
+	int timeSincePlayerSpotted = 0;
+	CAI * Ai(int memberIndex);
+	CAI * Ai(CEnemy * member);
 	int playerScanDelay;
-	int activityDelay;
-	bool IsActivityTimerZero();
-	void ResetActivityTimer();
 	int originalGroupSize;
 	bool groupIsAwareOfPlayer = false;
 	void DecreaseDelays();
+	bool HasSufferedCasualties();
 	bool IsDelayZero(int index);
 	CGroup::GroupActivity activity;
 	bool IsCaptain(CAnimate*);
@@ -55,9 +55,8 @@ private:
 	int lowerBraveryLimit;
 	const int randomTalkDelay = 1500; //maybe not here
 	void InitDelays();
-
+	CAI::PlayerDirection lastKnownDirection;
 	CEnemy * captain;
-
 	std::vector<CEnemy*> groupMembers;
 	std::vector<int> delayVector;
 

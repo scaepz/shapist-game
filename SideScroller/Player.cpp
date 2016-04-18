@@ -20,6 +20,8 @@ CPlayer::CPlayer(int x, int y, int _textureId, int _size, vector<CWeapon*> & wea
 	currentAnim = idle;
 
 }
+
+
 bool CPlayer::Die()
 {
 

@@ -12,7 +12,6 @@ public:
 	void OnCollision(bool stopHor, bool stopVer);
 	
 	void SetRotation(float _rotation);
-
 	
 	
 	void SwitchWeapon(int weapon);

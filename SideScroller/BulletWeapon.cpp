@@ -2,6 +2,7 @@
 #include "Global.h"
 #include "SDL.h"
 #include <iostream>
+
 CBulletWeapon::CBulletWeapon(CVectorManager * _vm)
 {
 	vm = _vm;
@@ -76,7 +77,7 @@ void CBulletWeapon::Update()
 
 
 }
-bool CBulletWeapon::Attack(int x, int y, float angle)
+bool CBulletWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 {
 	totalDamage = 0;
 	bool playerHitEnemy = true;
@@ -181,7 +182,6 @@ bool CBulletWeapon::Attack(int x, int y, float angle)
 		int closestSolid = -1;
 		for (int p = 0; p < vm->GetSolidVector()->size(); p++)
 		{
-
 			SDL_Rect enemy;
 			enemy.x = vm->GetSolidVector()->at(p)->GetX();
 			enemy.y = vm->GetSolidVector()->at(p)->GetY();
@@ -191,17 +191,21 @@ bool CBulletWeapon::Attack(int x, int y, float angle)
 			int tempx2 = x2;
 			int tempy1 = y1;
 			int tempy2 = y2;
-
 			if (SDL_IntersectRectAndLine(&enemy, &tempx1, &tempy1, &tempx2, &tempy2))
 			{
 				x2 = tempx1;
 				y2 = tempy1;
 				closestSolid = p;
 			}
+
 		}
 		if (closestSolid != -1)
 		{
-			if (vm->GetSolidVector()->at(closestSolid) != vm->GetPlayer())
+			if (attacker != vm->GetPlayer() && vm->GetSolidVector()->at(closestSolid) == vm->GetPlayer())
+			{
+				vm->GetSolidVector()->at(closestSolid)->TakeDamage(damage);
+			}
+			else if (attacker == vm->GetPlayer() && vm->GetSolidVector()->at(closestSolid) != vm->GetPlayer())
 			{
 				totalDamage += damage;
 				CDamageNumber * dmgn = new CDamageNumber(damage, x2, y2);
@@ -209,7 +213,7 @@ bool CBulletWeapon::Attack(int x, int y, float angle)
 				vm->AddObject(dmgn);
 				vm->GetSolidVector()->at(closestSolid)->TakeDamage(damage);
 			}
-			vm->GetSolidVector()->at(closestSolid)->TakeDamage(damage);
+			
 		}
 		vm->GetParticleEngine()->NewBulletTracer(x1, y1, x2, y2, tracerIntensity);
 		currentExtraRecoil += recoilIncreasePerBullet;

@@ -39,6 +39,6 @@ void CAIHandler::HandleAI()
 	std::vector<CEnemy*> * enemyVector = vm->GetEnemyVector();
 	for (int i = 0; i < enemyVector->size(); i++)
 	{
-			AIVector[enemyVector->at(i)->AI]->MakeDecision(enemyVector->at(i));
+
 	}
 }

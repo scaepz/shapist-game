@@ -8,7 +8,6 @@ CEnemy::CEnemy(int x, int y, int textureId, int size, vector<CWeapon*> & weaponV
 	SetWeaponEquipped(_spear_mudhands);
 	timeSincePlayerVisibilityCheck = 0;
 	timeSincePlayerNotVisible = 0;
-	reactionTime = 230;
 	xhairVelocity = 0;
 	SetPointingDirection(1, 1);
 	speechType = "generic";
@@ -17,6 +16,7 @@ CEnemy::CEnemy(int x, int y, int textureId, int size, vector<CWeapon*> & weaponV
 	{
 		ammoInClip[i] = weaponVector[i]->clipSize;
 	}
+	currentActivity = CurrentActivity::searching;
 }
 float CEnemy::GetXhairAngleDeg()
 {
@@ -30,13 +30,13 @@ float CEnemy::GetXhairAngleDeg()
 
 void CEnemy::Aim()
 {
-	float distance = GetXhairAngle() - optimalAngle;
+	float distance = GetXhairAngle() - optimalAngle + xhairAngleRandomAddition;
 	if (distance == 0) return;
 	int direction = (distance / abs(distance)) * -1;
 	if (abs(distance) > 3.1415f)
 	{
 		if (direction == 1) distance += 3.1415f;
-		else 
+		else
 		{
 			distance -= 3.1415f;
 		}
@@ -75,19 +75,26 @@ pugi::char_t * CEnemy::GetActivityString()
 
 	}
 }
-void CEnemy::ResetTimeUntilReaction()
+
+void CEnemy::React()
 {
-	timeUntilReaction = reactionTime;
+	timeUntilReaction = REACTION_TIME;
+	isReacting = true;
 }
-int CEnemy::GetTimeUntilReaction()
+bool CEnemy::IsReacting()
 {
-	return timeUntilReaction;
+	return isReacting;
+}
+bool CEnemy::HasReacted()
+{
+	if (timeUntilReaction <= 0)
+	{
+		isReacting = false;
+		return true;
+	}
+	else return false;
 }
 
-void CEnemy::UpdateTimeUntilReaction(int time)
-{
-	timeUntilReaction -= time;
-}
 void CEnemy::SetAwareOfPlayer(bool a)
 {
 	awareOfPlayer = a;
@@ -131,17 +138,24 @@ void CEnemy::SetPlayerVisible(bool newPlayerVisibility)
 	{
 		timeSincePlayerNotVisible = 0;
 	}
-
+	awareOfPlayer = newPlayerVisibility;
 	playerVisible = newPlayerVisibility;
 	timeSincePlayerVisibilityCheck = 0;
 }
 
 void CEnemy::UpdateTime(int time)
 {
-
+	for (int i = 0; i < time; i++)
+	{
+		if (rand() % 2000 == 0)
+		{
+			xhairAngleRandomAddition = ((float)(rand() % 100 - 50) / 250.0f);
+		}
+	}
+	if (isReacting)
+		timeUntilReaction -= time;
 	CAnimate::UpdateTime(time);
 	timeSincePlayerVisibilityCheck += time;
-	AITimer += time;
 	if (!GetPlayerVisible())
 	{
 		timeSincePlayerNotVisible += time;

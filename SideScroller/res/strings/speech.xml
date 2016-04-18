@@ -1,55 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <speech>
   <generic>
-     <captain>
-        <idling>
-          <amount>2</amount>
-          <a>Stay alert.</a>
-          <b>Eyes open.</b>
-        </idling>
-       <spotted>
-         <amount>5</amount>
-         <a>Let's get him boys.</a>
-         <b>All on me!</b>
-         <c>Don't let him get away!</c>
-         <d>He's mine!</d>
-         <e>Wake up!</e>
-       </spotted>
-       <alert>
-         <amount>10</amount>
-         <a>He can't have gotten far.</a>
-         <b>Stay alert.</b>
-         <c>He's around here.</c>
-         <d>Show yourself, coward!</d>
-         <e>Show yourself!</e>
-         <f>Where are you hiding?</f>
-         <g>You've got nowhere to go!</g>
-         <h>You can't hide forever!</h>
-         <i>Did you hear something?</i>
-         <j>What's that smell?</j>
-       </alert>
-       <deserting>
-         <amount>11</amount>
-         <a>Fuck this!</a>
-         <b>Nope. Nope nope nope.</b>
-         <c>Guys I forgot to feed my cat!</c>
-         <d>Hell no.</d>
-         <e>We've no chance!</e>
-         <f>I don't want to die!</f>
-         <g>Mercy!</g>
-         <h>I had a dream it would end this way.</h>
-         <i>I'm out of here!</i>
-         <j>Oh fuck!</j>
-         <k>I've got kids!</k>
-       </deserting>
-       <braveryboost>
-         <a>Stay and fight!</a>
-         <b>You flee you die.</b>
-         <c>Deserters will be hung!</c>
-         <d>To death!</d>
-       </braveryboost>
-    </captain>
-    <soldier>
+    <enemy role="common">
+      <idling>
+        <amount>3</amount>
+        <a>So bored.</a>
+        <b>I should quit.</b>
+        <c>Where is that roundie?</c>
+      </idling>
       <spotted>
         <amount>6</amount>
         <a>I see him!</a>
@@ -59,12 +17,7 @@
         <e>HELP!</e>
         <f>Guys?</f>
       </spotted>
-      <idling>
-        <a>So bored.</a>
-        <b>I should quit.</b>
-        <c>Where is that roundie?</c>
-      </idling>
-      <alert>
+      <searching>
         <amount>10</amount>
         <a>He can't have gotten far.</a>
         <b>Stay alert.</b>
@@ -76,7 +29,7 @@
         <h>You can't hide forever!</h>
         <i>Did you hear something?</i>
         <j>What's that smell?</j>
-      </alert>
+      </searching>
       <deserting>
         <amount>10</amount>
         <a>Fuck this!</a>
@@ -90,6 +43,74 @@
         <i>I'm out of here!</i>
         <j>Oh fuck!</j>
       </deserting>
-    </soldier>
+      <fighting>
+        <amount>4</amount>
+        <a>That all you've got?</a>
+        <b>Is that the best you can do?</b>
+        <c>Die!</c>
+        <d>You fight like a rhomb.</d>
+      </fighting>
+    </enemy>
+    <enemy role="captain">
+      <idling>
+        <amount>2</amount>
+        <a>Stay alert.</a>
+        <b>Eyes open.</b>
+      </idling>
+      <spotted>
+        <amount>5</amount>
+        <a>Let's get him boys.</a>
+        <b>All on me!</b>
+        <c>Don't let him get away!</c>
+        <d>He's mine!</d>
+        <e>Wake up!</e>
+      </spotted>
+      <searching>
+        <amount>10</amount>
+        <a>He can't have gotten far.</a>
+        <b>Stay alert.</b>
+        <c>He's around here.</c>
+        <d>Show yourself, coward!</d>
+        <e>Show yourself!</e>
+        <f>Where are you hiding?</f>
+        <g>You've got nowhere to go!</g>
+        <h>You can't hide forever!</h>
+        <i>Did you hear something?</i>
+        <j>What's that smell?</j>
+      </searching>
+      <deserting>
+        <amount>11</amount>
+        <a>Fuck this!</a>
+        <b>Nope. Nope nope nope.</b>
+        <c>Guys I forgot to feed my cat!</c>
+        <d>Hell no.</d>
+        <e>We've no chance!</e>
+        <f>I don't want to die!</f>
+        <g>Mercy!</g>
+        <h>I had a dream it would end this way.</h>
+        <i>I'm out of here!</i>
+        <j>Oh fuck!</j>
+        <k>I've got kids!</k>
+      </deserting>
+      <braveryboost>
+        <a>Stay and fight!</a>
+        <b>You flee you die.</b>
+        <c>Deserters will be hung.</c>
+        <d>To death!</d>
+      </braveryboost>
+      <fighting>
+        <amount>3</amount>
+        <a>That all you've got?</a>
+        <b>Is that the best you can do?</b>
+        <c>Die!</c>
+      </fighting>
+      <retreating>
+        <amount>4</amount>
+        <a>Fall back!</a>
+        <b>Retreat!</b>
+        <c>Take cover!</c>
+        <d>Find some cover!</d>
+      </retreating>
+    </enemy>
   </generic>
 </speech>

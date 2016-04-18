@@ -551,10 +551,10 @@ void CArtist::DrawBackground(background bg)
 	dest.w = bg.width;
 	dest.h = bg.height;
 	//for x = blabla - 2*bgwidth  <--- the 2 is a bandaid fix and might limit distancemultiplier range
-	for (float x = (screenPos[0] % bg.width) - 2 * bg.width; x <= resolution[0] / bg.distanceMultiplier; x += bg.width)
+	for (float x = (screenPos[0] % bg.width) - 3 * bg.width; x <= resolution[0] / bg.distanceMultiplier; x += bg.width)
 	{
 		dest.x = (resolution[0] - x) * bg.distanceMultiplier;
-		for (float y = (screenPos[1] % bg.height) - 2 * bg.height; y <= resolution[0] / bg.distanceMultiplier; y += bg.height)
+		for (float y = (screenPos[1] % bg.height) - 3 * bg.height; y <= resolution[0] / bg.distanceMultiplier; y += bg.height)
 		{
 			dest.y = (resolution[1] - y) * bg.distanceMultiplier;
 			if (dest.x <= resolution[0] && dest.y <= resolution[1])

@@ -391,7 +391,7 @@ void CGame::CreateWeapons()
 	vm.AddObject(ak);
 	CBulletWeapon* m4a4 = new CBulletWeapon(&vm);
 	m4a4->clipSize = 30;
-	m4a4->damage = 7;
+	m4a4->damage = 0;
 	m4a4->numberOfPellets = 1;
 	m4a4->fireConeTightness = 110000.0f;
 	m4a4->maxLength = 1300;

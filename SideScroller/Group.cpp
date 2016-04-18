@@ -29,17 +29,22 @@ void CGroup::ScanForPlayer()
 		playerScanDelay = playerScanDelayMax;
 		for (int i = 0; i < groupMembers.size(); i++)
 		{
-			if (AIVector->at(0)->IsPlayerInLineOfSight(1000, groupMembers[i]))
+			if (AIVector->at(groupMembers[i]->AI)->IsPlayerInLineOfSight(1000, groupMembers[i]))
 			{
 				groupMembers[i]->SetPlayerVisible(true);
 				if (activity == GroupActivity::idle)
-					groupMembers[i]->currentActivity = CEnemy::CurrentActivity::spottedPlayer;
-				//text line here in the style of "there he is!"/"stop right there!"/"got him!" on enemy that made discovery
-				if (!groupIsAwareOfPlayer)
+				{
+					CEnemy * closest = Ai(0)->GetEnemyClosestToPlayerFromVector(groupMembers);
+					closest->currentActivity = CEnemy::CurrentActivity::spottedPlayer;
+					if (rand() % 3 < 2)
+					{
+						speechManager->AddSpeech(closest, AIVector->at(groupMembers[i]->AI)->GetSpeechString(closest, (IsCaptain(closest))), GetColor(closest));
+					}
+				}
+				if (!groupIsAwareOfPlayer || activity == GroupActivity::searching)
 				{
 					GroupGainAwarenessOfPlayer();
 				}
-				std::cout << "Player spotted!" << std::endl;
 				timeSincePlayerSpotted = 0;
 			}
 			else
@@ -58,6 +63,11 @@ bool CGroup::IsGroupBrave()
 	}
 	return (braveryPool > lowerBraveryLimit);
 }
+bool CGroup::HasSufferedCasualties()
+{
+	return (groupMembers.size() < originalGroupSize);
+}
+
 bool CGroup::IsCaptainAlive()
 {
 	return (captain != nullptr);
@@ -74,8 +84,6 @@ void CGroup::DecreaseDelays()
 		if (delayVector[i] > 0)
 			delayVector[i] -= g_time;
 	}
-	if (activityDelay > 0)
-		activityDelay -= g_time;
 	if (playerScanDelay > 0)
 		playerScanDelay -= g_time;
 	timeSincePlayerSpotted += g_time;
@@ -84,23 +92,17 @@ bool CGroup::IsDelayZero(int index)
 {
 	return (delayVector[index] <= 0);
 }
-bool CGroup::IsActivityTimerZero()
-{
-	return (activityDelay <= 0);
-}
-void CGroup::ResetActivityTimer()
-{
-	activityDelay = 100;
-}
 bool CGroup::Update()
 {
-
+	if (groupMembers.size() == 0) return false;
 	DecreaseDelays();
 	ScanForPlayer();
 
 	for (int i = 0; i < groupMembers.size(); i++)
 	{
-		if (groupMembers[i]->currentActivity == CEnemy::CurrentActivity::fighting || groupMembers[i]->currentActivity == CEnemy::CurrentActivity::braveryboost || groupMembers[i]->currentActivity == CEnemy::CurrentActivity::spottedPlayer)
+		if (groupMembers[i]->currentActivity == CEnemy::CurrentActivity::fighting
+			|| groupMembers[i]->currentActivity == CEnemy::CurrentActivity::braveryboost
+			|| groupMembers[i]->currentActivity == CEnemy::CurrentActivity::spottedPlayer)
 		{
 			if (groupMembers[i]->timeUntilAimCorrection >= 0)
 			{
@@ -116,30 +118,57 @@ bool CGroup::Update()
 		}
 	}
 
-	if (timeSincePlayerSpotted > 10000)
+	if (groupIsAwareOfPlayer && timeSincePlayerSpotted > 7000)
 	{
 		groupIsAwareOfPlayer = false;
 		for (int i = 0; i < groupMembers.size(); i++)
 		{
 			groupMembers[i]->SetAwareOfPlayer(false);
+			groupMembers[i]->currentActivity = CEnemy::CurrentActivity::alert;
+			groupMembers[i]->SetXhairAngle(0);
 		}
-		activity = GroupActivity::idle;
+		activity = GroupActivity::alert;
 	}
+	else if (groupIsAwareOfPlayer && timeSincePlayerSpotted > 2000)
+	{
+		activity = GroupActivity::searching;
+		for (int i = 0; i < groupMembers.size(); i++)
+		{
+			groupMembers[i]->SetXhairAngle(0);
+			if (groupMembers[i]->currentActivity != CEnemy::CurrentActivity::deserting)
+				groupMembers[i]->currentActivity = CEnemy::CurrentActivity::searching;
+		}
+	}
+
 	if (activity != GroupActivity::lostMorals)
 	{
-		if (!IsGroupBrave() && IsActivityTimerZero())
+		if (!IsGroupBrave() && AIVector->at(0)->GetRandomBool(2000))
 		{
-			ResetActivityTimer();
-			std::cout << "Group lost morals" << std::endl;
 			LoseMorals();
 		}
 	}
+
+
 	switch (activity)
 	{
+	case GroupActivity::alert:
+		for (int i = 0; i < groupMembers.size(); i++)
+		{
+			Ai(i)->Idle(groupMembers[i]);
+			if (Ai(i)->GetRandomBool(10000))
+			{
+				speechManager->AddSpeech(groupMembers[i], Ai(i)->GetSpeechString(groupMembers[i], IsCaptain(groupMembers[i])), GetColor(i));
+			}
+		}
+		break;
 	case GroupActivity::idle:
 		for (int i = 0; i < groupMembers.size(); i++)
 		{
-			AIVector->at(groupMembers[i]->AI)->Idle(groupMembers[i]);
+			Ai(i)->Idle(groupMembers[i]);
+			if (Ai(i)->GetRandomBool(10000))
+			{
+				speechManager->AddSpeech(groupMembers[i], Ai(i)->GetSpeechString(groupMembers[i], IsCaptain(groupMembers[i])), GetColor(i));
+			}
 		}
 		break;
 	case GroupActivity::gainingAwareness:
@@ -163,8 +192,9 @@ bool CGroup::Update()
 			else
 			{
 				groupMembers[i]->currentActivity = CEnemy::CurrentActivity::fighting;
-				AIVector->at(groupMembers[i]->AI)->Attack(groupMembers[i]);
-				groupMembers[i]->Aim();
+				Ai(i)->Attack(groupMembers[i]);
+				if (groupMembers[i]->GetPlayerVisible())
+					groupMembers[i]->Aim();
 			}
 		}
 		if (allAware)
@@ -179,18 +209,33 @@ bool CGroup::Update()
 		{
 			if (IsDelayZero(i))
 			{
-				AIVector->at(groupMembers[i]->AI)->Retreat(groupMembers[i]);
-				std::cout << "Group member retreated" << std::endl;
+				Ai(i)->Retreat(groupMembers[i]);
 			}
 		}
 		break;
 	case GroupActivity::lostMorals:
-		if (IsActivityTimerZero() && IsCaptainAlive())
-
+		for (int i = 0; i < groupMembers.size(); i++)
+		{
+			if (groupMembers[i]->currentActivity == CEnemy::CurrentActivity::aboutToDesert)
+			{
+				if (Ai(i)->GetRandomBool(1200))
+				{
+					groupMembers[i]->currentActivity = CEnemy::CurrentActivity::deserting;
+					if (rand() % 3 > 0)
+					{
+						speechManager->AddSpeech(groupMembers[i], Ai(i)->GetSpeechString(groupMembers[i], false), memberColor);
+					}
+				}
+			}
+			if (groupMembers[i]->currentActivity == CEnemy::CurrentActivity::deserting)
+			{
+				Ai(i)->Desert(groupMembers[i]);
+			}
+		}
+		if (AIVector->at(0)->GetRandomBool(20000) && IsCaptainAlive())
 		{	//if rand true
 			//Captain orders braveryboost, deserters might return
 			std::cout << "Braveryboost" << std::endl;
-			ResetActivityTimer();
 		}
 		break;
 	case GroupActivity::fighting:
@@ -198,17 +243,33 @@ bool CGroup::Update()
 		{
 			AIVector->at(groupMembers[i]->AI)->Attack(groupMembers[i]);
 		}
-		if (IsActivityTimerZero() && IsCaptainAlive())
+		if (AIVector->at(0)->GetRandomBool(40000) && IsCaptainAlive() && HasSufferedCasualties())
 		{
-			if (rand() % retreatRarity == 1)
-				//		std::cout << "Retreat" << std::endl;
-				ResetActivityTimer();
-			//appropriate text here
-			//activity = GroupActivity::retreating;
+			captain->currentActivity = CEnemy::CurrentActivity::retreating;
+			speechManager->AddSpeech(captain, Ai(0)->GetSpeechString(captain, true), captainColor);
+			activity = GroupActivity::retreating;
+		}
+		lastKnownDirection = Ai(0)->GetPlayerHorizontalDirection(groupMembers[0]);
+	case GroupActivity::searching:
+		for (int i = 0; i < groupMembers.size(); i++)
+		{
+			if (groupMembers[i]->currentActivity == CEnemy::CurrentActivity::searching)
+			{
+				Ai(i)->Search(groupMembers[i], lastKnownDirection);
+				if (Ai(i)->GetRandomBool(25000))
+					speechManager->AddSpeech(groupMembers[i], Ai(i)->GetSpeechString(groupMembers[i], IsCaptain(groupMembers[i])), GetColor(i));
+			}
 		}
 	}
-	return (groupMembers.size() < 0);
+	return false;
 }
+
+SDL_Color CGroup::GetColor(int index)
+{
+	if (IsCaptain(groupMembers[index])) return captainColor;
+	else return memberColor;
+}
+
 void CGroup::GroupGainAwarenessOfPlayer()
 {
 	activity = GroupActivity::gainingAwareness;
@@ -221,7 +282,7 @@ void CGroup::LoseMorals()//if bravery is low (captain may be alive) units might 
 	{
 		if (groupMembers[i]->bravery < 10)
 		{
-			AIVector->at(groupMembers[i]->AI)->Retreat(groupMembers[i]);
+			groupMembers[i]->currentActivity = CEnemy::CurrentActivity::aboutToDesert;
 		}
 		else
 		{
@@ -229,16 +290,24 @@ void CGroup::LoseMorals()//if bravery is low (captain may be alive) units might 
 			{
 				if (IsCaptain(groupMembers[i]))
 				{
-					if (rand() % 3 == 1)
-						AIVector->at(groupMembers[i]->AI)->Retreat(groupMembers[i]);
+					if (rand() % 2 == 1)
+					{
+						groupMembers[i]->currentActivity = CEnemy::CurrentActivity::deserting;
+						speechManager->AddSpeech(groupMembers[i], Ai(i)->GetSpeechString(groupMembers[i], true), captainColor);
+					}
 				}
 				else
-					AIVector->at(groupMembers[i]->AI)->Retreat(groupMembers[i]);
+				{
+					groupMembers[i]->currentActivity = CEnemy::CurrentActivity::aboutToDesert;
+				}
 			}
 		}
 	}
 }
-
+CAI * CGroup::Ai(int memberIndex)
+{
+	return AIVector->at(groupMembers[memberIndex]->AI);
+}
 CGroup::~CGroup()
 {
 }
@@ -274,4 +343,15 @@ bool CGroup::RemoveMember(CAnimate* memberToRemove)
 		}
 	}
 	return false;
+}
+
+SDL_Color CGroup::GetColor(CEnemy * member)
+{
+	if (IsCaptain(member)) return captainColor;
+	else return memberColor;
+}
+
+CAI * CGroup::Ai(CEnemy * member)
+{
+	return AIVector->at(member->AI);
 }
