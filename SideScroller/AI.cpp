@@ -40,14 +40,14 @@ void CAI::Idle(CEnemy* self)
 				self->currentIdleActivity = CEnemy::CurrentIdleActivity::lookingRight;
 				break;
 			case (int)CEnemy::CurrentIdleActivity::movingLeft:
-				if (rand() % 2)
+				if (Chance(50))
 				{
 					SoftMoveLeft(self);
 					self->currentIdleActivity = CEnemy::CurrentIdleActivity::movingLeft;
 					break;
 				}
 			case (int)CEnemy::CurrentIdleActivity::movingRight:
-				if (rand() % 2)
+				if (Chance(50))
 				{
 					SoftMoveRight(self);
 					self->currentIdleActivity = CEnemy::CurrentIdleActivity::movingRight;
@@ -73,7 +73,7 @@ void CAI::Idle(CEnemy* self)
 	case CEnemy::CurrentIdleActivity::lookingLeft:
 		if (GetRandomBool(2500))
 		{
-			if (rand() % 3 == 0)
+			if (Chance(33))
 			{
 				self->ChangeAnimation(self->idle);
 				self->currentIdleActivity = CEnemy::CurrentIdleActivity::idle;
@@ -90,7 +90,7 @@ void CAI::Idle(CEnemy* self)
 	case CEnemy::CurrentIdleActivity::lookingRight:
 		if (GetRandomBool(2500))
 		{
-			if (rand() % 3 == 0)
+			if (Chance(33))
 			{
 				self->ChangeAnimation(self->idle);
 				self->currentIdleActivity = CEnemy::CurrentIdleActivity::idle;
@@ -377,11 +377,12 @@ int CAI::DistanceToPlayer(CEnemy * self)
 }
 bool CAI::GetRandomBool(int averageMsBetweenOccurence)
 {
-	for (int i = 0; i < g_time; i++)
-	{
-		if (rand() % averageMsBetweenOccurence == 0) return true;
-	}
-	return false;
+	return (rand() % averageMsBetweenOccurence / g_time == 0);
+}
+bool CAI::Chance(int percent)
+{
+	if (percent == 0) return false;
+	return (rand() % 100 / percent);
 }
 std::string CAI::GetSpeechString(CEnemy * self, bool captain)
 {

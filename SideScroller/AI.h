@@ -48,7 +48,7 @@ public:
 	int DistanceToPlayer(CEnemy* self);
 	int QuickDistanceToPlayer(CEnemy * self);
 	bool GetRandomBool(int averageMsBetweenOccurence);
-
+	bool Chance(int percent);
 	CEnemy * GetEnemyClosestToPlayerFromVector(vector<CEnemy*> group);
 
 	PlayerDirection GetPlayerHorizontalDirection(CAnimate* self);
