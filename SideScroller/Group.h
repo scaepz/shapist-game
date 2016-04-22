@@ -38,11 +38,12 @@ private:
 	bool IsCaptainAlive();
 	static const int maxReactionTime = 600; //actually max + min is real max
 	static const int minReactionTime = 200;
-	static const int playerScanDelayMax = 155;
-
+	static const int playerScanDelayMax = 40;
+	CEnemy* M(int index);
 	int timeSincePlayerSpotted = 0;
 	CAI * Ai(int memberIndex);
 	CAI * Ai(CEnemy * member);
+	CAI * Ai();
 	int playerScanDelay;
 	int originalGroupSize;
 	bool groupIsAwareOfPlayer = false;
@@ -59,6 +60,7 @@ private:
 	CEnemy * captain;
 	std::vector<CEnemy*> groupMembers;
 	std::vector<int> delayVector;
+	int braveryBoost;
 
 };
 

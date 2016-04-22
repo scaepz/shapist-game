@@ -87,14 +87,13 @@ bool CBulletWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 	float correctedOffsetY = (float)(radius * sin(angle));
 
 	int tileSize = vm->standardTileSize;
-
+	vector<vector<CTile*>>* tileVector = vm->GetTileVector();
 	//calculate bullet paths
 	for (int i = 0; i < numberOfPellets; i++)
 	{
 		srand(rand());
 		float newAngle = angle + (float)((rand() % 10000) / (fireConeTightness - currentExtraSpread)) - (10000 / (fireConeTightness - currentExtraSpread) / 2);
 
-		//std::cout << "Recoil: " << currentExtraRecoil << ", spread: " << currentExtraSpread << std::endl;
 
 
 		if (newAngle > -1.5 && newAngle < 1.5)
@@ -144,18 +143,17 @@ bool CBulletWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 			for (int xIterator = x1; xIterator != x2; xIterator += xAddition)
 			{
 				yIterator += m * xAddition; //when x increases with 1, y increases with m
-				if (xIterator % tileSize == xBorder || (int)yIterator % tileSize == yBorder) //whenever an iterator passes a tileborder, check if the tilearea is occupied (with a tile)
+
+				if (xIterator / tileSize >= 0 && xIterator / tileSize < vm->GetTileVector()->at(0).size() && yIterator / tileSize >= 0 && yIterator / tileSize < vm->GetTileVector()->size()) //outside of map check
 				{
-					if (xIterator / tileSize >= 0 && xIterator / tileSize < vm->GetTileVector()->at(0).size() && yIterator / tileSize >= 0 && yIterator / tileSize < vm->GetTileVector()->size()) //outside of map check
+					if (tileVector->at(yIterator / tileSize).at(xIterator / tileSize) != nullptr)
 					{
-						if (vm->GetTileVector()->at(yIterator / tileSize).at(xIterator / tileSize) != nullptr)
-						{
-							x2 = xIterator;
-							y2 = yIterator;
-							break;
-						}
+						x2 = xIterator;
+						y2 = yIterator;
+						break;
 					}
 				}
+
 			}
 		}
 		else
@@ -165,18 +163,17 @@ bool CBulletWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 			for (int yIterator = y1; yIterator != y2; yIterator += yAddition)
 			{
 				xIterator += m * yAddition; //when y increases with 1, x increases with m
-				if (yIterator % tileSize == yBorder || (int)xIterator % tileSize == xBorder) //whenever an iterator passes a tileborder, check if the tilearea is occupied (with a tile)
+
+				if (xIterator / tileSize >= 0 && xIterator / tileSize < vm->GetTileVector()->at(0).size() && yIterator / tileSize >= 0 && yIterator / tileSize < vm->GetTileVector()->size())//outside of map check
 				{
-					if (xIterator / tileSize >= 0 && xIterator / tileSize < vm->GetTileVector()->at(0).size() && yIterator / tileSize >= 0 && yIterator / tileSize < vm->GetTileVector()->size())//outside of map check
+					if (tileVector->at(yIterator / tileSize).at(xIterator / tileSize) != nullptr)
 					{
-						if (vm->GetTileVector()->at(yIterator / tileSize).at(xIterator / tileSize) != nullptr)
-						{
-							x2 = xIterator;
-							y2 = yIterator;
-							break;
-						}
+						x2 = xIterator;
+						y2 = yIterator;
+						break;
 					}
 				}
+
 			}
 		}
 		int closestSolid = -1;
@@ -213,7 +210,7 @@ bool CBulletWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 				vm->AddObject(dmgn);
 				vm->GetSolidVector()->at(closestSolid)->TakeDamage(damage);
 			}
-			
+
 		}
 		vm->GetParticleEngine()->NewBulletTracer(x1, y1, x2, y2, tracerIntensity);
 		currentExtraRecoil += recoilIncreasePerBullet;

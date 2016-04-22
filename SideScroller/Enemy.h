@@ -33,13 +33,13 @@ public:
 	pugi::char_t * GetActivityString();	
 	CurrentIdleActivity currentIdleActivity;
 	CurrentActivity currentActivity;
-
+	virtual void TakeDamage(int damage);
 	CEnemy(int x, int y, int textureId, int size, vector<CWeapon*> & weaponVector);
 	virtual ~CEnemy();
 	void OnCollision(bool, bool);
 	void SetRotation(float _rotation);
 	void UpdateTime(int time);
-	
+
 	
 private:
 
@@ -73,6 +73,7 @@ public:
 	bool GetPlayerVisible();
 	bool GetPlayerVisibleStale();
 	void SetPlayerVisible(bool);
+	bool tookDamage;
 private:
 	bool awareOfPlayer;
 	int timeSincePlayerNotVisible;

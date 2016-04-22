@@ -638,9 +638,4 @@
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Xml Include="res\strings\speech.xml">
-      <Filter>AI</Filter>
-    </Xml>
-  </ItemGroup>
 </Project>

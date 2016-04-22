@@ -18,7 +18,6 @@ void CLevelReader::importLevel(std::string path)
 	}
 	reader.close();
 	levelString = levelString.substr(0, levelString.size() - 1);
-	std::cout << levelString;
 }
 
 

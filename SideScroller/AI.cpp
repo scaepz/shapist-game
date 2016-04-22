@@ -15,18 +15,12 @@ CAI::CAI(CVectorManager* _vm)
 
 void CAI::Idle(CEnemy* self)
 {
-	if (self->currentActivity != CEnemy::CurrentActivity::idling)
-	{
-		self->currentActivity = CEnemy::CurrentActivity::idling;
-	}
-	GetSpeechString(self, true);
 	switch (self->currentIdleActivity)
 	{
 	case CEnemy::CurrentIdleActivity::idle:
-		if (GetRandomBool(3500))
+		if (ContinuousChance(3500))
 		{
 			int newActivity = rand() % (int)CEnemy::CurrentIdleActivity::numberOfIdleActivites;
-			cout << newActivity << endl;
 			switch (newActivity)
 			{
 			case (int)CEnemy::CurrentIdleActivity::lookingLeft:
@@ -62,7 +56,7 @@ void CAI::Idle(CEnemy* self)
 	case CEnemy::CurrentIdleActivity::movingLeft:
 	case CEnemy::CurrentIdleActivity::movingRight:
 
-		if (GetRandomBool(2400))
+		if (ContinuousChance(2400))
 		{
 			SoftStop(self);
 			self->ChangeAnimation(self->idle);
@@ -71,7 +65,7 @@ void CAI::Idle(CEnemy* self)
 		break;
 
 	case CEnemy::CurrentIdleActivity::lookingLeft:
-		if (GetRandomBool(2500))
+		if (ContinuousChance(2500))
 		{
 			if (Chance(33))
 			{
@@ -88,7 +82,7 @@ void CAI::Idle(CEnemy* self)
 		}
 		break;
 	case CEnemy::CurrentIdleActivity::lookingRight:
-		if (GetRandomBool(2500))
+		if (ContinuousChance(2500))
 		{
 			if (Chance(33))
 			{
@@ -118,28 +112,28 @@ void CAI::Attack(CEnemy* self)
 
 	if (pDir == PlayerDirection::left)
 	{
-		if (GetRandomBool(2500))
+		if (ContinuousChance(2500))
 			MoveLeft(self);
-		else if (GetRandomBool(2500))
+		else if (ContinuousChance(2500))
 			SoftStop(self);
-		else if (GetRandomBool(2500))
+		else if (ContinuousChance(2500))
 			SoftMoveRight(self);
-		else if (GetRandomBool(4500))
+		else if (ContinuousChance(4500))
 			MoveRight(self);
-		else if (GetRandomBool(3000))
+		else if (ContinuousChance(3000))
 			SoftMoveLeft(self);
 	}
 	else if (pDir == PlayerDirection::right)
 	{
-		if (GetRandomBool(2500))
+		if (ContinuousChance(2500))
 			MoveRight(self);
-		else if (GetRandomBool(2500))
+		else if (ContinuousChance(2500))
 			SoftStop(self);
-		else if (GetRandomBool(2500))
+		else if (ContinuousChance(2500))
 			SoftMoveLeft(self);
-		else if (GetRandomBool(4500))
+		else if (ContinuousChance(4500))
 			MoveLeft(self);
-		else if (GetRandomBool(3000))
+		else if (ContinuousChance(3000))
 			SoftMoveRight(self);
 	}
 	else
@@ -158,13 +152,14 @@ void CAI::Attack(CEnemy* self)
 			CeaseFire(self);
 		}
 	}
-	if (GetRandomBool(3000))
+	if (ContinuousChance(3000))
 	{
 		Jump(self);
 	}
 }
 void CAI::Desert(CEnemy* self)
 {
+	std::cout << "Desert";
 	if (self->currentActivity != CEnemy::CurrentActivity::deserting)
 	{
 		self->currentActivity = CEnemy::CurrentActivity::deserting;
@@ -180,7 +175,7 @@ void CAI::Desert(CEnemy* self)
 		if (React(self))
 			MoveRight(self);
 	}
-	if (GetRandomBool(3000))
+	if (ContinuousChance(3000))
 	{
 		Jump(self);
 	}
@@ -199,7 +194,7 @@ void CAI::Search(CEnemy* self, PlayerDirection lastKnownDirection)
 	{
 		MoveLeft(self);
 	}
-	if (GetRandomBool(1500))
+	if (ContinuousChance(1500))
 	{
 		Jump(self);
 	}
@@ -208,10 +203,7 @@ void CAI::Search(CEnemy* self, PlayerDirection lastKnownDirection)
 
 void CAI::Retreat(CEnemy* self)
 {
-	if (self->currentActivity != CEnemy::CurrentActivity::retreating)
-	{
-		self->currentActivity = CEnemy::CurrentActivity::retreating;
-	}
+
 	PlayerDirection pDir = GetPlayerHorizontalDirection(self);
 
 	if (pDir == PlayerDirection::right)
@@ -224,12 +216,13 @@ void CAI::Retreat(CEnemy* self)
 		if (React(self))
 			MoveRight(self);
 	}
-	if (GetRandomBool(3000))
+	if (ContinuousChance(3000))
 	{
 		Jump(self);
 	}
 	if (self->GetPlayerVisible())
 	{
+		self->Aim();
 		Fire(self);
 	}
 }
@@ -243,6 +236,9 @@ void CAI::MoveLeft(CEnemy* self)
 	delete m;
 	CMoveCommand * move = new CMoveCommand(self, 0);
 	vm->AddObject(move);
+
+	self->ChangeAnimation(self->move);
+	self->lookingLeft = true;
 }
 void CAI::Jump(CEnemy* self)
 {
@@ -260,6 +256,9 @@ void CAI::MoveRight(CEnemy* self)
 	delete m;
 	CMoveCommand * move = new CMoveCommand(self, 1);
 	vm->AddObject(move);
+
+	self->ChangeAnimation(self->move);
+	self->lookingLeft = false;
 }
 bool CAI::React(CEnemy* self)
 {
@@ -375,103 +374,53 @@ int CAI::DistanceToPlayer(CEnemy * self)
 
 
 }
-bool CAI::GetRandomBool(int averageMsBetweenOccurence)
-{
-	return (rand() % averageMsBetweenOccurence / g_time == 0);
+bool CAI::ContinuousChance(int averageMsBetweenOccurence)
+{ 
+	return (rand() % (averageMsBetweenOccurence / g_time) == 0);
 }
 bool CAI::Chance(int percent)
 {
 	if (percent == 0) return false;
-	return (rand() % 100 / percent);
+	return ((rand() % 100) < percent);
 }
 std::string CAI::GetSpeechString(CEnemy * self, bool captain)
 {
 	pugi::xml_document doc;
-
 	doc.load_file(vm->GetSpeechPath());
 
-	char_t * activity = self->GetActivityString();
-	vector<string> possibleLines;
+	string activity = self->GetActivityString();
 
-	char_t * role;
+	string role;
 	if (captain) role = "captain"; else role = "common";
 
-	char_t * index = new char_t[2];
-	string test = doc.child("speech").child(self->speechType).child(role).child(activity).child("amount").text().as_string();
-	int numberOfChildren = doc.child("speech").child(self->speechType).child(role).child(activity).child("amount").text().as_int();
-	if (numberOfChildren == 0) return "";
-	index[0] = (char_t)(rand() % numberOfChildren + 'a');
-	index[1] = '\0';
-
-	string a = doc.child("speech").child(self->speechType).child(role).child(activity).child(index).text().as_string();
-	delete[] index;
-	return a;
+	for (pugi::xml_node node = doc.child("speech").first_child(); node; node = node.next_sibling())
+	{
+		string a = node.name();
+		if (a == role)
+		for (pugi::xml_node rolenode = node.first_child(); rolenode; rolenode = rolenode.next_sibling())
+		{
+			a = rolenode.name();
+			if (a == activity)
+			{
+				int amount = 0;
+				pugi::xml_node linenode;
+				vector<string> lineVector;
+				for (pugi::xml_node linenode = rolenode.first_child(); linenode; linenode = linenode.next_sibling())
+				{
+					lineVector.push_back(linenode.text().as_string());
+				}
+				if (lineVector.size() == 0) return "";
+				string line = lineVector.at(rand() % lineVector.size()); 
+				std::cout << line << std::endl;
+				return line;
+			}
+		}
+	}
+	
+	return "";
 }
 CAI::~CAI()
 {
-}
-bool CAI::IsPlayerInLineOfSight(int maxDistance, CEnemy * self)
-{
-	if (QuickDistanceToPlayer(self) < maxDistance)
-	{
-		//check if there are any tiles between player and enemy (from enemy eye-height (height/4) to player top and bottom)
-
-		//first rule out tiles not between player and enemy
-		int minX, maxX;
-		int minY, maxY;
-		if (self->GetX() > player->GetX())
-		{
-			minX = player->GetX() / vm->standardTileSize;
-			maxX = self->GetX() / vm->standardTileSize;
-		}
-		else
-		{
-			minX = self->GetX() / vm->standardTileSize;
-			maxX = player->GetX() / vm->standardTileSize;
-		}
-		if (self->GetY() > player->GetY())
-		{
-			minY = (player->GetY()) / vm->standardTileSize;
-			maxY = self->GetY() / vm->standardTileSize;
-		}
-		else
-		{
-			minY = (self->GetY()) / vm->standardTileSize;
-			maxY = player->GetY() / vm->standardTileSize;
-		}
-
-		//points to check
-		int x1, x2, y1, y2;
-		x1 = self->GetX() + self->GetWidth() / 2;
-		y1 = self->GetY() + self->GetHeight() / 4;
-		//loop through remaining tiles.
-		//to optimize i could use an equation to find position in matrix of next tile
-
-		for (int x = minX; x <= maxX; x++)
-		{
-			for (int y = minY; y <= maxY; y++)
-			{
-				if (tileVector->at(y).at(x) != nullptr)
-				{
-					SDL_Rect rect;
-					rect.x = x* vm->standardTileSize;
-					rect.y = y* vm->standardTileSize;
-					rect.w = vm->standardTileSize;
-					rect.h = rect.w;
-
-					x2 = player->GetX();
-					y2 = player->GetY();
-					if (SDL_IntersectRectAndLine(&rect, &x1, &y1, &x2, &y2))
-					{
-						return false;
-					}
-				}
-			}
-		}
-		return true; //return true if loop ends without returning false
-	}
-	else return false;
-
 }
 float CAI::GetOptimalXhairAngle(CEnemy* self)
 {
@@ -479,15 +428,118 @@ float CAI::GetOptimalXhairAngle(CEnemy* self)
 }
 CEnemy * CAI::GetEnemyClosestToPlayerFromVector(vector<CEnemy*> group)
 {
-	if (group.size() == 0) throw new std::exception("Empty group given to AI");
+	if (group.size() == 0) return nullptr;
 	CEnemy * closest = group[0];
-	int distance = 2000;
+	int lowestDistance = 80000;
 	for (int i = 0; i < group.size(); i++)
 	{
-		if (QuickDistanceToPlayer(group[i]) < distance)
+		int tempDistance = QuickDistanceToPlayer(group[i]);
+		if (tempDistance < lowestDistance)
 		{
 			closest = group[i];
+			lowestDistance = tempDistance;
 		}
 	}
 	return closest;
+}
+
+int CAI::GroupDistanceToPlayer(vector<CEnemy*> group)
+{
+	if (group.size() == 0) return -1;
+	int lowestDistance = 80000;
+	for (int i = 0; i < group.size(); i++)
+	{
+		int tempDistance = QuickDistanceToPlayer(group[i]);
+		if (tempDistance < lowestDistance)
+		{
+			lowestDistance = tempDistance;
+		}
+	}
+	return lowestDistance;
+}
+
+bool CAI::SeesPlayer(int maxDistance, CEnemy * self)
+{
+	if (QuickDistanceToPlayer(self) > maxDistance) return false;
+	int tileSize = vm->standardTileSize;
+
+	int x1 = self->GetX() + self->GetWidth() / 2;
+	int y1 = self->GetY() + self->GetHeight() / 4;
+
+	int x2;
+	int y2;
+
+	if (vm->GetTileVector()->at(y1 / vm->standardTileSize).at(x1 / vm->standardTileSize) != nullptr)
+	{
+		return false;
+	}
+
+	vector<vector<CTile*>>* tileVector = vm->GetTileVector();
+	for (int i = 0; i < 2; i++)
+	{
+
+		bool seesPlayer = true;
+		switch (i)
+		{
+		case 0:
+			x2 = player->GetX();
+			y2 = player->GetY() + player->GetHeight()/2;
+			break;
+		case 1:
+			x2 = player->GetX() + player->GetWidth();
+			y2 = player->GetY() + player->GetHeight() / 2;
+			break;
+		}
+		int xAddition = 1;
+		int yAddition = 1;
+
+		int xBorder = 0;
+		int yBorder = 0;
+		if (x2 < x1)
+		{
+			xAddition = -1;
+			xBorder = tileSize - 1;
+		}
+		if (y2 < y1)
+		{
+			yAddition = -1;
+			yBorder = tileSize - 1;
+		}
+		float m = (float)((float)(y2 - y1) / (float)(x2 - x1)); //riktningskoefficient / slope
+		float yIterator = y1;
+		if (abs(m) < 1.5f)
+		{
+			for (int xIterator = x1; xIterator != x2; xIterator += xAddition)
+			{
+				yIterator += m * xAddition; //when x increases with 1, y increases with m
+				if (xIterator / tileSize >= 0 && xIterator / tileSize < vm->GetTileVector()->at(0).size() && yIterator / tileSize >= 0 && yIterator / tileSize < vm->GetTileVector()->size()) //outside of map check
+				{
+					if (tileVector->at(yIterator / tileSize).at(xIterator / tileSize) != nullptr)
+					{
+						seesPlayer = false;
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
+			float xIterator = x1;
+			m = (float)((float)(x2 - x1) / (float)(y2 - y1));
+			for (int yIterator = y1; yIterator != y2; yIterator += yAddition)
+			{
+				xIterator += m * yAddition; //when y increases with 1, x increases with m
+				if (xIterator / tileSize >= 0 && xIterator / tileSize < vm->GetTileVector()->at(0).size() && yIterator / tileSize >= 0 && yIterator / tileSize < vm->GetTileVector()->size())//outside of map check
+				{
+					if (tileVector->at(yIterator / tileSize).at(xIterator / tileSize) != nullptr)
+					{
+						seesPlayer = false;
+						break;
+					}
+				}
+			}
+		}
+		if (seesPlayer) return true;
+	}
+	return false;
 }

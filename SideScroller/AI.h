@@ -43,18 +43,18 @@ public:
 	void SoftMoveRight(CEnemy* self);
 	void SoftMoveLeft(CEnemy* self);
 	virtual std::string GetSpeechString(CEnemy * self, bool captain);
-	//virtual void UpdateCurrentActivity(CEnemy* self);
 	float GetOptimalXhairAngle(CEnemy* self);
 	int DistanceToPlayer(CEnemy* self);
 	int QuickDistanceToPlayer(CEnemy * self);
-	bool GetRandomBool(int averageMsBetweenOccurence);
+	bool ContinuousChance(int averageMsBetweenOccurence);
 	bool Chance(int percent);
+	int GroupDistanceToPlayer(vector<CEnemy*> group);
 	CEnemy * GetEnemyClosestToPlayerFromVector(vector<CEnemy*> group);
 
 	PlayerDirection GetPlayerHorizontalDirection(CAnimate* self);
 	PlayerDirection GetPlayerVerticalDirection(CAnimate* self);
-	bool IsPlayerInLineOfSight(int maxDistance, CEnemy * self);//expensive operation, only call once in a while
-
+//	bool IsPlayerInLineOfSight(int maxDistance, CEnemy * self);//expensive operation, only call once in a while
+	bool SeesPlayer(int maxDistance, CEnemy* self);
 
 	/* GetEnemyCrosshairPlacement
 	do not call every frame, call only based on time

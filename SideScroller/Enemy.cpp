@@ -16,16 +16,22 @@ CEnemy::CEnemy(int x, int y, int textureId, int size, vector<CWeapon*> & weaponV
 	{
 		ammoInClip[i] = weaponVector[i]->clipSize;
 	}
-	currentActivity = CurrentActivity::searching;
+	currentActivity = CurrentActivity::idling;
+}
+
+void CEnemy::TakeDamage(int damage)
+{
+	tookDamage = true; //for AI player awareness
+	CAnimate::TakeDamage(damage);
 }
 float CEnemy::GetXhairAngleDeg()
 {
-	if (currentActivity == CurrentActivity::idling)
+	if (IsAwareOfPlayer() == false)
 	{
 		if (lookingLeft) return 180;
 		else return 0;
 	}
-	else return CAnimate::GetXhairAngleDeg();
+	 return CAnimate::GetXhairAngleDeg();
 }
 
 void CEnemy::Aim()
@@ -70,6 +76,8 @@ pugi::char_t * CEnemy::GetActivityString()
 		return "braveryboost";
 	case CurrentActivity::spottedPlayer:
 		return "spotted";
+	case CurrentActivity::searching:
+		return "searching";
 	default:
 		return "";
 
@@ -138,7 +146,6 @@ void CEnemy::SetPlayerVisible(bool newPlayerVisibility)
 	{
 		timeSincePlayerNotVisible = 0;
 	}
-	awareOfPlayer = newPlayerVisibility;
 	playerVisible = newPlayerVisibility;
 	timeSincePlayerVisibilityCheck = 0;
 }
@@ -155,7 +162,6 @@ void CEnemy::UpdateTime(int time)
 	if (isReacting)
 		timeUntilReaction -= time;
 	CAnimate::UpdateTime(time);
-	timeSincePlayerVisibilityCheck += time;
 	if (!GetPlayerVisible())
 	{
 		timeSincePlayerNotVisible += time;
@@ -168,7 +174,7 @@ bool CEnemy::IsAwareOfPlayer()
 	{
 		return true;
 	}
-	else if (timeSincePlayerNotVisible < 3000)
+	else if (timeSincePlayerNotVisible < 1000)
 	{
 		return true;
 	}

@@ -14,6 +14,7 @@ enum weapons
 	m4a4,
 	mp5,
 	_spear_mudhands,
+	devLaser1,
 	numberOfWeapons
 };
 

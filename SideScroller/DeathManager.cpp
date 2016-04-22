@@ -99,7 +99,7 @@ void CDeathManager::UpdateAnimates()
 						break;
 					}
 				}
-				if (groupMap->count(animateVector->at(b)->groupNumber == 1))
+				if (groupMap->count(animateVector->at(b)->groupNumber >= 1))
 					groupMap->at(animateVector->at(b)->groupNumber)->RemoveMember(animateVector->at(b));
 				vm->DeleteObject(animateVector->at(b));
 

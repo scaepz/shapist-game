@@ -172,13 +172,12 @@ CGame::CGame(string levelDirectory, bool * nextLevel, SDL_Renderer * renderer, S
 		ms += g_time;
 		if (ms > 500)
 		{
-			std::cout << vm.GetPlayer()->GetX() << std::endl;
-			std::cout << vm.GetPlayer()->GetY() << std::endl;
-			std::cout << "----" << std::endl;
+			std::cout << frames << std::endl;
 			frames = 0;
 			ms = 0;
 		}
-		SDL_Delay(4);
+
+		SDL_Delay(1);
 		g_time = GetTicks();
 		dialogHandler.GetInventory()->Update();
 		dialogHandler.Update();
@@ -294,7 +293,8 @@ void CGame::CreateWeapons()
 	//vm.AddObject(hitscan);
 	CRocketLauncher* rocket = new CRocketLauncher(&vm);
 	vm.AddObject(rocket);
-	vm.AddObject(rocket);
+	CRocketLauncher* rocket2 = new CRocketLauncher(&vm);
+	vm.AddObject(rocket2);
 
 	CBulletWeapon* shotgun = new CBulletWeapon(&vm);
 	shotgun->clipSize = 8;
@@ -391,7 +391,7 @@ void CGame::CreateWeapons()
 	vm.AddObject(ak);
 	CBulletWeapon* m4a4 = new CBulletWeapon(&vm);
 	m4a4->clipSize = 30;
-	m4a4->damage = 0;
+	m4a4->damage = 4;
 	m4a4->numberOfPellets = 1;
 	m4a4->fireConeTightness = 110000.0f;
 	m4a4->maxLength = 1300;
@@ -479,5 +479,30 @@ void CGame::CreateWeapons()
 	spear_mudhands->idlePositionAdjustment[1] = 40;
 	vm.AddObject(spear_mudhands);
 
+	CBulletWeapon* mp55 = new CBulletWeapon(&vm);
+	mp55->clipSize = 10000;
+	mp55->damage = 3;
+	mp55->recoilIncreasePerBullet = 0;
+	mp55->numberOfPellets = 1;
+	mp55->fireConeTightness = 10000000;
+	mp55->maxLength = 1300;
+	mp55->tracerIntensity = 1.0f;
+	mp55->fireDelay = 25;
+	mp55->reloadDelay = 2000;
+	mp55->height = 17;
+	mp55->width = 49;
+	mp55->offsetX = 49;
+	mp55->offsetY = 3;
+	mp55->kickBackY = 0;
+	mp55->kickBackX = 0;
+	mp55->kickBackRot = 0;
+	mp55->kickBackTime = 95;
+	mp55->iconId = 202;
+	mp55->textureId = 102;
+	mp55->flipPoint.y = 8;
+	mp55->semiAutomatic = false;
+	mp55->name = "devLaser";
+	mp55->fireSound = 0;
+	vm.AddObject(mp55);
 
 }

@@ -22,7 +22,7 @@ public:
 	bool AirMove(bool dir, int ms);
 	float moveSpeed;
 	float maxMoveSpeed;
-	void TakeDamage(int damage);
+	virtual void TakeDamage(int damage);
 
 	virtual int GetWidth();
 	virtual int GetHeight();

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <speech>
-  <generic>
      <captain>
         <idling>
-          <amount>2</amount>
           <a>Stay alert.</a>
           <b>Eyes open.</b>
+		  <c>We've a job to do.</c>
         </idling>
        <spotted>
-         <amount>5</amount>
          <a>Let's get him boys.</a>
          <b>All on me!</b>
          <c>Don't let him get away!</c>
@@ -16,7 +14,6 @@
          <e>Wake up!</e>
        </spotted>
        <alert>
-         <amount>10</amount>
          <a>He can't have gotten far.</a>
          <b>Stay alert.</b>
          <c>He's around here.</c>
@@ -29,7 +26,6 @@
          <j>What's that smell?</j>
        </alert>
        <deserting>
-         <amount>10</amount>
          <a>Fuck this!</a>
          <b>Nope. Nope nope nope.</b>
          <c>Guys I forgot to feed my cat!</c>
@@ -47,10 +43,22 @@
          <c>Deserters will be hung!</c>
          <d>To death!</d>
        </braveryboost>
+	   <retreating>
+	     <a>Fall back!</a>
+         <c>Find cover!</c>
+         <d>Take cover!</d>
+	   </retreating>
+	   <searching>
+	      <a>Come out you maggot!</a>
+		  <b>He's right here!</b>
+	   </searching>
     </captain>
-    <soldier>
-      <spotted>
-        <amount>6</amount>
+    <common>
+	  <searching>
+		  <a>Come out you maggot!</a>
+		  <b>He's right here!</b>
+	  </searching>
+        <spotted>
         <a>I see him!</a>
         <b>There he is!</b>
         <c>Get him!</c>
@@ -62,9 +70,9 @@
         <a>So bored.</a>
         <b>I should quit.</b>
         <c>Where is that roundie?</c>
+		<d>So hot.</d>
       </idling>
       <alert>
-        <amount>10</amount>
         <a>He can't have gotten far.</a>
         <b>Stay alert.</b>
         <c>He's around here.</c>
@@ -77,7 +85,6 @@
         <j>What's that smell?</j>
       </alert>
       <deserting>
-        <amount>10</amount>
         <a>Fuck this!</a>
         <b>Nope. Nope nope nope.</b>
         <c>Guys I forgot to feed my cat!</c>
@@ -89,6 +96,5 @@
         <i>I'm out of here!</i>
         <j>Oh fuck!</j>
       </deserting>
-    </soldier>
-  </generic>
+    </common>
 </speech>

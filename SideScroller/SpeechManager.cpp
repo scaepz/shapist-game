@@ -1,6 +1,5 @@
 #include "SpeechManager.h"
 
-
 CSpeechManager::CSpeechManager(CVectorManager * _vm)
 {
 	font = TTF_OpenFont("res/fonts/AkizaSans-Regular.otf", 16);
@@ -23,6 +22,7 @@ void CSpeechManager::AddSpeech(CAnimate* speaker, std::string text, SDL_Color co
 	TTF_SizeText(font, text.c_str(), &dst.w, &dst.h);
 
 	CSpeech * speech = new CSpeech(speaker, texture, 2000, dst);
+	
 	vm->AddObject(speech);
 }
 void CSpeechManager::Update()

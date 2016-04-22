@@ -516,5 +516,14 @@ void CVectorManager::SetRenderPointer(SDL_Renderer* r)
 }
 void CVectorManager::AddObject(CSpeech*s)
 {
+	for (int c = 0; c < speechVector.size(); c++)
+	{
+		if (speechVector.at(c)->speaker == s->speaker)
+		{
+			delete speechVector.at(c);
+			speechVector.erase(speechVector.begin() + c);
+			c--;
+		}
+	}
 	speechVector.push_back(s);
 }

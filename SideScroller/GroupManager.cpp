@@ -27,6 +27,16 @@ CGroupManager::~CGroupManager()
 
 void CGroupManager::HandleGroups()
 {
-	for (std::map<int, CGroup*>::iterator it = groupMap->begin(); it != groupMap->end(); ++it)
-		it->second->Update();
+	for (auto it = groupMap->begin(); it != groupMap->end();)
+	{
+		if (it->second->Update())
+		{
+			delete it->second;
+			groupMap->erase(it++);	
+		}
+		else
+		{
+			++it;
+		}
+	}
 }
