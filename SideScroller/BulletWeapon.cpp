@@ -81,7 +81,7 @@ bool CBulletWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 {
 	totalDamage = 0;
 	bool playerHitEnemy = true;
-	float radius = sqrt(offsetX*offsetX + offsetY*offsetY);
+	float radius = sqrt((offsetX + positionAdjustment[0])*(offsetX + positionAdjustment[0]) + (offsetY+positionAdjustment[1])*(offsetY+positionAdjustment[1]));
 
 	float correctedOffsetX = (float)(radius * cos(angle));
 	float correctedOffsetY = (float)(radius * sin(angle));
@@ -105,8 +105,8 @@ bool CBulletWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 			newAngle += currentExtraRecoil;
 		}
 
-		int x1 = x + correctedOffsetX;
-		int y1 = y + correctedOffsetY;
+		int x1 = x + correctedOffsetX + positionAdjustment[0];
+		int y1 = y + correctedOffsetY + positionAdjustment[1];
 
 		int x2 = x1 + maxLength * cos(newAngle);
 		int y2 = y1 + maxLength * sin(newAngle);
@@ -223,7 +223,15 @@ bool CBulletWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 	}
 	if (fireSound != -1)
 	{
-		vm->GetSoundPlayer()->PlaySound(fireSound, 0);
+		vm->GetSoundPlayer()->PlaySoundAtVolume(fireSound, 0, vm->GetSoundPlayer()->GetVolumeByDistance(DistanceToPlayer(attacker)));
 	}
 	return semiAutomatic;
+}
+
+int CBulletWeapon::DistanceToPlayer(CBaseObject * self)
+{
+	if (self == vm->GetPlayer()) return 0;
+	CBaseObject * player = vm->GetPlayer();
+	int a = sqrt((player->GetX() - self->GetX()) * (player->GetX() - self->GetX()) + (player->GetY() - self->GetY()) * (player->GetY() - self->GetY()));
+	return a;
 }

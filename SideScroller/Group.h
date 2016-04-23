@@ -22,7 +22,6 @@ public:
 	{
 		idle,
 		gainingAwareness,
-		lostMorals,
 		retreating,
 		fighting,
 		searching,
@@ -31,6 +30,7 @@ public:
 	};
 	CSpeechManager * speechManager;
 private:
+	bool losingMorals;
 	SDL_Color captainColor;
 	SDL_Color memberColor;
 	SDL_Color GetColor(int index);

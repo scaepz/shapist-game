@@ -26,6 +26,7 @@ public:
 	float maxExtraSpread;
 
 private:
+	int DistanceToPlayer(CBaseObject* self);
 	float currentExtraRecoil;
 	float currentExtraSpread;
 	int totalDamage; //used to determine hit sound

@@ -39,7 +39,7 @@ void CInputHandler::HandleInput()
 		int x1; int y1;
 		SDL_GetMouseState(&x1, &y1);
 
-		player->SetPointingDirection(x1 - playerPosOnScreen[0], y1 - playerPosOnScreen[1]); //name is slightly misleading //a month later im curious to know in what way
+		player->SetPointingDirection(x1 - playerPosOnScreen[0], y1 - playerPosOnScreen[1]);
 
 		player->SetRotation(90 - (atan2(x1 - playerPosOnScreen[0], y1 - playerPosOnScreen[1])*(180 / 3.1415)));
 	}
@@ -76,10 +76,8 @@ void CInputHandler::HandleInput()
 					dialogHandler->Release(ev.button.x, ev.button.y);
 				}
 				break;
-
 			}
 		}
-
 		else
 		{
 			if (ev.type == SDL_KEYDOWN)
@@ -99,10 +97,7 @@ void CInputHandler::HandleInput()
 					debugPause = true;
 				}
 				else if (ev.key.keysym.sym == keyMap[moveRight])
-
 				{
-
-
 					if (!ev.key.repeat)
 					{
 
@@ -122,15 +117,12 @@ void CInputHandler::HandleInput()
 						falseLeftMoveKeyUpFix = true;
 						CSoftStopCommand softStop(player);
 						vm->DeleteObject(&softStop);
-
 					}
 				}
 				else if (ev.key.keysym.sym == keyMap[jump])
 				{
 					if (!ev.key.repeat)
 					{
-
-
 						CJumpCommand *jump = new CJumpCommand(player);
 						vm->AddObject(jump);
 					}

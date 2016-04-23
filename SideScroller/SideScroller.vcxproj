@@ -320,9 +320,6 @@
     <ClInclude Include="SDL2_rotozoom.h" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Shapist.rc" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,6 +1,7 @@
 #include "SoundPlayer.h"
 #include <iostream>
 #include "SoundEnum.h"
+
 CSoundPlayer::CSoundPlayer()
 {
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 1, 2048) == -1)
@@ -9,6 +10,31 @@ CSoundPlayer::CSoundPlayer()
 	}
 	LoadCommonSounds();
 	
+}
+void CSoundPlayer::PlaySoundAtVolume(int soundId, int loops, int volume)
+{
+	if (volume < 1) return;
+	if (volume > 128) volume = 128;
+	int channels = 8;
+	for (int i = 0; i < channels; i++)
+	{
+		if (Mix_Playing(i) == false)
+		{
+			Mix_Volume(i, volume);
+			Mix_PlayChannel(i, soundMap[soundId], loops);
+			return;
+		}
+	}
+	//if none free, steal a random one
+	int i = rand() % 8;
+	Mix_Volume(i, volume);
+	Mix_PlayChannel(i, soundMap[soundId], loops);
+
+}
+int CSoundPlayer::GetVolumeByDistance(int distance)
+{
+	if (distance == 0) return maxVolume;
+	return maxVolume - (maxVolume*(distance/soundMaxDistance));
 }
 //returns the channel
 int CSoundPlayer::PlaySound(int soundId, int loops)
@@ -25,11 +51,6 @@ void CSoundPlayer::StopSound(int channel)
 int CSoundPlayer::PlayMs(int soundId, int loops ,int ms)
 {
 	return Mix_PlayChannelTimed(-1, soundMap[soundId], loops, ms);
-}
-void CSoundPlayer::SetVolume(int channel, int volume)
-{
-	Mix_Volume(channel, volume);
-	currentVolume = volume;
 }
 
 void CSoundPlayer::LoadCommonSounds()

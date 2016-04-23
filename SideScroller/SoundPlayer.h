@@ -9,6 +9,8 @@ public:
 	CSoundPlayer();
 	virtual ~CSoundPlayer();
 
+	void PlaySoundAtVolume(int soundId, int loops, int volume);
+
 	//returns the channel
 	int PlaySound(int soundId, int loops);
 
@@ -21,8 +23,10 @@ public:
 	//plays sound for ms milliseconds
 	int PlayMs(int soundId, int loops, int ms);
 
-	void SetVolume(int channel, int volume);
+	int maxVolume = 128;
 
+	int GetVolumeByDistance(int distance);
+	int soundMaxDistance = 600;
 
 private:
 	std::map<int, Mix_Chunk*> soundMap;

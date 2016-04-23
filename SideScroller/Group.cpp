@@ -163,11 +163,28 @@ bool CGroup::Update()
 		}
 	}
 
-	if (activity != GroupActivity::lostMorals)
+	if (!losingMorals)
 	{
 		if (!IsGroupBrave() && AIVector->at(0)->ContinuousChance(2000))
 		{
 			LoseMorals();
+		}
+	}
+	else
+	{
+		for (int i = 0; i < groupMembers.size(); i++)
+		{
+			if (M(i)->currentActivity == CEnemy::CurrentActivity::aboutToDesert)
+			{
+				if (Ai(i)->ContinuousChance(1600))
+				{
+					M(i)->currentActivity = CEnemy::CurrentActivity::deserting;
+					if (Ai()->Chance(35))
+					{
+						speechManager->AddSpeech(M(i), Ai(i)->GetSpeechString(M(i), false), memberColor);
+					}
+				}
+			}
 		}
 	}
 
@@ -254,47 +271,17 @@ bool CGroup::Update()
 			}
 		}
 		break;
-	case GroupActivity::lostMorals:
-		for (int i = 0; i < groupMembers.size(); i++)
-		{
-			if (M(i)->currentActivity == CEnemy::CurrentActivity::aboutToDesert)
-			{
-				if (Ai(i)->ContinuousChance(1600))
-				{
-					M(i)->currentActivity = CEnemy::CurrentActivity::deserting;
-					if (Ai()->Chance(35))
-					{
-						speechManager->AddSpeech(M(i), Ai(i)->GetSpeechString(M(i), false), memberColor);
-					}
-				}
-			}
-			if (M(i)->currentActivity == CEnemy::CurrentActivity::deserting)
-			{
-				Ai(i)->Desert(M(i));
-			}
-		}
-		if (Ai()->ContinuousChance(30000) && IsCaptainAlive() && captain->currentActivity != CEnemy::CurrentActivity::deserting)
-		{
-			braveryBoost = 100;
-			captain->currentActivity = CEnemy::CurrentActivity::braveryboost;
-			if (groupMembers.size() > 1)
-				speechManager->AddSpeech(captain, Ai()->GetSpeechString(captain, true), GetColor(captain));
-			for (int i = 0; i < groupMembers.size(); i++)
-			{
-				//M(i)->currentActivity = CEnemy::Cur
-			}
-		}
-		break;
+
 	case GroupActivity::fighting:
 		for (int i = 0; i < groupMembers.size(); i++)
 		{
 			if (IsDelayZero(i))
 			{
 				if (M(i)->currentActivity != CEnemy::CurrentActivity::deserting)
-					AIVector->at(M(i)->AI)->Attack(M(i));
+					Ai(i)->Attack(M(i));
 			}
 		}
-		if (AIVector->at(0)->ContinuousChance(100000) && IsCaptainAlive() && HasSufferedCasualties() && groupMembers.size() > 1)
+		if (Ai()->ContinuousChance(100000) && IsCaptainAlive() && HasSufferedCasualties() && groupMembers.size() > 1)
 		{
 			captain->currentActivity = CEnemy::CurrentActivity::retreating;
 			speechManager->AddSpeech(captain, Ai(0)->GetSpeechString(captain, true), captainColor);
@@ -308,7 +295,21 @@ bool CGroup::Update()
 				}
 			}
 		}
-		lastKnownDirection = Ai(0)->GetPlayerHorizontalDirection(groupMembers[0]);
+		if (Ai()->ContinuousChance(30000) && IsCaptainAlive() && captain->currentActivity != CEnemy::CurrentActivity::deserting)
+		{
+			braveryBoost = 100;
+			captain->currentActivity = CEnemy::CurrentActivity::braveryboost;
+			if (groupMembers.size() > 1)
+				speechManager->AddSpeech(captain, Ai()->GetSpeechString(captain, true), GetColor(captain));
+			for (int i = 0; i < groupMembers.size(); i++)
+			{
+				if (groupMembers[i]->currentActivity == CEnemy::CurrentActivity::deserting)
+				{
+					groupMembers[i]->currentActivity = CEnemy::CurrentActivity::fighting;
+				}
+			}
+		}
+		lastKnownDirection = Ai()->GetPlayerHorizontalDirection(Ai()->GetEnemyClosestToPlayerFromVector(groupMembers));
 	case GroupActivity::searching:
 		for (int i = 0; i < groupMembers.size(); i++)
 		{

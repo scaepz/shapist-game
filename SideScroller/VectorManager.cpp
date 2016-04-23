@@ -290,17 +290,6 @@ void CVectorManager::AddObject(CCommandObject* command)
 			break;
 		}
 	}
-	if (command->commandId == command->stop || command->commandId == command->softstop)
-	{
-		CMoveCommand left(command->obj, 0);
-		CMoveCommand right(command->obj, 1);
-		DeleteObject(&left);
-		DeleteObject(&right);
-		CSlowMoveCommand slowleft(command->obj, 0);
-		CSlowMoveCommand slowright(command->obj, 1);
-		DeleteObject(&slowleft);
-		DeleteObject(&slowright);
-	}
 	if (!commandAlreadyExists)
 	{
 		commandVector.push_back(command);
