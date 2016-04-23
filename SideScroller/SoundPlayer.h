@@ -26,7 +26,7 @@ public:
 	int maxVolume = 128;
 
 	int GetVolumeByDistance(int distance);
-	int soundMaxDistance = 600;
+	int soundMaxDistance = 1000;
 
 private:
 	std::map<int, Mix_Chunk*> soundMap;

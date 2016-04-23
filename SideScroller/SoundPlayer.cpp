@@ -16,12 +16,13 @@ void CSoundPlayer::PlaySoundAtVolume(int soundId, int loops, int volume)
 	if (volume < 1) return;
 	if (volume > 128) volume = 128;
 	int channels = 8;
+	//find free channel
 	for (int i = 0; i < channels; i++)
 	{
 		if (Mix_Playing(i) == false)
 		{
 			Mix_Volume(i, volume);
-			Mix_PlayChannel(i, soundMap[soundId], loops);
+			Mix_PlayChannel(i, soundMap[soundId], loops);			
 			return;
 		}
 	}
@@ -29,12 +30,11 @@ void CSoundPlayer::PlaySoundAtVolume(int soundId, int loops, int volume)
 	int i = rand() % 8;
 	Mix_Volume(i, volume);
 	Mix_PlayChannel(i, soundMap[soundId], loops);
-
 }
 int CSoundPlayer::GetVolumeByDistance(int distance)
 {
 	if (distance == 0) return maxVolume;
-	return maxVolume - (maxVolume*(distance/soundMaxDistance));
+	return  -1* (maxVolume*(cbrt((float)distance/(float)soundMaxDistance)-1));
 }
 //returns the channel
 int CSoundPlayer::PlaySound(int soundId, int loops)
