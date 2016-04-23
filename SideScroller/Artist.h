@@ -58,7 +58,6 @@ private:
 	int input;
 	std::vector<std::vector<CTile*>>* tileVector;
 	std::vector<CBaseObject*>* baseVector;
-	std::vector<SDL_Texture*> textureVector;
 	std::map<int, SDL_Texture*> textureMap;
 	
 	//for drawing weapons

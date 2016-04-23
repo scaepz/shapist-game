@@ -30,6 +30,7 @@ public:
 	};
 	CSpeechManager * speechManager;
 private:
+	bool IsAlone();
 	bool losingMorals;
 	SDL_Color captainColor;
 	SDL_Color memberColor;

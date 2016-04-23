@@ -383,23 +383,21 @@ void CGame::CreateWeapons()
 	ak->maxExtraRecoil = 0.18f;
 	ak->maxExtraSpread = 50000;
 	ak->textureId = 101;
-	ak->width =65;
-	ak->height = 15;
+	//ak->width =65;
+	//ak->height = 15;
 	ak->flipPoint.y = 7;
 	ak->name = "AK-47";
 	ak->fireSound = ak47_shot;
 	vm.AddObject(ak);
 	CBulletWeapon* m4a4 = new CBulletWeapon(&vm);
 	m4a4->clipSize = 30;
-	m4a4->damage = 4;
+	m4a4->damage = 0;
 	m4a4->numberOfPellets = 1;
 	m4a4->fireConeTightness = 110000.0f;
 	m4a4->maxLength = 1300;
 	m4a4->tracerIntensity = 0.2f;
 	m4a4->fireDelay = 95;
 	m4a4->reloadDelay = 2000;
-	m4a4->height = 24	;
-	m4a4->width = 71;
 	m4a4->offsetX = 71;
 	m4a4->offsetY = 0;
 	m4a4->kickBackY = -2;
@@ -504,5 +502,10 @@ void CGame::CreateWeapons()
 	mp55->name = "devLaser";
 	mp55->fireSound = 0;
 	vm.AddObject(mp55);
+
+	for (int i = 0; i < vm.GetWeaponVector()->size(); i++)
+	{
+		vm.GetWeaponVector()->at(i)->InitHandPlacement();
+	}
 
 }

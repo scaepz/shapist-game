@@ -56,4 +56,6 @@ res/textures/backgroundobjects/poster_removed.png
 res/textures/enemies/miniboss_trollhelvete.png
 1006
 res/textures/enemies/guard_mud.png
+1007
+res/textures/enemies/guard_mud_hand.png
 eof

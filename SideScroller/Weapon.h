@@ -6,6 +6,7 @@
 #include <string>
 #include "BaseObject.h"
 
+
 class CWeapon
 {
 public:
@@ -14,11 +15,11 @@ public:
 	virtual bool Attack(int x, int y, float angle, CBaseObject* attacker) = 0;
 	virtual void CeaseFire();
 	virtual void Update();
-
+	
 	virtual int GetFrame(int ms, int anim);
 
 	int fireSound = -1;
-
+	
 	int kickBackX = 1;
 	int kickBackY = 1;
 	int kickBackRot = 1;
@@ -46,6 +47,8 @@ public:
 	int positionAdjustment[2];
 	int idlePositionAdjustment[2];
 	int idleRotation;
+	void InitHandPlacement();
+	std::vector<std::pair<int,int>> handPlacements;
 private:
 	
 };

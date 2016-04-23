@@ -22,6 +22,7 @@ public:
 	float recoilIncreasePerBullet;
 	float spreadIncreasePerBullet;
 
+
 	float maxExtraRecoil;
 	float maxExtraSpread;
 

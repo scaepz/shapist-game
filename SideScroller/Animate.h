@@ -58,7 +58,7 @@ public:
 
 	//Weaponstuff
 	vector<CWeapon*>* weaponVector;
-
+	int handTextureId;
 	bool CancelAttack();
 	
 	void SetSwitchDelay(int ms);

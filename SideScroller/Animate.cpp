@@ -7,7 +7,7 @@ CAnimate::CAnimate(int x, int y, int textureId, int size, vector<CWeapon*> & _we
 	kickback = new CKickBack();
 	smallObject = false;
 	fireDelay = 0;
-
+	
 	weaponVector = &_weaponVector;
 	renderOrder = 2;
 	SetLoot(redHP);

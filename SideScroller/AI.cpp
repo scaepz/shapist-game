@@ -164,6 +164,7 @@ void CAI::Desert(CEnemy* self)
 	{
 		self->currentActivity = CEnemy::CurrentActivity::deserting;
 	}
+	self->SetPlayerVisible(false);
 	PlayerDirection pDir = GetPlayerHorizontalDirection(self);
 	if (pDir == PlayerDirection::right)
 	{
@@ -194,7 +195,7 @@ void CAI::Search(CEnemy* self, PlayerDirection lastKnownDirection)
 	{
 		MoveLeft(self);
 	}
-	if (ContinuousChance(1500))
+	if (ContinuousChance(1200))
 	{
 		Jump(self);
 	}
@@ -375,7 +376,9 @@ int CAI::DistanceToPlayer(CEnemy * self)
 
 }
 bool CAI::ContinuousChance(int averageMsBetweenOccurence)
-{ 
+{
+	if (averageMsBetweenOccurence / g_time == 0) return true;
+
 	return (rand() % (averageMsBetweenOccurence / g_time) == 0);
 }
 bool CAI::Chance(int percent)
@@ -410,13 +413,13 @@ std::string CAI::GetSpeechString(CEnemy * self, bool captain)
 					lineVector.push_back(linenode.text().as_string());
 				}
 				if (lineVector.size() == 0) return "";
-				string line = lineVector.at(rand() % lineVector.size()); 
+				string line = lineVector.at(rand() % lineVector.size());
 				std::cout << line << std::endl;
 				return line;
 			}
 		}
 	}
-	
+
 	return "";
 }
 CAI::~CAI()
@@ -483,7 +486,7 @@ bool CAI::SeesPlayer(int maxDistance, CEnemy * self)
 		{
 		case 0:
 			x2 = player->GetX();
-			y2 = player->GetY() + player->GetHeight()/2;
+			y2 = player->GetY() + player->GetHeight() / 2;
 			break;
 		case 1:
 			x2 = player->GetX() + player->GetWidth();

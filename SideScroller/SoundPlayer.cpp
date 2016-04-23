@@ -14,7 +14,7 @@ CSoundPlayer::CSoundPlayer()
 void CSoundPlayer::PlaySoundAtVolume(int soundId, int loops, int volume)
 {
 	if (volume < 1) return;
-	if (volume > 128) volume = 128;
+	if (volume > maxVolume) volume = maxVolume;
 	int channels = 8;
 	//find free channel
 	for (int i = 0; i < channels; i++)
@@ -89,22 +89,21 @@ CSoundPlayer::~CSoundPlayer()
 
 void CSoundPlayer::PlayDamageSound(int damage)
 {
-	
+	PlaySoundAtVolume(weapon_hit_low_quick, 0, maxVolume);
 	if (damage >= 0 && damage < 10) //white
 	{
-		Mix_PlayChannel(-1, soundMap[weapon_hit_low_quick], 0);
+		PlaySoundAtVolume(weapon_hit_low_quick, 0, maxVolume);
 	}
-
 	else if (damage >= 10 && damage < 30) // yellow
 	{
-		Mix_PlayChannel(-1, soundMap[weapon_hit_low], 0);
+		PlaySoundAtVolume(weapon_hit_low, 0, maxVolume);
 	}
 	else if (damage >= 30 && damage < 70) //orange
 	{
-		Mix_PlayChannel(-1, soundMap[weapon_hit_medium], 0);
+		PlaySoundAtVolume(weapon_hit_medium, 0, maxVolume);
 	}
 	else if (damage >= 70) //red
 	{
-		Mix_PlayChannel(-1, soundMap[weapon_hit_high], 0);
+		PlaySoundAtVolume(weapon_hit_high, 0, maxVolume);
 	}
 }

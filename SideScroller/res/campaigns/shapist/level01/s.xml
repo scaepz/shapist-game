@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <speech>
      <captain>
+		<fighting>
+			<a>You've no chance.</a>
+			<b>Surrender!</b>
+			<c>It's time to end this.</c>
+			<d>No more of this nonsense.</d>
+			<e>I've had enough of you.</e>
+			<f>Die!</f>
+			<e>It's over.</e>
+			<g>Get him!</g>
+			<h>Death!</h>
+			<i>Shoot him!</i>
+		</fighting>
+		<alone>
+			<a>My men...</a>
+			<b>I've failed my men.</b>
+			<c>I will avenge my men.</c>
+			<d>They're dead, they're all dead.</d>
+			<e>I can't believe it.</e>
+			<f>I will have revenge.</f>
+		</alone>
         <idling>
           <a>Stay alert.</a>
           <b>Eyes open.</b>
@@ -54,6 +74,21 @@
 	   </searching>
     </captain>
     <common>
+	<alone>
+		<a>They're all gone.</a>
+		<b>I'm all alone...</b>
+		<c>Well, this sucks.</c>
+		<e>All my friends...</e>
+	</alone>
+		<fighting>
+			<a>You have no chance.</a>
+			<b>Surrender!</b>
+			<c>It's time to end this.</c>
+			<d>No more of this nonsense.</d>
+			<e>I've had enough of you.</e>
+			<f>Die!</f>
+			<g>Go to hell.</g>
+		</fighting>
 	  <searching>
 		  <a>Come out you maggot!</a>
 		  <b>He's right here!</b>
@@ -69,7 +104,7 @@
       <idling>
         <a>So bored.</a>
         <b>I should quit.</b>
-        <c>Where is that roundie?</c>
+        <c>Where is that roundie?</c>		
 		<d>So hot.</d>
       </idling>
       <alert>
@@ -87,7 +122,7 @@
       <deserting>
         <a>Fuck this!</a>
         <b>Nope. Nope nope nope.</b>
-        <c>Guys I forgot to feed my cat!</c>
+        <c>I forgot to feed my cat!</c>
         <d>Hell no.</d>
         <e>We've no chance!</e>
         <f>I don't want to die!</f>

@@ -120,8 +120,7 @@ bool CGroup::Update()
 		if (M(i)->currentActivity == CEnemy::CurrentActivity::fighting
 			|| M(i)->currentActivity == CEnemy::CurrentActivity::braveryboost
 			|| M(i)->currentActivity == CEnemy::CurrentActivity::spottedPlayer
-			|| M(i)->currentActivity == CEnemy::CurrentActivity::retreating
-			|| M(i)->currentActivity == CEnemy::CurrentActivity::deserting)
+			|| M(i)->currentActivity == CEnemy::CurrentActivity::retreating)
 		{
 			if (M(i)->timeUntilAimCorrection >= 0)
 			{
@@ -134,6 +133,16 @@ bool CGroup::Update()
 					M(i)->timeUntilAimCorrection -= g_time;
 			}
 			M(i)->Aim();
+		}
+	}
+
+	if (IsAlone())
+	{
+		if (Ai()->ContinuousChance(32000))
+		{
+			CEnemy::CurrentActivity tempActivity = M(0)->currentActivity;
+			M(0)->currentActivity = CEnemy::CurrentActivity::alone;
+			speechManager->AddSpeech(M(0), Ai()->GetSpeechString(M(0), IsCaptain(M(0))), GetColor(M(0)));
 		}
 	}
 
@@ -179,9 +188,9 @@ bool CGroup::Update()
 				if (Ai(i)->ContinuousChance(1600))
 				{
 					M(i)->currentActivity = CEnemy::CurrentActivity::deserting;
-					if (Ai()->Chance(35))
+					if (Ai()->Chance(50))
 					{
-						speechManager->AddSpeech(M(i), Ai(i)->GetSpeechString(M(i), false), memberColor);
+						speechManager->AddSpeech(M(i), Ai(i)->GetSpeechString(M(i), IsCaptain(M(i))), GetColor(i));
 					}
 				}
 			}
@@ -195,7 +204,7 @@ bool CGroup::Update()
 		for (int i = 0; i < groupMembers.size(); i++)
 		{
 			Ai(i)->Idle(M(i));
-			if (Ai(i)->ContinuousChance(12000))
+			if (Ai(i)->ContinuousChance(12000) && !IsAlone())
 			{
 				speechManager->AddSpeech(M(i), Ai(i)->GetSpeechString(M(i), IsCaptain(M(i))), GetColor(i));
 			}
@@ -259,11 +268,11 @@ bool CGroup::Update()
 		for (int i = 0; i < groupMembers.size(); i++)
 		{
 			if (IsDelayZero(i))
-			{
+			{	
 				if (M(i)->currentActivity == CEnemy::CurrentActivity::retreating)
 					Ai(i)->Retreat(M(i));
 			}
-			if (Ai()->ContinuousChance(6000))
+			if (Ai()->ContinuousChance(7000))
 			{
 				InitDelays();
 				activity = GroupActivity::fighting;
@@ -278,7 +287,12 @@ bool CGroup::Update()
 			if (IsDelayZero(i))
 			{
 				if (M(i)->currentActivity != CEnemy::CurrentActivity::deserting)
+				{
 					Ai(i)->Attack(M(i));
+					if (Ai(i)->ContinuousChance(20000))
+						speechManager->AddSpeech(M(i), Ai(i)->GetSpeechString(M(i), (IsCaptain(M(i)))), GetColor(M(i)));
+				}
+
 			}
 		}
 		if (Ai()->ContinuousChance(100000) && IsCaptainAlive() && HasSufferedCasualties() && groupMembers.size() > 1)
@@ -295,12 +309,13 @@ bool CGroup::Update()
 				}
 			}
 		}
-		if (Ai()->ContinuousChance(30000) && IsCaptainAlive() && captain->currentActivity != CEnemy::CurrentActivity::deserting)
+		if (Ai()->ContinuousChance(30000) && IsCaptainAlive() && captain->currentActivity != CEnemy::CurrentActivity::deserting && losingMorals)
 		{
 			braveryBoost = 100;
 			captain->currentActivity = CEnemy::CurrentActivity::braveryboost;
-			if (groupMembers.size() > 1)
+			if (!IsAlone())
 				speechManager->AddSpeech(captain, Ai()->GetSpeechString(captain, true), GetColor(captain));
+			captain->currentActivity = CEnemy::CurrentActivity::fighting;
 			for (int i = 0; i < groupMembers.size(); i++)
 			{
 				if (groupMembers[i]->currentActivity == CEnemy::CurrentActivity::deserting)
@@ -318,7 +333,7 @@ bool CGroup::Update()
 				Ai(i)->Search(M(i), lastKnownDirection);
 			}
 		}
-		if (Ai(0)->ContinuousChance(15000))
+		if (Ai(0)->ContinuousChance(15000) && !IsAlone())
 		{
 			CEnemy * closest = Ai()->GetEnemyClosestToPlayerFromVector(groupMembers);
 			speechManager->AddSpeech(closest, Ai(closest)->GetSpeechString(closest, IsCaptain(closest)), GetColor(closest));
@@ -326,7 +341,10 @@ bool CGroup::Update()
 	}
 	return false;
 }
-
+bool CGroup::IsAlone()
+{
+	return (groupMembers.size() == 1);
+}
 SDL_Color CGroup::GetColor(int index)
 {
 	if (IsCaptain(groupMembers[index])) return captainColor;
@@ -340,8 +358,9 @@ void CGroup::GroupGainAwarenessOfPlayer()
 	InitDelays();
 	timeSincePlayerSpotted = 0;
 }
-void CGroup::LoseMorals()//if bravery is low (captain may be alive) units might desert
+void CGroup::LoseMorals()
 {
+	losingMorals = true;
 	for (int i = 0; i < groupMembers.size(); i++)
 	{
 		if (M(i)->bravery < 10)

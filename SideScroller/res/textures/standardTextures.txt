@@ -1,5 +1,7 @@
 0
 res/duals_concept.png
+50
+res/textures/weapons/player_hand.png
 101
 res/textures/weapons/ak3.png
 102

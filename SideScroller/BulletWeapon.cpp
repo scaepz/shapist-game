@@ -1,6 +1,6 @@
 #include "BulletWeapon.h"
 #include "Global.h"
-#include "SDL.h"
+
 #include <iostream>
 
 CBulletWeapon::CBulletWeapon(CVectorManager * _vm)
@@ -11,8 +11,8 @@ CBulletWeapon::CBulletWeapon(CVectorManager * _vm)
 	iconId = 8;
 	offsetY = 10;
 	offsetX = 65;
-	width = 65;
-	height = 20;
+	width = 0;
+	height = 0;
 
 	flipPoint.x = 0;
 	flipPoint.y = 10;
@@ -81,7 +81,7 @@ bool CBulletWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 {
 	totalDamage = 0;
 	bool playerHitEnemy = true;
-	float radius = sqrt((offsetX + positionAdjustment[0])*(offsetX + positionAdjustment[0]) + (offsetY+positionAdjustment[1])*(offsetY+positionAdjustment[1]));
+	float radius = sqrt((offsetX + positionAdjustment[0])*(offsetX + positionAdjustment[0]) + (offsetY + positionAdjustment[1])*(offsetY + positionAdjustment[1]));
 
 	float correctedOffsetX = (float)(radius * cos(angle));
 	float correctedOffsetY = (float)(radius * sin(angle));
@@ -235,3 +235,4 @@ int CBulletWeapon::DistanceToPlayer(CBaseObject * self)
 	int a = sqrt((player->GetX() - self->GetX()) * (player->GetX() - self->GetX()) + (player->GetY() - self->GetY()) * (player->GetY() - self->GetY()));
 	return a;
 }
+

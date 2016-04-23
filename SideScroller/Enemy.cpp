@@ -12,6 +12,7 @@ CEnemy::CEnemy(int x, int y, int textureId, int size, vector<CWeapon*> & weaponV
 	SetPointingDirection(1, 1);
 	speechType = "generic";
 	AddAmmo(bulletAmmo, 200);
+	handTextureId = 1007;
 	for (int i = 0; i < numberOfWeapons; i++)
 	{
 		ammoInClip[i] = weaponVector[i]->clipSize;
@@ -78,6 +79,8 @@ pugi::char_t * CEnemy::GetActivityString()
 		return "spotted";
 	case CurrentActivity::searching:
 		return "searching";
+	case CurrentActivity::alone:
+		return "alone";
 	default:
 		return "";
 

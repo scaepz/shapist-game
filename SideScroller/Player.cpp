@@ -10,7 +10,7 @@ CPlayer::CPlayer(int x, int y, int _textureId, int _size, vector<CWeapon*> & wea
 	frameSizeX = 200;
 	frameSizeY = 200;
 	renderOrder = 2;
-
+	handTextureId = 50;
 	animationData[idle][frameCountData] = 1;
 	animationData[idle][msPerFrameData] = 1000;
 	animationData[idle][startFrameData] = 0;
@@ -18,7 +18,6 @@ CPlayer::CPlayer(int x, int y, int _textureId, int _size, vector<CWeapon*> & wea
 	animationData[move][msPerFrameData] = 1000;
 	animationData[move][startFrameData] = 2;
 	currentAnim = idle;
-
 }
 
 

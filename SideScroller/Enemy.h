@@ -18,7 +18,8 @@ public:
 		alert,
 		braveryboost,
 		spottedPlayer,
-		searching
+		searching,
+		alone
 	};
 	enum class CurrentIdleActivity
 	{
