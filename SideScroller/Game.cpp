@@ -184,9 +184,9 @@ CGame::CGame(string levelDirectory, bool * nextLevel, SDL_Renderer * renderer, S
 		if (!dialogHandler.IsDialogOpen())
 		{
 			groups.HandleGroups();
-			speechManager.Update();
+			
 			physicsHandler.DoPhysics();
-
+			speechManager.Update();
 			ExecuteCommands();
 			ExecuteEffects();
 			eventTriggerManager.HandleEvents();

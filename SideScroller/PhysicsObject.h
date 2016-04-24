@@ -27,10 +27,10 @@ public:
 	};
 	//////////
 	
-	void AddVelocity(const CVector2f & relvel);
+	void AddVelocity(const CVector2<double> & relvel);
 
 
-	CVector2f velocity;
+	CVector2<double> velocity;
 	virtual void OnCollision(bool stopHor, bool stopVer) = 0;
 	bool OnGround();
 	void SetOnGround(bool);
@@ -40,7 +40,6 @@ public:
 	
 	bool IsSubjectToGravity();
 	void SetSubjectToGravity(bool);
-
 private:
 	bool onGround;
 	bool subjectToGravity = true;

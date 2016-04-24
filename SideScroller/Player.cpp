@@ -227,9 +227,18 @@ void CPlayer::SetRotation(float _rotation)
 }
 void CPlayer::OnCollision(bool stopHor, bool stopVer)
 {
+	/*if (stopHor)
+	{
+		velocity.SetX(velocity.);
+	}
+	if (stopVer)
+	{
+		velocity.SetY(0);
+	}*/
 	if (stopHor)
 	{
-		velocity.SetX(0);
+		velocity.SetX(velocity[0] * -0.1);
+
 	}
 	if (stopVer)
 	{

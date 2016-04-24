@@ -24,9 +24,11 @@ private:
 	CPlayer * player; //included for bandaid reasons
 	double gravity;
 	void FixCollision(int index);
+	void FixCollisions();
 	void ApplyGravity();
 	void UpdateObjectPositions();
 	float friction;
+	void Unstuck(int index);
 
 };
 

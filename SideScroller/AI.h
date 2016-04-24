@@ -50,7 +50,7 @@ public:
 	bool Chance(int percent);
 	int GroupDistanceToPlayer(vector<CEnemy*> group);
 	CEnemy * GetEnemyClosestToPlayerFromVector(vector<CEnemy*> group);
-
+	int GetHorizontalDistanceToPlayer(CEnemy * self);
 	PlayerDirection GetPlayerHorizontalDirection(CAnimate* self);
 	PlayerDirection GetPlayerVerticalDirection(CAnimate* self);
 //	bool IsPlayerInLineOfSight(int maxDistance, CEnemy * self);//expensive operation, only call once in a while

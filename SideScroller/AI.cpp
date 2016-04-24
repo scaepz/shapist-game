@@ -157,13 +157,15 @@ void CAI::Attack(CEnemy* self)
 		Jump(self);
 	}
 }
+
+int CAI::GetHorizontalDistanceToPlayer(CEnemy * self)
+{
+	return abs(self->GetX() - player->GetX());
+}
 void CAI::Desert(CEnemy* self)
 {
 	std::cout << "Desert";
-	if (self->currentActivity != CEnemy::CurrentActivity::deserting)
-	{
-		self->currentActivity = CEnemy::CurrentActivity::deserting;
-	}
+
 	self->SetPlayerVisible(false);
 	PlayerDirection pDir = GetPlayerHorizontalDirection(self);
 	if (pDir == PlayerDirection::right)

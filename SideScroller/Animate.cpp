@@ -1,6 +1,7 @@
 #include "Animate.h"
 #include "Global.h"
 #include "SDL.h"
+#include <iostream>
 #include "vector2.h"
 CAnimate::CAnimate(int x, int y, int textureId, int size, vector<CWeapon*> & _weaponVector) : CPhysicsObject(x, y, textureId, size)
 {
@@ -326,7 +327,10 @@ void CAnimate::UpdateTime(int time)
 
 	if (stamina != MAX_STAMINA)
 	{
-		stamina += staminaRegenPerMs * g_time;
+		float staminaboost = 1.0f;
+		if (abs(velocity[0]) < 0.05f && abs(velocity[1]) < 0.05f) 
+			staminaboost = 1.5f;
+		stamina += staminaRegenPerMs * g_time * staminaboost;
 		if (stamina > MAX_STAMINA) stamina = MAX_STAMINA;
 	}
 	if (staminaRedness > 0)

@@ -10,7 +10,7 @@ CPhysicsHandler::CPhysicsHandler(CVectorManager * _vm)
 	solidVector = vm->GetSolidVector();
 
 	gravity = 0.00155;
-	friction = 0.9995;
+	friction = 0.9993;
 
 
 }
@@ -37,16 +37,14 @@ void CPhysicsHandler::DoPhysics()
 {
 	ApplyGravity();
 	UpdateObjectPositions();
-	for (int i = 0; i < objectVector->size(); i++)
-	{
-		FixCollision(i);
-	}
+
 }
 void CPhysicsHandler::UpdateObjectPositions()
 {
 	for (int i = 0; i < objectVector->size(); i++)
 	{
 		objectVector->at(i)->Update(g_time);
+		FixCollision(i);
 	}
 }
 
@@ -101,7 +99,7 @@ void CPhysicsHandler::FixCollision(int index)
 								obj->pos[1] -= 2 * obj->velocity[1];
 
 								if (!collisionDetector.Collides(obj, tile, standardTileSize))
-								{									
+								{
 									if ((tile->pos[0] + 1) * standardTileSize < obj->pos[0])
 									{
 										stopDir[horizontal] = true;
@@ -110,15 +108,25 @@ void CPhysicsHandler::FixCollision(int index)
 									{
 										stopDir[horizontal] = true;
 									}
-									else if (tileVector->at((obj->pos[1] - 2) / standardTileSize).at((obj->pos[0]+1) / standardTileSize) != nullptr || tileVector->at((obj->pos[1] - 2) / standardTileSize).at((obj->pos[0] + obj->GetWidth()-1) / standardTileSize) != nullptr)
+									else if ((obj->pos[1] - 2) / standardTileSize >= 0
+										&& (obj->pos[1] - 2) / standardTileSize < tileVector->size()
+										&& (obj->pos[0] + 1) / standardTileSize < tileVector->at(0).size()
+										&& (obj->pos[0] + 1) / standardTileSize >= 0
+										&& (obj->pos[0] + obj->GetWidth() - 1) / standardTileSize >= 0
+										&& (obj->pos[0] + obj->GetWidth() - 1) / standardTileSize < tileVector->at(0).size())
+									{
+										if (tileVector->at((obj->pos[1] - 2) / standardTileSize).at((obj->pos[0] + 1) / standardTileSize) != nullptr || tileVector->at((obj->pos[1] - 2) / standardTileSize).at((obj->pos[0] + obj->GetWidth() - 1) / standardTileSize) != nullptr)
+											stopDir[vertical] = true;
+										else if ((tile->pos[1]) * standardTileSize > obj->pos[1] + obj->GetHeight())
+										{
+											stopDir[vertical] = true;
+										}
+									}
+									else
 									{
 										stopDir[vertical] = true;
 									}
-									else if ((tile->pos[1]) * standardTileSize > obj->pos[1] + obj->GetHeight())
-									{
-										stopDir[vertical] = true;
-									}
-							
+
 									collision = false;
 								}
 								if (stopDir[horizontal] && !stopDir[vertical])
@@ -295,7 +303,7 @@ void CPhysicsHandler::FixCollision(int index)
 							}//if object is on tof of object2
 							else if (obj->GetY() + obj->GetHeight() <= obj2->GetY() && obj->GetY() + obj->GetHeight() > obj2->GetY() - 1 && obj->pos[0] + obj->GetWidth() > obj2->pos[0] && obj2->pos[0] + obj2->GetWidth() > obj->pos[0])
 							{
-						standingOnEntity = true;
+								standingOnEntity = true;
 							}
 
 						}
@@ -363,14 +371,14 @@ void CPhysicsHandler::FixCollision(int index)
 		//	std::cout << "throw" << index << std::endl;
 		objectVector->at(index)->pos[0] = objectVector->at(index)->previousFramePos[0];
 		objectVector->at(index)->pos[1] = objectVector->at(index)->previousFramePos[1];
-		//objectVector->at(index)->velocity[0] = 0;
+		objectVector->at(index)->velocity[0] = 0;
 		//objectVector->at(index)->velocity[1] = 0;
 		if (e > -1)
 		{
 			objectVector->at(e)->pos[0] = objectVector->at(e)->previousFramePos[0];
 			objectVector->at(e)->pos[1] = objectVector->at(e)->previousFramePos[1];
-			//objectVector->at(e)->velocity[0] = 0;
-			//objectVector->at(e)->velocity[1] = 0;
+			objectVector->at(e)->velocity[0] = 0;
+			objectVector->at(e)->velocity[1] = 0;
 		}
 	}
 }

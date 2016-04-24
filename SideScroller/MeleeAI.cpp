@@ -13,21 +13,27 @@ CMeleeAI::~CMeleeAI()
 void CMeleeAI::Attack(CEnemy* self)
 {
 
-	if (self->currentActivity != CEnemy::CurrentActivity::fighting)
-	{
-		self->currentActivity = CEnemy::CurrentActivity::fighting;
-	}
+	PlayerDirection verDir = GetPlayerVerticalDirection(self);
+
 	self->currentAnim = self->move;
 	int distance = DistanceToPlayer(self);
 	PlayerDirection pDir = GetPlayerHorizontalDirection(self);
 
-	if (pDir == PlayerDirection::left && distance > 20)
+	if (verDir == PlayerDirection::above && GetHorizontalDistanceToPlayer(self) < 100)
+	{
+		if (ContinuousChance(1000))
+			MoveRight(self);
+		else if (ContinuousChance(1000))
+			MoveLeft(self);
+		else if (ContinuousChance(1000))
+			Jump(self);
+	}
+	else if (pDir == PlayerDirection::left && distance > 20)
 	{
 			MoveLeft(self);
 	}
 	else if (pDir == PlayerDirection::right && distance > 20)
 	{
-		
 			MoveRight(self);
 	}
 	else
