@@ -13,6 +13,13 @@ CWeapon::CWeapon()
 	idlePositionAdjustment[0] = 0;
 	idlePositionAdjustment[1] = 8;
 	idleRotation = 15;
+
+	animationData[0][frameCountData] = 1;
+	for (int i = 1; i < numberOfAnimations; i++)
+	{
+		animationData[i][frameCountData] = 0;
+	}
+	numberOfHands = 2;
 }
 
 
@@ -63,7 +70,7 @@ void CWeapon::InitHandPlacement()
 	{
 		if (atoi(rowreader.GetRow(textureData, i).c_str()) == textureId)
 		{
-			surface = IMG_Load(rowreader.GetRow(textureData, i+1).c_str());
+			surface = IMG_Load(rowreader.GetRow(textureData, i + 1).c_str());
 			break;
 		}
 	}
@@ -75,35 +82,54 @@ void CWeapon::InitHandPlacement()
 	Uint32 *pixels = ((Uint32*)surface->pixels);
 	SDL_UnlockSurface(surface);
 
-	for (int x = 0; x < surface->w; x++)
+	int frameWidth = surface->w;
+	int frameHeight = surface->h;
+	if (frameSizeX != 0)
 	{
-		for (int y = 0; y < surface->h; y++)
+		frameWidth = frameSizeX;
+		frameHeight = frameSizeY;
+	}
+	int numberOfFrames = 0;
+	for (int i = 0; i < numberOfAnimations; i++)
+	{
+		numberOfFrames += animationData[i][frameCountData];
+	}
+	for (int i = 0; i < numberOfFrames; i++)
+	{
+		int startX = (i % 4)*frameWidth;
+		int startY = (i / 4)*frameHeight;
+		int endX = startX + frameWidth;
+		int endY = startY + frameHeight;
+		for (int y = startY; y < endY; y++)
 		{
-			Uint32 temp, pixel;
-			Uint8 red, green, blue, alpha;
-			pixel = pixels[(y * surface->w) + x];
-			/* Get Red component */
-			temp = pixel & fmt->Rmask;  /* Isolate red component */
-			temp = temp >> fmt->Rshift; /* Shift it down to 8-bit */
-			temp = temp << fmt->Rloss;  /* Expand to a full 8-bit number */
-			red = (Uint8)temp;
-
-			/* Get Green component */
-			temp = pixel & fmt->Gmask;  /* Isolate green component */
-			temp = temp >> fmt->Gshift; /* Shift it down to 8-bit */
-			temp = temp << fmt->Gloss;  /* Expand to a full 8-bit number */
-			green = (Uint8)temp;
-
-			/* Get Blue component */
-			temp = pixel & fmt->Bmask;  /* Isolate blue component */
-			temp = temp >> fmt->Bshift; /* Shift it down to 8-bit */
-			temp = temp << fmt->Bloss;  /* Expand to a full 8-bit number */
-			blue = (Uint8)temp;
-
-			if (red == 255 && blue == 255 && green == 0)
+			for (int x = startX; x < endX; x++)
 			{
-				//if purple pixel found, add its coordinates to handplacements. CArtist will render an animate's hands at these positions.
-				handPlacements.push_back(std::pair<int,int>(x,y));
+				Uint32 temp, pixel;
+				Uint8 red, green, blue, alpha;
+				pixel = pixels[(y * surface->w) + x];
+				/* Get Red component */
+				temp = pixel & fmt->Rmask;  /* Isolate red component */
+				temp = temp >> fmt->Rshift; /* Shift it down to 8-bit */
+				temp = temp << fmt->Rloss;  /* Expand to a full 8-bit number */
+				red = (Uint8)temp;
+
+				/* Get Green component */
+				temp = pixel & fmt->Gmask;  /* Isolate green component */
+				temp = temp >> fmt->Gshift; /* Shift it down to 8-bit */
+				temp = temp << fmt->Gloss;  /* Expand to a full 8-bit number */
+				green = (Uint8)temp;
+
+				/* Get Blue component */
+				temp = pixel & fmt->Bmask;  /* Isolate blue component */
+				temp = temp >> fmt->Bshift; /* Shift it down to 8-bit */
+				temp = temp << fmt->Bloss;  /* Expand to a full 8-bit number */
+				blue = (Uint8)temp;
+
+				if (red == 255 && blue == 255 && green == 0)
+				{
+					//if purple pixel found, add its coordinates to handplacements. CArtist will render an animate's hands at these positions.
+					handPlacements.push_back(std::pair<int, int>(x-startX, y-startY));
+				}
 			}
 		}
 	}

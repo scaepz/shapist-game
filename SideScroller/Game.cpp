@@ -460,8 +460,6 @@ void CGame::CreateWeapons()
 	spear_mudhands->timeSinceAnimationStart = 0;
 	spear_mudhands->frameSizeX = 160;
 	spear_mudhands->frameSizeY = 24;
-	spear_mudhands->height = 24;
-	spear_mudhands->width = 160;
 	spear_mudhands->maxLength = 128;
 	spear_mudhands->offsetX = 32;
 	spear_mudhands->offsetY = 10;

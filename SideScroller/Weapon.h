@@ -49,6 +49,22 @@ public:
 	int idleRotation;
 	void InitHandPlacement();
 	std::vector<std::pair<int,int>> handPlacements;
+	char numberOfHands = 0;
+	enum animationDataType
+	{
+		frameCountData,
+		msPerFrameData,
+		startFrameData,
+		numberOfDataTypes
+	};
+	enum animations
+	{
+		idle,
+		attack1,
+		attack2,
+		numberOfAnimations
+	};
+	int animationData[numberOfAnimations][numberOfDataTypes];
 private:
 	
 };

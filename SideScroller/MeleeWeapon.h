@@ -17,21 +17,7 @@ public:
 	int damageDelay;
 	void Update();
 	int timeSinceAnimationStart;
-	enum animationDataType
-	{
-		frameCountData,
-		msPerFrameData,
-		startFrameData,
-		numberOfDataTypes
-	};
-	enum animations
-	{
-		idle,
-		attack1,
-		attack2,
-		numberOfAnimations
-	};
-	int animationData[numberOfAnimations][numberOfDataTypes];
+
 private:
 
 	

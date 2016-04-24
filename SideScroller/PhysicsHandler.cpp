@@ -101,16 +101,16 @@ void CPhysicsHandler::FixCollision(int index)
 								obj->pos[1] -= 2 * obj->velocity[1];
 
 								if (!collisionDetector.Collides(obj, tile, standardTileSize))
-								{
+								{									
 									if ((tile->pos[0] + 1) * standardTileSize < obj->pos[0])
 									{
 										stopDir[horizontal] = true;
 									}
-									else if ((tile->pos[0]) * standardTileSize > obj->pos[0] + obj->GetWidth())							
+									else if ((tile->pos[0]) * standardTileSize > obj->pos[0] + obj->GetWidth())
 									{
 										stopDir[horizontal] = true;
 									}
-									else if ((tile->pos[1])*standardTileSize + 1 < obj->pos[1])
+									else if (tileVector->at((obj->pos[1]-2) / standardTileSize).at(obj->pos[0]/standardTileSize) != nullptr)
 									{
 										stopDir[vertical] = true;
 									}
@@ -118,6 +118,7 @@ void CPhysicsHandler::FixCollision(int index)
 									{
 										stopDir[vertical] = true;
 									}
+							
 									collision = false;
 								}
 								if (stopDir[horizontal] && !stopDir[vertical])

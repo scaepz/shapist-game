@@ -351,24 +351,20 @@ void CArtist::DrawObjects()
 										float yPart = 0;
 										float xPart = 0;
 										float angle;
-										if (animateVector->at(a) == player)
-										{
+										
 											int inverter = 1;
 											angle = animateVector->at(a)->GetXhairAngleDeg() + animateVector->at(a)->kickback->GetRotation()*kickBackFlipper;
 											if (angle < 0) inverter = -1;
 											angle = abs(angle) - 90.0f;
 											yPart = (angle / 90.0f)*verticalCorrection;
 											xPart = (verticalCorrection-yPart) * inverter;
-										}
+										
 
 										hDstrect.y += yPart;
 										hDstrect.x += xPart;
-
 									}
-									;
 									flipPoint.x = -weapon->handPlacements[h].first + weapon->flipPoint.x + hDstrect.w / 2;
 									flipPoint.y = -weapon->handPlacements[h].second + weapon->flipPoint.y + hDstrect.h / 2;
-
 
 									SDL_RenderCopyEx(renderer,
 										textureMap[animateVector->at(a)->handTextureId],
@@ -390,15 +386,37 @@ void CArtist::DrawObjects()
 									weapon->idleRotation,
 									&weapon->flipPoint,
 									SDL_FLIP_NONE);
+
+								for (int h = 0; h < weapon->handPlacements.size(); h++)
+								{
+									SDL_Rect hDstrect;
+									SDL_QueryTexture(textureMap[animateVector->at(a)->handTextureId], NULL, NULL, &hDstrect.w, &hDstrect.h);
+									hDstrect.x = dstrect.x + weapon->handPlacements[h].first - hDstrect.w / 2;
+									hDstrect.y = dstrect.y + weapon->handPlacements[h].second - hDstrect.h / 2;
+									SDL_Point flipPoint;
+									float verticalCorrection = 0;
+									
+									flipPoint.x = -weapon->handPlacements[h].first + weapon->flipPoint.x + hDstrect.w / 2;
+									flipPoint.y = -weapon->handPlacements[h].second + weapon->flipPoint.y + hDstrect.h / 2;
+
+									SDL_RenderCopyEx(renderer,
+										textureMap[animateVector->at(a)->handTextureId],
+										NULL,
+										&hDstrect,
+										weapon->idleRotation,
+										&flipPoint,
+										SDL_FLIP_NONE);
+								}
 							}
 						}
 						else
 						{
+							int frame = animateVector->at(a)->GetWeaponFrame();
 							SDL_Rect srcrect;
 							srcrect.h = weapon->GetFrameSizeY();
 							srcrect.w = weapon->GetFrameSizeX();
-							srcrect.x = (animateVector->at(a)->GetWeaponFrame() % 4) * srcrect.w;
-							srcrect.y = (animateVector->at(a)->GetWeaponFrame() / 4) * srcrect.h;
+							srcrect.x = (frame % 4) * srcrect.w;
+							srcrect.y = (frame / 4) * srcrect.h;
 
 
 							if (animateVector->at(a)->currentAnim > 1)
@@ -414,6 +432,47 @@ void CArtist::DrawObjects()
 									animateVector->at(a)->GetXhairAngleDeg() + animateVector->at(a)->kickback->GetRotation()*kickBackFlipper,
 									&weapon->flipPoint,
 									flipper);
+								//Draw hands
+								for (int h = frame*weapon->numberOfHands; h < frame*weapon->numberOfHands + weapon->numberOfHands; h++)
+								{
+									SDL_Rect hDstrect;
+									SDL_QueryTexture(textureMap[animateVector->at(a)->handTextureId], NULL, NULL, &hDstrect.w, &hDstrect.h);
+									hDstrect.x = dstrect.x + weapon->handPlacements[h].first - hDstrect.w / 2;
+									hDstrect.y = dstrect.y + weapon->handPlacements[h].second - hDstrect.h / 2;
+									SDL_Point flipPoint;
+									float verticalCorrection = 0;
+									if (flipper == SDL_FLIP_VERTICAL)
+									{
+										//Manually mirror hands while accounting for rotation
+										verticalCorrection = (weapon->handPlacements[h].second - (dstrect.h / 2)) * 2;
+
+										float yPart = 0;
+										float xPart = 0;
+										float angle;
+
+										int inverter = 1;
+										angle = animateVector->at(a)->GetXhairAngleDeg() + animateVector->at(a)->kickback->GetRotation()*kickBackFlipper;
+										if (angle < 0) inverter = -1;
+										angle = abs(angle) - 90.0f;
+										yPart = (angle / 90.0f)*verticalCorrection;
+										xPart = (verticalCorrection - yPart) * inverter;
+
+
+										hDstrect.y += yPart;
+										hDstrect.x += xPart;
+									}
+									flipPoint.x = -weapon->handPlacements[h].first + weapon->flipPoint.x + hDstrect.w / 2;
+									flipPoint.y = -weapon->handPlacements[h].second + weapon->flipPoint.y + hDstrect.h / 2;
+
+									SDL_RenderCopyEx(renderer,
+										textureMap[animateVector->at(a)->handTextureId],
+										NULL,
+										&hDstrect,
+										animateVector->at(a)->GetXhairAngleDeg() + animateVector->at(a)->kickback->GetRotation()*kickBackFlipper,
+										&flipPoint,
+										flipper);
+								}
+
 							}
 							else
 							{
@@ -426,6 +485,25 @@ void CArtist::DrawObjects()
 									weapon->idleRotation,
 									&weapon->flipPoint,
 									SDL_FLIP_NONE);
+								for (int h = frame*weapon->numberOfHands; h < frame*weapon->numberOfHands + weapon->numberOfHands; h++)
+								{
+									SDL_Rect hDstrect;
+									SDL_QueryTexture(textureMap[animateVector->at(a)->handTextureId], NULL, NULL, &hDstrect.w, &hDstrect.h);
+									hDstrect.x = dstrect.x + weapon->handPlacements[h].first - hDstrect.w / 2;
+									hDstrect.y = dstrect.y + weapon->handPlacements[h].second - hDstrect.h / 2;
+									SDL_Point flipPoint;
+									
+									flipPoint.x = -weapon->handPlacements[h].first + weapon->flipPoint.x + hDstrect.w / 2;
+									flipPoint.y = -weapon->handPlacements[h].second + weapon->flipPoint.y + hDstrect.h / 2;
+
+									SDL_RenderCopyEx(renderer,
+										textureMap[animateVector->at(a)->handTextureId],
+										NULL,
+										&hDstrect,
+										weapon->idleRotation,
+										&flipPoint,
+										flipper);
+								}
 							}
 						}
 					}

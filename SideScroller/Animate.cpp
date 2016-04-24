@@ -184,16 +184,16 @@ bool CAnimate::AirMove(bool dir, int ms)
 			{
 				//max selfmovement in air
 				velocity[0] = maxMoveSpeed*-0.3;
-				return true;
+				return false; //
 			}
 		}
 		else if (velocity[0] > maxMoveSpeed*-0.3)
 		{
 			//max selfmovement in air
 			velocity[0] = maxMoveSpeed*-0.3;
-			return true;
+			return false; //
 		}
-		else return true;
+		else return false;
 
 	}
 	else // right
@@ -211,16 +211,16 @@ bool CAnimate::AirMove(bool dir, int ms)
 			{
 				//max selfmovement in air
 				velocity[0] = maxMoveSpeed*0.3;
-				return true;
+				return false;
 			}
 		}
 		else if (velocity[0] < maxMoveSpeed*0.3)
 		{
 			//max selfmovement in air
 			velocity[0] = maxMoveSpeed*0.3;
-			return true;
+			return false;
 		}
-		else return true;
+		else return false;
 
 	}
 }
