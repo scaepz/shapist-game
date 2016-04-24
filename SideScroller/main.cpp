@@ -26,8 +26,8 @@ int main()
 		std::cout << "TTF failed to init";
 	}
 
-	int resolution[2] = { 1920, 1080};
-	SDL_Window * window = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, resolution[0], resolution[1], NULL);
+	int resolution[2] = { 1280, 720};
+	SDL_Window * window = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, resolution[0], resolution[1], SDL_WINDOW_FULLSCREEN);
 	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, NULL);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	

@@ -118,8 +118,14 @@ void CPlayer::SwitchWeapon(int slotIndex)
 {
 	if (SlotOK(slotIndex))
 	{
-
-		int weapon = inventorySlots[slotIndex];
+		int weapon;
+		if (slotIndex == currentSlot)
+		{	
+			slotIndex = -1;
+			weapon = noWeapon;
+		}
+		else
+			weapon = inventorySlots[slotIndex];
 		currentSlot = slotIndex;
 		if (weapon != GetWeaponEquipped())
 		{

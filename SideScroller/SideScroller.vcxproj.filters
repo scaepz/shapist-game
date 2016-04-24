@@ -179,9 +179,6 @@
     <ClCompile Include="AI.cpp">
       <Filter>AI</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleTestAI.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
     <ClCompile Include="TrapObject.cpp">
       <Filter>Objects\StaticObjects\Traps</Filter>
     </ClCompile>
@@ -236,23 +233,11 @@
     <ClCompile Include="InteractCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="RangedAI.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="AggressiveAI.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="RetreatingAI.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
     <ClCompile Include="Chest.cpp">
       <Filter>Misc</Filter>
     </ClCompile>
     <ClCompile Include="ChestDialog.cpp">
       <Filter>Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="AIHandler.cpp">
-      <Filter>AI</Filter>
     </ClCompile>
     <ClCompile Include="DamageNumber.cpp">
       <Filter>HUD</Filter>
@@ -305,9 +290,6 @@
     <ClCompile Include="MeleeWeapon.cpp">
       <Filter>Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="CautiousRangedAI.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
     <ClCompile Include="BackgroundObject.cpp">
       <Filter>Objects\StaticObjects</Filter>
     </ClCompile>
@@ -323,16 +305,19 @@
     <ClCompile Include="SlowMoveCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="SpeechManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Speech.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pugixml.cpp">
       <Filter>pugixml</Filter>
     </ClCompile>
     <ClCompile Include="FileReader.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="SpeechManager.cpp">
+      <Filter>Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Speech.cpp">
       <Filter>Misc</Filter>
     </ClCompile>
   </ItemGroup>
@@ -448,9 +433,6 @@
     <ClInclude Include="AI.h">
       <Filter>AI</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleTestAI.h">
-      <Filter>AI</Filter>
-    </ClInclude>
     <ClInclude Include="Commands.h">
       <Filter>Commands</Filter>
     </ClInclude>
@@ -514,23 +496,11 @@
     <ClInclude Include="InteractCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="AggressiveAI.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="RangedAI.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="RetreatingAI.h">
-      <Filter>AI</Filter>
-    </ClInclude>
     <ClInclude Include="Chest.h">
       <Filter>Misc</Filter>
     </ClInclude>
     <ClInclude Include="ChestDialog.h">
       <Filter>Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="AIHandler.h">
-      <Filter>AI</Filter>
     </ClInclude>
     <ClInclude Include="DamageNumber.h">
       <Filter>HUD</Filter>
@@ -592,9 +562,6 @@
     <ClInclude Include="MeleeWeapon.h">
       <Filter>Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="CautiousRangedAI.h">
-      <Filter>AI</Filter>
-    </ClInclude>
     <ClInclude Include="BackgroundObject.h">
       <Filter>Objects\StaticObjects</Filter>
     </ClInclude>
@@ -610,15 +577,6 @@
     <ClInclude Include="SlowMoveCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="SpeechManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Speech.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="pugiconfig.hpp">
       <Filter>pugixml</Filter>
     </ClInclude>
@@ -626,6 +584,15 @@
       <Filter>pugixml</Filter>
     </ClInclude>
     <ClInclude Include="FileReader.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="SpeechManager.h">
+      <Filter>Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Speech.h">
       <Filter>Misc</Filter>
     </ClInclude>
   </ItemGroup>

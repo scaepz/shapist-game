@@ -134,7 +134,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AI.cpp" />
-    <ClCompile Include="AIHandler.cpp" />
     <ClCompile Include="AmmoItem.cpp" />
     <ClCompile Include="Animate.cpp" />
     <ClCompile Include="Artist.cpp" />
@@ -142,7 +141,6 @@
     <ClCompile Include="BackgroundObject.cpp" />
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="Campaign.cpp" />
-    <ClCompile Include="CautiousRangedAI.cpp" />
     <ClCompile Include="CeaseFire.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="ChestDialog.cpp" />
@@ -179,8 +177,8 @@
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="KickBack.cpp" />
     <ClCompile Include="Fluid.cpp" />
-    <ClCompile Include="AggressiveAI.cpp" />
     <ClCompile Include="Line.cpp" />
+    <ClCompile Include="MeleeAI.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="ParticleEngine.cpp" />
     <ClCompile Include="ProjectileHandler.cpp" />
@@ -195,9 +193,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="pugixml.cpp" />
-    <ClCompile Include="RangedAI.cpp" />
     <ClCompile Include="ReloadCommand.cpp" />
-    <ClCompile Include="RetreatingAI.cpp" />
     <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="RocketLauncher.cpp" />
     <ClCompile Include="SDL2_framerate.c" />
@@ -205,7 +201,6 @@
     <ClCompile Include="SDL2_imageFilter.c" />
     <ClCompile Include="SDL2_rotozoom.c" />
     <ClCompile Include="BulletWeapon.cpp" />
-    <ClCompile Include="SimpleTestAI.cpp" />
     <ClCompile Include="SlowMoveCommand.cpp" />
     <ClCompile Include="SoftStopCommand.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
@@ -223,7 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AI.h" />
-    <ClInclude Include="AIHandler.h" />
     <ClInclude Include="AIs.h" />
     <ClInclude Include="AmmoItem.h" />
     <ClInclude Include="Animate.h" />
@@ -232,7 +226,6 @@
     <ClInclude Include="BackgroundObject.h" />
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="Campaign.h" />
-    <ClInclude Include="CautiousRangedAI.h" />
     <ClInclude Include="CeaseFire.h" />
     <ClInclude Include="Chest.h" />
     <ClInclude Include="ChestDialog.h" />
@@ -263,11 +256,11 @@
     <ClInclude Include="GroupManager.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="Line.h" />
+    <ClInclude Include="MeleeAI.h" />
     <ClInclude Include="ParticleEngine.h" />
     <ClInclude Include="pugiconfig.hpp" />
     <ClInclude Include="pugixml.hpp" />
     <ClInclude Include="ReloadCommand.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Rocket.h" />
     <ClInclude Include="RocketLauncher.h" />
     <ClInclude Include="BulletWeapon.h" />
@@ -283,16 +276,12 @@
     <ClInclude Include="Key.h" />
     <ClInclude Include="KickBack.h" />
     <ClInclude Include="Fluid.h" />
-    <ClInclude Include="AggressiveAI.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="ProjectileHandler.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="PhysicsHandler.h" />
     <ClInclude Include="Projectile.h" />
-    <ClInclude Include="RangedAI.h" />
-    <ClInclude Include="RetreatingAI.h" />
-    <ClInclude Include="SimpleTestAI.h" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="Speech.h" />
     <ClInclude Include="SpeechManager.h" />

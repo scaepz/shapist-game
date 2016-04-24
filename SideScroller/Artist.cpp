@@ -75,7 +75,7 @@ CArtist::CArtist(CVectorManager* _vm, int _tileSet, int resX, int resY, string t
 	inventory = IMG_LoadTexture(renderer, "res/inventory_slot.png");
 	highlightedSlot = IMG_LoadTexture(renderer, "res/inventory_highlightedslot.png");
 	currentSlot = IMG_LoadTexture(renderer, "res/inventory_currentslot.png");
-
+	highlightedCurrent = IMG_LoadTexture(renderer, "res/inventory_highlightedcurrent.png");
 	chestDialog = IMG_LoadTexture(renderer, "res/chestdialog_purple_window.png");
 	chestDialogCloseButton = IMG_LoadTexture(renderer, "res/chestdialog_purple_close.png");
 	FadeIn(2000);
@@ -141,7 +141,11 @@ void CArtist::DrawDialogs()
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			if (player->GetCurrentSlot() == i)
+			if (player->GetCurrentSlot() == i && dialogHandler->IsHighLighted(i))
+			{
+				SDL_RenderCopy(renderer, highlightedCurrent, NULL, &dialogHandler->GetSlotRect(i));
+			}
+			else if (player->GetCurrentSlot() == i)
 			{
 				SDL_RenderCopy(renderer, currentSlot, NULL, &dialogHandler->GetSlotRect(i));
 			}
@@ -153,7 +157,6 @@ void CArtist::DrawDialogs()
 			{
 				SDL_RenderCopy(renderer, inventory, NULL, &dialogHandler->GetSlotRect(i));
 			}
-
 		}
 
 		for (int i = 0; i < 4; i++)

@@ -157,7 +157,7 @@ void CDialogHandler::Release(int x, int y)
 	{
 		if (!lifting)
 		{
-			// realising mousekey on slot when not lifting equips the weapon in that slot
+			// releasing mousekey on slot when not lifting equips the weapon in that slot
 			for (int i = 0; i < numberOfSlots; i++)//hardcoded for now, but size and pos of inv might vary with resolution
 			{
 				if (x > 48 + (128 * i) && x < 48 + 128 + (128 * i) && y > 0 && y < 128)

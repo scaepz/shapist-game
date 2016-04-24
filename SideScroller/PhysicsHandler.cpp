@@ -110,7 +110,7 @@ void CPhysicsHandler::FixCollision(int index)
 									{
 										stopDir[horizontal] = true;
 									}
-									else if (tileVector->at((obj->pos[1]-2) / standardTileSize).at(obj->pos[0]/standardTileSize) != nullptr)
+									else if (tileVector->at((obj->pos[1] - 2) / standardTileSize).at((obj->pos[0]+1) / standardTileSize) != nullptr || tileVector->at((obj->pos[1] - 2) / standardTileSize).at((obj->pos[0] + obj->GetWidth()-1) / standardTileSize) != nullptr)
 									{
 										stopDir[vertical] = true;
 									}

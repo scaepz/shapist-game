@@ -27,8 +27,8 @@ CMeleeWeapon::CMeleeWeapon(CVectorManager * _vm)
 	width = 72;
 	StartAnimation(idle);
 	maxLength = 28;
-	offsetX = 48;
-	offsetY = 0;
+	offsetX = 52;
+	offsetY = 5;
 	damage = 3;
 	ammoType = melee;
 	ammoCost = 0;
@@ -54,6 +54,7 @@ bool CMeleeWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 	int closestSolid = -1;
 	for (int p = 0; p < vm->GetSolidVector()->size(); p++)
 	{
+		if (vm->GetSolidVector()->at(p) == attacker) continue;
 		SDL_Rect enemy;
 		enemy.x = vm->GetSolidVector()->at(p)->GetX();
 		enemy.y = vm->GetSolidVector()->at(p)->GetY();
@@ -71,13 +72,18 @@ bool CMeleeWeapon::Attack(int x, int y, float angle, CBaseObject* attacker)
 			closestSolid = p;
 		}
 	}
-	if (closestSolid > -1)
+	if (closestSolid > -1 && attacker == vm->GetPlayer())
 	{
 		vm->GetSolidVector()->at(closestSolid)->TakeDamage(damage);
 		vm->GetSoundPlayer()->PlayDamageSound(damage);
 		CDamageNumber * dmgn = new CDamageNumber(damage, x2, y2);
 		vm->AddObject(dmgn);
 	}
+	else if (closestSolid > -1 && vm->GetSolidVector()->at(closestSolid) == vm->GetPlayer())
+	{
+		vm->GetSolidVector()->at(closestSolid)->TakeDamage(damage);
+	}
+
 
 	return true;
 }

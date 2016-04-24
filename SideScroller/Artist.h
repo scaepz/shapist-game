@@ -86,7 +86,7 @@ private:
 	SDL_Texture * nullTexture;
 	SDL_Texture * currentSlot;
 	SDL_Texture * highlightedSlot;
-
+	SDL_Texture * highlightedCurrent;
 	SDL_Texture * chestDialog;
 	SDL_Texture * chestDialogCloseButton;
 

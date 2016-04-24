@@ -4,8 +4,6 @@
 #include "SoundEnum.h"
 #include "GameSaver.h"
 #include "HitscanWeapon.h"
-#include "AIHandler.h"
-#include "SimpleTestAI.h"
 #include "RocketLauncher.h"
 #include "EventManager.h"
 #include "Hud.h"
@@ -454,12 +452,14 @@ void CGame::CreateWeapons()
 	spear_mudhands->animationData[spear_mudhands->attack2][spear_mudhands->frameCountData] = 0;
 	spear_mudhands->animationData[spear_mudhands->attack2][spear_mudhands->msPerFrameData] = 25;
 	spear_mudhands->animationData[spear_mudhands->attack2][spear_mudhands->startFrameData] = 1;
-	spear_mudhands->fireDelay = 1000;
+	spear_mudhands->fireDelay = 500;
 	spear_mudhands->flipPoint.x = 8;
 	spear_mudhands->flipPoint.y = 12;
 	spear_mudhands->timeSinceAnimationStart = 0;
 	spear_mudhands->frameSizeX = 160;
 	spear_mudhands->frameSizeY = 24;
+	spear_mudhands->width = 160;
+	spear_mudhands->height = 24;
 	spear_mudhands->maxLength = 128;
 	spear_mudhands->offsetX = 32;
 	spear_mudhands->offsetY = 10;
@@ -467,7 +467,7 @@ void CGame::CreateWeapons()
 	spear_mudhands->ammoType = melee;
 	spear_mudhands->ammoCost = 0;
 	spear_mudhands->staminaCost = 8;
-	spear_mudhands->animPointOfNoReturnInMs = 150;
+	spear_mudhands->animPointOfNoReturnInMs = 100;
 	spear_mudhands->positionAdjustment[0] = -7;
 	spear_mudhands->positionAdjustment[1] = -3;
 	spear_mudhands->idleRotation = -90;

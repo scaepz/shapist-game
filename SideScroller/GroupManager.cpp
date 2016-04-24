@@ -5,14 +5,10 @@ CGroupManager::CGroupManager(std::map<int, CGroup*> * _groupMap, CVectorManager 
 {
 	groupMap = _groupMap;
 	vm = _vm;
-	CRetreatingAI * retreating = new CRetreatingAI(vm);
-	AIVector.push_back(retreating);
-	CAggressiveAI * agg = new CAggressiveAI(vm);
-	AIVector.push_back(agg);
-	CRangedAI * ranged = new CRangedAI(vm);
-	AIVector.push_back(ranged);
-	CCautiousRangedAI * catRanged = new CCautiousRangedAI(vm);
-	AIVector.push_back(catRanged);
+	CAI * ai = new CAI(vm);
+	AIVector.push_back(ai);
+	CMeleeAI *meleeAi = new CMeleeAI(vm);
+	AIVector.push_back(meleeAi);
 
 	for (std::map<int, CGroup*>::iterator it = groupMap->begin(); it != groupMap->end(); ++it)
 	{

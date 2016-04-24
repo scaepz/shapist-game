@@ -7,7 +7,7 @@ CAnimate::CAnimate(int x, int y, int textureId, int size, vector<CWeapon*> & _we
 	kickback = new CKickBack();
 	smallObject = false;
 	fireDelay = 0;
-	
+
 	weaponVector = &_weaponVector;
 	renderOrder = 2;
 	SetLoot(redHP);
@@ -423,7 +423,9 @@ bool CAnimate::Attack()
 					SetFireDelay(weaponVector->at(GetWeaponEquipped())->fireDelay);
 					ammoInClip[GetWeaponEquipped()] -= weaponVector->at(GetWeaponEquipped())->ammoCost;
 					kickback->NewKickback();
-					return (weaponVector->at(weaponEquipped)->Attack(pos[0] + (GetWidth() / 2), pos[1] + (GetHeight() / 2), GetXhairAngle(), this));
+					bool ceaseFire = (weaponVector->at(weaponEquipped)->Attack(pos[0] + (GetWidth() / 2), pos[1] + (GetHeight() / 2), GetXhairAngle(), this));
+					if (ceaseFire) isAttacking = false;
+					return ceaseFire;
 				}
 			}
 			else return false;

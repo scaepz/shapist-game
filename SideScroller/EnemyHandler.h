@@ -5,7 +5,6 @@
 
 #include "Enemy.h"
 #include "AI.h"
-#include "SimpleTestAI.h"
 #include "Player.h"
 
 
