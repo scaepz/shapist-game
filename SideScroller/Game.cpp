@@ -165,18 +165,17 @@ CGame::CGame(string levelDirectory, bool * nextLevel, SDL_Renderer * renderer, S
 	gameState = 0;
 	while (gameState == 0 || gameState == 3)
 	{
-		
+		SDL_Delay(5);
 		frames++;
 		ms += g_time;
-		if (ms > 500)
+		if (ms > 250)
 		{
-			std::cout << frames << std::endl;
+			std::cout << frames*4 << std::endl;
 			frames = 0;
 			ms = 0;
 		}
-
-		SDL_Delay(1);
 		g_time = GetTicks();
+
 		dialogHandler.GetInventory()->Update();
 		dialogHandler.Update();
 		inputHandler.HandleInput();
