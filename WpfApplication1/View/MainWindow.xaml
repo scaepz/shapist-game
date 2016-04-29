@@ -19,6 +19,11 @@
                     <MenuItem Header="Open" Click="OpenOpenLevelDialog"/>
                     <MenuItem Header="Save" Click="SaveCurrentLevel"/>
                 </MenuItem>
+                <MenuItem Header="Resources">
+                    <MenuItem Header="New object">
+                    </MenuItem>
+                    <MenuItem Header="Import texture" Click="OpenImportTextureDialog"></MenuItem>
+                </MenuItem>
             </Menu>
             <StackPanel></StackPanel>
         </DockPanel>

@@ -47,7 +47,6 @@ namespace Editor.View
             imgMap.Add('1', bmpToAdd);
         }
 
-
         private void OpenNewLevelDialog(object sender, RoutedEventArgs e)
         {
             NewLevelDialog win2 = new NewLevelDialog(vm, this);
@@ -130,6 +129,11 @@ namespace Editor.View
         {
             if (vm.lvl != null)
                 vm.SaveLevel();
+        }
+        private void OpenImportTextureDialog(object sender, RoutedEventArgs e)
+        {
+            ImportTexture d = new ImportTexture();
+            d.Show();
         }
 
     }

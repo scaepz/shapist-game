@@ -8,6 +8,7 @@ namespace Editor.Model
 {
     public class Level
     {
+        List<Entity> entityList;
         public string Name { get; set; }
         public Tile[,] tileList { get; set; }
         public char GetTileType(int x, int y)
@@ -34,5 +35,12 @@ namespace Editor.Model
     public class Tile
     {
         public char Id;
+    }
+    public class Entity
+    {
+        public string Name { get; set; }
+        public char Id { get; set; }
+        public int FrameSizeX { get; set; }
+        public int FrameSizyY { get; set; }
     }
 }

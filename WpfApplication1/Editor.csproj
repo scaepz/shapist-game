@@ -55,12 +55,32 @@
     </ApplicationDefinition>
     <Compile Include="Model\DataProvider.cs" />
     <Compile Include="ViewModel\LevelEditViewModel.cs" />
+    <Compile Include="View\ConfigDialog.xaml.cs">
+      <DependentUpon>ConfigDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ImportTexture.xaml.cs">
+      <DependentUpon>ImportTexture.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewEnemy.xaml.cs">
+      <DependentUpon>NewEnemy.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NewLevelDialog.xaml.cs">
       <DependentUpon>NewLevelDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewObject.xaml.cs">
+      <DependentUpon>NewObject.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OpenLevelDialog.xaml.cs">
       <DependentUpon>OpenLevelDialog.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\ConfigDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ImportTexture.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,7 +93,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\NewEnemy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\NewLevelDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewObject.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
