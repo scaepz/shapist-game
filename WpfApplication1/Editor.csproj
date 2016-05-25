@@ -7,8 +7,8 @@
     <ProjectGuid>{2AF0617C-E738-4FE1-8408-C2939B1591EA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WpfApplication1</RootNamespace>
-    <AssemblyName>WpfApplication1</AssemblyName>
+    <RootNamespace>Editor</RootNamespace>
+    <AssemblyName>Editor</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,12 +55,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\DataProvider.cs" />
+    <Compile Include="ViewModel\ManageTexturesViewModel.cs" />
     <Compile Include="ViewModel\LevelEditViewModel.cs" />
+    <Compile Include="ViewModel\Validation.cs" />
     <Compile Include="View\ConfigDialog.xaml.cs">
       <DependentUpon>ConfigDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ImportTexture.xaml.cs">
       <DependentUpon>ImportTexture.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ManageTextures.xaml.cs">
+      <DependentUpon>ManageTextures.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NewEnemy.xaml.cs">
       <DependentUpon>NewEnemy.xaml</DependentUpon>
@@ -93,6 +99,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ManageTextures.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\NewEnemy.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

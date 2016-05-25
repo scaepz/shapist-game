@@ -6,12 +6,19 @@
 
         <Image Name="img" HorizontalAlignment="Left" Height="169" Margin="10,10,0,0" VerticalAlignment="Top" Width="169"/>
         <Button Content="Import" HorizontalAlignment="Left" Margin="10,297,0,0" VerticalAlignment="Top" Width="75" Click="Import" RenderTransformOrigin="-0.253,0.545"/>
-        <Button Content="Cancel" HorizontalAlignment="Left" Margin="101,297,0,0" VerticalAlignment="Top" Width="75" IsCancel="True"/>
-        <TextBox Name="nameTextBox" HorizontalAlignment="Left" Height="23" Margin="77,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="101,297,0,0" VerticalAlignment="Top" Width="75" IsCancel="True" Click="Cancel"/>
+        <TextBox Name="nameTextBox" HorizontalAlignment="Left" Height="23" Margin="77,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100">
+            <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+            </Binding>
+        </TextBox>
         <Label Content="Name" HorizontalAlignment="Left" Margin="10,211,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.237,0.013"/>
         <Label Content="Frames" HorizontalAlignment="Left" Margin="10,242,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="frameTextBox" HorizontalAlignment="Left" Height="23" Margin="77,244,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47" RenderTransformOrigin="0.737,0.609"/>
-        <Button Content="Browse" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top" Width="75" Click="Browse" RenderTransformOrigin="-0.253,-1.955"/>
+        <TextBox Name="frameTextBox" HorizontalAlignment="Left" Height="23" Margin="77,244,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47" RenderTransformOrigin="0.737,0.609">
+            <Binding Path="Frames" UpdateSourceTrigger="PropertyChanged">
+            </Binding>
+        </TextBox>
+
+        <Button IsDefault="True" Content="Browse" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top" Width="75" Click="Browse" RenderTransformOrigin="-0.253,-1.955"/>
 
     </Grid>
 </Window>

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Editor.Model;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Editor.ViewModel
 {
@@ -27,6 +29,34 @@ namespace Editor.ViewModel
             DataProvider.SaveLevel(lvl);
         }
 
+    }
+    public class ImportTextureViewModel : INotifyPropertyChanged
+    {
+        [Validation.UniqueTextureName]
+        [Required(ErrorMessage = "Name is required")]
+        public string Name { get; set; }
+        
+        [Range(1, 200,ErrorMessage="Frame amount must be in the range of [1, 200]")]
+        [Required(ErrorMessage = "Frame amount is required")]
+        public int Frames { get; set; }
+
+        public void Import()
+        {
+            DataProvider.ImportTexture(Name, Frames, Path);
+        }
+        public string Path { get; set; }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string info)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(info));
+            }
+        }
     }
 
 }

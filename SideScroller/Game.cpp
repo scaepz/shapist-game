@@ -110,7 +110,7 @@ CGame::CGame(string levelDirectory, bool * nextLevel, SDL_Renderer * renderer, S
 			xCounter++;
 			vm.AddTile(nullptr);
 
-			CPlayer * player = saver.LoadGame(xCounter * vm.standardTileSize, yCounter * vm.standardTileSize, 0, vm.standardTileSize);
+			CPlayer * player = saver.LoadGame(xCounter * vm.standardTileSize, yCounter * vm.standardTileSize, 0, 64);
 			vm.AddObject(player);
 		}
 	}

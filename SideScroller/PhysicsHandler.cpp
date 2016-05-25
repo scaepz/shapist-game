@@ -62,13 +62,12 @@ void CPhysicsHandler::FixCollision(int index)
 		bool stopDir[2] = { false, false };
 		CPhysicsObject* obj = objectVector->at(index);
 
-
 		bool collisionInThisLoop;
 		do{
 			collisionInThisLoop = false;
-			for (double o = (obj->pos[1] / standardTileSize); o < (obj->pos[1] + obj->GetHeight()) / standardTileSize + 1; o++)
+			for (double o = (obj->pos[1] / standardTileSize); o < ((obj->pos[1] + obj->GetHeight()) / standardTileSize) + 1; o++)
 			{
-				for (double i = (obj->pos[0] / standardTileSize); i <= ((obj->pos[0] + obj->GetWidth()) / standardTileSize) + 1; i++)
+				for (double i = (obj->pos[0] / standardTileSize); i <= ((obj->pos[0] + obj->GetWidth()) / standardTileSize)+1; i++)
 				{
 					if (o < 0 || i < 0)
 					{

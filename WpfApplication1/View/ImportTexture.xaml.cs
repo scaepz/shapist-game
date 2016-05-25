@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Editor.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,11 +20,14 @@ namespace Editor.View
     /// </summary>
     public partial class ImportTexture : Window
     {
+        ImportTextureViewModel vm;
         public ImportTexture()
         {
+            vm = new ImportTextureViewModel();
             InitializeComponent();
+            DataContext = vm;
         }
-        string filePath;
+        BitmapImage bmp;
         private void Browse(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -41,11 +45,11 @@ namespace Editor.View
             {
                 // Open document 
                 string filename = dlg.FileName;
-                nameTextBox.Text = filename.Substring(Model.DataProvider.GetShapistPath().Length);     
+                nameTextBox.Text = filename.Substring(Model.DataProvider.GetShapistPath().Length);
                 var uri = new Uri(filename);
-                BitmapImage bmp = new BitmapImage(uri);
+                bmp = new BitmapImage(uri);
                 img.Source = bmp;
-                filePath = filename;
+                vm.Path = filename;
             }
         }
 
@@ -56,12 +60,19 @@ namespace Editor.View
 
         private void Import(object sender, RoutedEventArgs e)
         {
-            int frames;
-            if (!int.TryParse(frameTextBox.Text, out frames)) return;
-            if (!string.IsNullOrEmpty(filePath))
-                Model.DataProvider.ImportTexture(nameTextBox.Text, frames, filePath);
+            try
+            {
+                vm.Import();
+                img.Source = null;
+                vm.Frames = 1;
+                vm.Name = "";
+                vm.Path = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
 
     }
 }

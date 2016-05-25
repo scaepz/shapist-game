@@ -130,9 +130,9 @@ namespace Editor.View
             if (vm.lvl != null)
                 vm.SaveLevel();
         }
-        private void OpenImportTextureDialog(object sender, RoutedEventArgs e)
+        private void OpenManageTexturesDialog(object sender, RoutedEventArgs e)
         {
-            ImportTexture d = new ImportTexture();
+            ManageTextures d = new ManageTextures();
             d.Show();
         }
 

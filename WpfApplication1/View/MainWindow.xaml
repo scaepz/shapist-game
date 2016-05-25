@@ -22,7 +22,7 @@
                 <MenuItem Header="Resources">
                     <MenuItem Header="New object">
                     </MenuItem>
-                    <MenuItem Header="Import texture" Click="OpenImportTextureDialog"></MenuItem>
+                    <MenuItem Header="Import texture" Click="OpenManageTexturesDialog"></MenuItem>
                 </MenuItem>
             </Menu>
             <StackPanel></StackPanel>

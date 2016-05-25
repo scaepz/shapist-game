@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace WpfApplication1.View
+namespace Editor.View
 {
     /// <summary>
     /// Interaction logic for NewObject.xaml
